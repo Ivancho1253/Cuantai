@@ -1,0 +1,35 @@
+# Domain and persistent model
+
+PostgreSQL definitions live in `src/lib/db/schema.ts`; SQL migrations live in `migrations/`. Version history is recorded in `schema_migrations`. Drizzle maps snake_case database fields to typed application fields.
+
+| Tables                                           | Purpose / relationships                                                                                                                         |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `users`, `sessions`, `accounts`, `verifications` | Better Auth identity, hashed credentials, expiring cookie sessions, OAuth and recovery verification. Owner rows cascade when a user is removed. |
+| `auth_rate_limits`                               | Persistent Better Auth request limits by key.                                                                                                   |
+| `user_settings`                                  | One row per owner; validated preferences stored as JSONB.                                                                                       |
+| `instruments`                                    | Listing ID + normalized JSONB metadata; separate exchange/currency identities and source. This is not an S&P constituent table.                 |
+| `cedear_ratios`                                  | Listing → underlying, certificates per share, effective date, source and retrieval timestamp. Unique listing/effective date.                    |
+| `watchlists`, `watchlist_items`                  | Owner → lists → exact listings; unique list/listing pairs, cascaded deletion.                                                                   |
+| `chart_workspaces`                               | Owner, name, JSONB configuration with instrument IDs, indicators, timeframe, chart style and horizontal drawings. Validated on every save.      |
+| `portfolios`                                     | Owner, name and fixed base currency.                                                                                                            |
+| `portfolio_transactions`                         | Portfolio → listing ledger; decimal quantities, price, fees, transaction currency/date, historical FX type/rate/source, broker and notes.       |
+| `manual_quotes`                                  | Private owner/listing prices with source and exact as-of timestamp. Never shared as a global live quote.                                        |
+| `exchange_rates`                                 | Private current conversions by owner/from/to, source, type (MEP/CCL/etc.) and as-of timestamp.                                                  |
+| `ai_analyses`                                    | Owner, asset and structured report JSONB, including provenance and limitations.                                                                 |
+| `request_limits`                                 | Atomic PostgreSQL counters for writes, market fan-out, provider budgets and per-user daily research limits.                                     |
+
+## Precision and accounting
+
+Money and position quantities use `numeric(38,18)` and are serialized as strings. The accepted user input has up to twelve fractional digits. Calculations use decimal.js at forty significant digits with round-half-even; display formatting rounds for readability only.
+
+Transactions are sorted by operation date, then insertion order. The API locks the portfolio row while validating and inserting, preventing concurrent oversells. Cost basis is FIFO with buy fees allocated to lots and sell fees deducted from proceeds. A partial sale consumes each lot proportionally. Splits multiply remaining lot quantities while preserving basis. Dividend income is separate from capital gains. Cash deposits and withdrawals are recorded separately; security purchases do not automatically debit a broker cash balance.
+
+Historical cost conversion is stored on each transaction as **base units per one original-currency unit**. Current valuation conversion is stored separately. Same-currency transactions ignore unrelated supplied conversion rates. An ARS certificate does not become the USD certificate listing after conversion. USDT requires an explicit conversion to USD, including USDT stablecoin balances recorded through cash-style deposits/withdrawals. A unit of account is not a guaranteed USD peg.
+
+Missing FX, missing quote, stale current FX/price or demo prices are reported as issues. Missing monetary terms remain `null`; totals and allocation weights are incomplete rather than silently treating the asset as zero. Manual prices retain manual provenance. Tax reporting, withholding, automatic corporate actions, TWR/XIRR and capital-flow-adjusted equity curves are pending.
+
+## Isolation and security
+
+Every private handler derives `userId` from the session. No client-supplied owner ID is trusted. Portfolio lookups, workspace updates and watchlist edits scope the owner in SQL. Child ledger queries are performed only after owner validation. Owner checks are covered by independent-account E2E tests. Database foreign keys, uniqueness constraints, indices and transaction locks enforce integrity beyond UI validation.
+
+Provider data is cached in process memory rather than stored as a complete historical market warehouse. Private records persist in PostgreSQL. Row-level database security is not claimed; authorization is enforced by the application handlers. Do not expose the database directly to browsers.
