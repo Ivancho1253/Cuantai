@@ -37,7 +37,12 @@ export class FinnhubProvider implements FundamentalsProvider, NewsProvider {
     return {
       metrics: specs.map(([key, label, unit]) => ({
         label,
-        value: data.metric[key] != null ? String(data.metric[key]) : null,
+        value:
+          data.metric[key] != null &&
+          Number.isFinite(Number(data.metric[key])) &&
+          String(data.metric[key]).trim() !== ''
+            ? String(data.metric[key])
+            : null,
         unit,
         period: 'Proveedor · TTM / último disponible',
       })),
@@ -77,6 +82,8 @@ export class FinnhubProvider implements FundamentalsProvider, NewsProvider {
       .parse(raw);
     return data
       .filter((n) => /^https?:\/\//.test(n.url))
+      .filter((n) => n.datetime > 0 && n.datetime * 1000 <= Date.now() + 60000)
+      .sort((a, b) => b.datetime - a.datetime)
       .slice(0, 25)
       .map((n) => ({
         id: String(n.id),

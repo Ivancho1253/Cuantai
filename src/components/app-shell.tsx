@@ -278,8 +278,8 @@ export function AppShell({
           </header>
           {(demo || status.data?.mode === 'demo') && (
             <div className="demo-strip">
-              <span className="demo-indicator" /> Explorá con datos sintéticos · Snapshot
-              ilustrativo: 14 mar 2025{' '}
+              <span className="demo-indicator" /> Datos demo de Cuantai · 14 mar 2025. Gráficos:
+              fuente TradingView.{' '}
               <Link href={demo ? '/register' : href('settings')}>
                 {demo ? 'Crear mi espacio' : 'Ver proveedores'} <ArrowUpRight size={12} />
               </Link>

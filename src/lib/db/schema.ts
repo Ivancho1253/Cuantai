@@ -11,6 +11,7 @@ import {
   bigint,
 } from 'drizzle-orm/pg-core';
 import type { Instrument } from '../market/types';
+import type { ChatAnswer } from '../ai/asset-chat';
 export const user = pgTable('users', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
@@ -220,6 +221,26 @@ export const limits = pgTable('request_limits', {
   count: integer('count').notNull(),
   expiresAt: timestamp('expires_at').notNull(),
 });
+
+export const chatTurns = pgTable(
+  'asset_chat_turns',
+  {
+    id: text('id').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    instrumentId: text('instrument_id')
+      .notNull()
+      .references(() => instrumentTable.id),
+    dataMode: text('data_mode').notNull(),
+    question: text('question').notNull(),
+    answer: jsonb('answer').$type<ChatAnswer>().notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  (t) => [
+    index('asset_chat_owner_listing_idx').on(t.userId, t.instrumentId, t.dataMode, t.createdAt),
+  ],
+);
 
 export const rateLimit = pgTable('auth_rate_limits', {
   id: text('id').primaryKey(),

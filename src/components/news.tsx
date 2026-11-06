@@ -9,9 +9,11 @@ import { EmptyState, SectionTitle, ErrorState, Skeleton } from './ui';
 export function News({
   instrumentId,
   embedded = false,
+  compact = false,
 }: {
   instrumentId?: string;
   embedded?: boolean;
+  compact?: boolean;
 }) {
   const { demo } = useApp();
   const [search, setSearch] = useState('');
@@ -23,9 +25,9 @@ export function News({
       ),
   });
   const items =
-    news.data?.items.filter((i) =>
-      `${i.title} ${i.source}`.toLowerCase().includes(search.toLowerCase()),
-    ) ?? [];
+    news.data?.items
+      .filter((i) => `${i.title} ${i.source}`.toLowerCase().includes(search.toLowerCase()))
+      .slice(0, compact ? 5 : 25) ?? [];
   return (
     <>
       {!embedded && (
@@ -35,18 +37,20 @@ export function News({
           description="Titulares con fuente original y fecha. La información antes que el ruido."
         />
       )}
-      <div className="panel news-container">
+      <div className={`panel news-container${compact ? ' asset-news-compact' : ''}`}>
         <div className="panel-header">
           <strong>
-            <Newspaper size={16} /> Noticias del mercado
+            <Newspaper size={16} /> {compact ? 'Últimas noticias' : 'Noticias del mercado'}
           </strong>
-          <input
-            className="compact-input"
-            aria-label="Buscar noticias"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Filtrar titulares..."
-          />
+          {!compact && (
+            <input
+              className="compact-input"
+              aria-label="Buscar noticias"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Filtrar titulares..."
+            />
+          )}
         </div>
         {news.isLoading ? (
           <Skeleton className="table-skeleton" />
@@ -70,16 +74,18 @@ export function News({
           </div>
         ) : (
           <EmptyState
-            title="Solo noticias que podamos verificar."
+            title={compact ? 'Sin titulares verificados.' : 'Solo noticias que podamos verificar.'}
             action={
-              <a
-                className="button button-secondary"
-                href="https://www.federalreserve.gov/newsevents.htm"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Comunicaciones de la Reserva Federal <ExternalLink size={14} />
-              </a>
+              !compact && (
+                <a
+                  className="button button-secondary"
+                  href="https://www.federalreserve.gov/newsevents.htm"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Comunicaciones de la Reserva Federal <ExternalLink size={14} />
+                </a>
+              )
             }
           >
             {news.data?.error ?? 'No se encontraron noticias para este filtro.'}

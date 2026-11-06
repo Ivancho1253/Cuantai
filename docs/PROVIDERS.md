@@ -1,6 +1,10 @@
 # Data providers and provenance
 
-Research date: **2026-10-14**; connectivity check: **2026-10-15**. Coverage, prices, terms and quotas can change. A configured key is not a license to display or redistribute data. This document is an implementation record, not a legal clearance.
+Research date: **2026-10-14**, SEC implementation/docs review **2026-10-17**; Binance connectivity check: **2026-10-15**. Coverage, prices, terms and quotas can change. A configured key is not a license to display or redistribute data. This document is an implementation record, not a legal clearance.
+
+## Chart source
+
+All price charts use TradingView’s official hosted widget and its own data. It receives no Cuantai OHLCV datafeed and does not expose a quote API to our research or portfolio services. Market tables and valuation/research adapters below remain separate. Coverage and latency are controlled by TradingView and the exchange. [Integration and fullscreen verification](TRADINGVIEW.md).
 
 ## Implemented adapters
 
@@ -78,6 +82,8 @@ This is a schema illustration using fictitious identifiers, not a real ratio. Im
 
 ## Primary references
 
+SEC annual statements now use the official ticker/exchange directory and Company Facts APIs, or a validated operator-imported bundle. Identified access, exact filing contexts, precision and failure states are tested; **live SEC connectivity remains unverified** without an operator contact. See [setup, methodology and coverage limits](FINANCIAL_STATEMENTS.md).
+
 - [Binance Spot REST market data](https://developers.binance.com/docs/binance-spot-api-docs/rest-api/market-data-endpoints)
 - [Twelve Data documentation](https://twelvedata.com/docs) and [terms](https://twelvedata.com/terms)
 - [Finnhub API documentation](https://finnhub.io/docs/api) and [terms](https://finnhub.io/terms-of-service)
@@ -85,7 +91,7 @@ This is a schema illustration using fictitious identifiers, not a real ratio. Im
 - [Massive REST quickstart](https://massive.com/docs/rest/quickstart)
 - [BYMA Market Data products and access](https://www.byma.com.ar/productos/productos-de-datos/market-data/apis)
 - [BYMA API catalog](https://www.byma.com.ar/byma-apis)
-- [Lightweight Charts pane API](https://tradingview.github.io/lightweight-charts/tutorials/how_to/panes)
+- [Official TradingView Advanced Chart widget](https://www.tradingview.com/widget-docs/widgets/charts/advanced-chart/) and [data/coverage FAQ](https://www.tradingview.com/widget-docs/faq/data/)
 - [Better Auth Drizzle adapter](https://better-auth.com/docs/adapters/drizzle)
 - [OpenAI structured output](https://developers.openai.com/api/docs/guides/structured-outputs) and [function calling](https://developers.openai.com/api/docs/guides/function-calling)
 

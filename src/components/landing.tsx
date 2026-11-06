@@ -15,22 +15,16 @@ import {
   Wallet,
   Star,
   Newspaper,
-  Plus,
   Check,
   ChevronRight,
 } from 'lucide-react';
 import { Brand, DataBadge, AssetIcon } from './ui';
-import { FinancialChart } from './financial-chart';
-import { Sparkline } from './sparkline';
+import { TradingViewChart } from './tradingview-chart';
 import { instruments } from '@/lib/market/catalog';
 import { demoHistory } from '@/lib/market/demo';
 import { number } from '@/lib/utils';
 const nvda = demoHistory(instruments[0]);
 const btc = demoHistory(instruments.find((i) => i.symbol === 'BTCUSDT')!);
-const previewIndicators = [
-  { id: 'ema20', kind: 'EMA' as const, period: 20, color: '#c8ef84', visible: true },
-  { id: 'ema50', kind: 'EMA' as const, period: 50, color: '#b29bf1', visible: true },
-];
 export function Landing() {
   const reduced = useReducedMotion();
   return (
@@ -165,28 +159,11 @@ export function Landing() {
                           <strong>NVIDIA Corporation</strong>
                           <small>NVDA · NASDAQ · USD</small>
                         </span>
-                        <span className="preview-price">
-                          121.67<small className="positive">+2.18% · ilustrativo</small>
-                        </span>
+                        <span className="preview-price">TradingView</span>
                       </div>
-                      <div className="preview-chart-controls">
-                        <span>1H</span>
-                        <span>4H</span>
-                        <b>1D</b>
-                        <span>1W</span>
-                        <span>1M</span>
-                        <i />
-                        <span className="green-text">EMA 20</span>
-                        <span className="purple-text">EMA 50</span>
-                        <Plus size={12} />
-                      </div>
-                      <FinancialChart
-                        candles={nvda.candles.slice(-100)}
-                        indicators={previewIndicators}
-                        height={260}
-                      />
+                      <TradingViewChart symbol="NASDAQ:NVDA" height={330} />
                       <div className="preview-chart-foot">
-                        Datos sintéticos de demostración · 14 MAR 2025
+                        Gráfico y datos provistos por TradingView
                       </div>
                     </div>
                     <aside className="preview-intelligence">
@@ -226,7 +203,7 @@ export function Landing() {
                           <strong>{d.instrument.symbol}</strong>
                           <small>{d.instrument.exchange}</small>
                         </span>
-                        <Sparkline values={d.candles.slice(-20).map((c) => c.close)} />
+                        <small>DEMO</small>
                         <b>{number(d.quote?.price)}</b>
                       </div>
                     ))}
@@ -310,20 +287,10 @@ export function Landing() {
         <section className="landing-chart-feature">
           <div className="chart-feature-visual">
             <div className="feature-visual-label">
-              <span className="connection-dot" /> BTC / USDT <DataBadge status="demo" />
+              <span className="connection-dot" /> BTC / USDT · TradingView
             </div>
-            <FinancialChart
-              candles={btc.candles.slice(-100)}
-              indicators={[
-                ...previewIndicators,
-                { id: 'rsi', kind: 'RSI', period: 14, color: '#b49beb', visible: true },
-              ]}
-              height={330}
-            />
-            <div className="floating-indicator">
-              <span className="indicator-dot" /> EMA 20 <Plus size={12} /> EMA 50 <Plus size={12} />{' '}
-              RSI 14
-            </div>
+            <TradingViewChart symbol="BINANCE:BTCUSDT" height={440} />
+            <div className="floating-indicator">Herramientas de TradingView</div>
           </div>
           <div className="chart-feature-copy">
             <span className="eyebrow">UNA HERRAMIENTA PARA PENSAR</span>
@@ -338,13 +305,13 @@ export function Landing() {
             </p>
             <div className="feature-check-list">
               <span>
-                <Check size={14} /> Indicadores sin límites de suscripción
+                <Check size={14} /> Herramientas oficiales de TradingView
               </span>
               <span>
                 <Check size={14} /> Layouts de uno, dos y cuatro gráficos
               </span>
               <span>
-                <Check size={14} /> Configuraciones guardadas en tu cuenta
+                <Check size={14} /> Configuración de apertura guardada en tu cuenta
               </span>
             </div>
             <Link className="text-link" href="/demo?view=charts">

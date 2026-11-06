@@ -11,6 +11,7 @@ import {
   marketOverview,
   resolveInstrument,
   assetFundamentals,
+  assetFinancialStatements,
   marketNews,
   providerStatus,
   dataMode,
@@ -24,6 +25,9 @@ import {
   fxInputSchema,
 } from '@/lib/validation';
 import { createAnalysis } from '@/lib/ai/analysis';
+import { assetOverview } from '@/lib/market/asset-overview';
+import { chatInputSchema, type ChatTurn } from '@/lib/ai/asset-chat';
+import { answerAssetQuestion } from '@/lib/ai/asset-chat-server';
 import { calculatePortfolio, type Transaction } from '@/lib/finance/portfolio';
 import { ownedPortfolio, portfolioDetail } from '@/lib/portfolio-service';
 export const runtime = 'nodejs';
@@ -40,7 +44,15 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
       method === 'GET' &&
       !demo &&
       dataMode() === 'live' &&
-      ['instruments', 'market', 'overview', 'fundamentals', 'news'].includes(route)
+      [
+        'instruments',
+        'market',
+        'overview',
+        'asset-overview',
+        'fundamentals',
+        'financials',
+        'news',
+      ].includes(route)
     )
       await rateLimit('market:global', 240, 60);
     if (method === 'GET' && route === 'status')
@@ -68,16 +80,27 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
           dataMode() === 'live' && !demo,
         ),
       );
+    if (method === 'GET' && route === 'instrument')
+      return json(await resolveInstrument(z.string().min(1).parse(url.searchParams.get('id'))));
     if (method === 'GET' && route === 'market') {
       const id = z.string().min(1).parse(url.searchParams.get('id'));
       const tf = z.enum(timeframes).parse(url.searchParams.get('timeframe') ?? '1D');
       return json(await marketSnapshot(id, tf, demo));
     }
     if (method === 'GET' && route === 'overview') return json(await marketOverview(demo));
+    if (method === 'GET' && route === 'asset-overview')
+      return json(await assetOverview(z.string().min(1).parse(url.searchParams.get('id')), demo));
     if (method === 'GET' && route === 'fundamentals')
       return json(
         await assetFundamentals(
           await resolveInstrument(z.string().parse(url.searchParams.get('id'))),
+          demo,
+        ),
+      );
+    if (method === 'GET' && route === 'financials')
+      return json(
+        await assetFinancialStatements(
+          await resolveInstrument(z.string().min(1).parse(url.searchParams.get('id'))),
           demo,
         ),
       );
@@ -296,6 +319,90 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
           set: body,
         });
       return json({ ok: true });
+    }
+    if (route === 'asset-chat') {
+      const input = method === 'POST' ? chatInputSchema.parse(await readJson(req)) : null;
+      const instrumentId =
+        input?.instrumentId ?? z.string().min(1).max(150).parse(url.searchParams.get('id'));
+      const mode = (input?.demo ?? demo) || dataMode() === 'demo' ? 'demo' : 'live';
+      await resolveInstrument(instrumentId);
+      const scope = and(
+        eq(s.chatTurns.userId, userId),
+        eq(s.chatTurns.instrumentId, instrumentId),
+        eq(s.chatTurns.dataMode, mode),
+      );
+      const rows = await db
+        .select()
+        .from(s.chatTurns)
+        .where(scope)
+        .orderBy(desc(s.chatTurns.createdAt), desc(s.chatTurns.id))
+        .limit(31);
+      const turns: ChatTurn[] = rows
+        .slice(0, 30)
+        .reverse()
+        .map((row) => ({
+          id: row.id,
+          question: row.question,
+          answer: row.answer,
+          createdAt: row.createdAt.toISOString(),
+        }));
+      if (method === 'GET') return json({ turns, hasMore: rows.length > 30 });
+      if (input) {
+        const latestId = rows[0]?.id ?? null;
+        if (input.baseTurnId !== latestId)
+          throw new HttpError(409, 'La conversación cambió. Recargá el historial antes de enviar.');
+        await rateLimit(
+          `ai:${userId}:${new Date().toISOString().slice(0, 10)}`,
+          Number(process.env.AI_DAILY_LIMIT ?? 10),
+          86400,
+        );
+        const overview = await assetOverview(instrumentId, mode === 'demo');
+        const news = await marketNews(overview.instrument, mode === 'demo');
+        let answer;
+        try {
+          answer = await answerAssetQuestion(overview, news, input.question, turns);
+        } catch {
+          throw new HttpError(
+            502,
+            'La IA no pudo producir una respuesta verificable. Intentá de nuevo; no se guardó una respuesta incompleta.',
+          );
+        }
+        const turn = await db.transaction(async (tx) => {
+          // Serialize final appends across processes without holding a lock during model inference.
+          await tx
+            .select({ id: s.user.id })
+            .from(s.user)
+            .where(eq(s.user.id, userId))
+            .for('update');
+          const [latest] = await tx
+            .select({ id: s.chatTurns.id })
+            .from(s.chatTurns)
+            .where(scope)
+            .orderBy(desc(s.chatTurns.createdAt), desc(s.chatTurns.id))
+            .limit(1);
+          if ((latest?.id ?? null) !== latestId)
+            throw new HttpError(409, 'Llegó otra respuesta. Recargá el historial antes de enviar.');
+          const [saved] = await tx
+            .insert(s.chatTurns)
+            .values({
+              id: crypto.randomUUID(),
+              userId,
+              instrumentId,
+              dataMode: mode,
+              question: input.question,
+              answer,
+              createdAt: new Date(),
+            })
+            .returning();
+          return {
+            id: saved.id,
+            question: saved.question,
+            answer: saved.answer,
+            createdAt: saved.createdAt.toISOString(),
+          };
+        });
+        return json(turn, 201);
+      }
     }
     if (route === 'analyses') {
       if (method === 'GET')

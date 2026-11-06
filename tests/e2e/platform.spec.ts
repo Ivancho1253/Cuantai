@@ -1,4 +1,8 @@
+import { installTradingViewFixture } from './tradingview-fixture';
 import { test, expect, request as requestFactory, type APIRequestContext } from '@playwright/test';
+test.beforeEach(async ({ page }) => {
+  await installTradingViewFixture(page);
+});
 const origin = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3000';
 const password = 'Test-Cuantai-813!';
 async function account() {
@@ -230,6 +234,71 @@ test('origin, malformed input and real instrument identity', async ({ request })
     await a.client.dispose();
   }
 });
+test('asset conversation persists through reload and is isolated by account and listing', async ({
+  page,
+  request,
+}) => {
+  expect((await request.get('/api/data/asset-chat?id=NASDAQ%3ANVDA%3AUSD')).status()).toBe(401);
+  const a = await account(),
+    b = await account();
+  const id = 'NASDAQ:NVDA:USD';
+  const path = `asset-chat?id=${encodeURIComponent(id)}`;
+  try {
+    const first = await post(a.client, 'asset-chat', {
+      instrumentId: id,
+      question: '¿Qué riesgo tiene?',
+      baseTurnId: null,
+    });
+    expect(first.answer.mode).toBe('rules');
+    const second = await post(a.client, 'asset-chat', {
+      instrumentId: id,
+      question: 'Explicá eso',
+      baseTurnId: first.id,
+    });
+    expect(second.answer.text).toBe(first.answer.text);
+    expect((await (await a.client.get(`/api/data/${path}`)).json()).turns).toHaveLength(2);
+    expect((await (await b.client.get(`/api/data/${path}`)).json()).turns).toEqual([]);
+    expect(
+      (await (await a.client.get('/api/data/asset-chat?id=NYSE%3AJPM%3AUSD')).json()).turns,
+    ).toEqual([]);
+    expect(
+      (
+        await a.client.post('/api/data/asset-chat', {
+          data: { instrumentId: id, question: 'Stale version', baseTurnId: first.id },
+        })
+      ).status(),
+    ).toBe(409);
+    expect(
+      (
+        await b.client.post('/api/data/asset-chat', {
+          data: { instrumentId: id, question: 'Other account version', baseTurnId: second.id },
+        })
+      ).status(),
+    ).toBe(409);
+    expect(
+      (
+        await a.client.post('/api/data/asset-chat', {
+          data: { instrumentId: id, question: '  ', baseTurnId: second.id },
+        })
+      ).status(),
+    ).toBe(400);
+    await page.context().addCookies((await a.client.storageState()).cookies);
+    await page.goto('/asset/NASDAQ/NVDA');
+    await expect(page.locator('.asset-chat-turn')).toHaveCount(2);
+    await page.getByLabel('Pregunta sobre el activo').fill('¿Y el rendimiento semanal?');
+    await page.getByRole('button', { name: 'Enviar pregunta', exact: true }).click();
+    await expect(page.locator('.asset-chat-turn')).toHaveCount(3);
+    await page.reload();
+    await expect(page.locator('.asset-chat-turn')).toHaveCount(3);
+    await expect(page.locator('.asset-chat-turn').last()).toContainText(
+      '¿Y el rendimiento semanal?',
+    );
+    expect((await (await b.client.get(`/api/data/${path}`)).json()).turns).toEqual([]);
+  } finally {
+    await a.client.dispose();
+    await b.client.dispose();
+  }
+});
 test('registration, onboarding, watchlist and chart UI survive reload', async ({ page }) => {
   const email = `ui-${crypto.randomUUID()}@example.test`;
   const errors: string[] = [];
@@ -261,7 +330,7 @@ test('registration, onboarding, watchlist and chart UI survive reload', async ({
   await expect(page.locator('.watchlist-row')).toHaveCount(1);
   await expect(page.locator('.watchlist-row')).toContainText('NVDA');
   await page.getByRole('link', { name: 'Charts', exact: true }).click();
-  await expect(page.locator('canvas').first()).toBeVisible();
+  await expect(page.locator('.tv-chart iframe').first()).toBeVisible();
   await page.getByRole('button', { name: 'Guardar workspace', exact: true }).click();
   await page.getByLabel('Nombre del workspace').fill('Mi BTC');
   await page.getByRole('button', { name: 'Guardar workspace', exact: true }).last().click();
@@ -271,15 +340,12 @@ test('registration, onboarding, watchlist and chart UI survive reload', async ({
   await expect(page.getByText('Workspace recuperado')).toBeVisible();
   expect(errors).toEqual([]);
 });
-test('responsive demo navigation and multi-indicator charts', async ({ page }) => {
+test('responsive demo navigation and official TradingView layouts', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/demo?view=charts');
-  await expect(page.locator('canvas').first()).toBeVisible();
-  await page.getByRole('button', { name: 'Indicadores' }).click();
-  await page.getByRole('button', { name: 'EMA', exact: true }).click();
-  await expect(page.getByLabel('Mostrar EMA 20', { exact: true })).toHaveCount(2);
-  await page.getByRole('button', { name: 'Cerrar', exact: true }).click();
+  await expect(page.locator('.tv-chart iframe').first()).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Indicadores', exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: '2 gráficos', exact: true }).click();
   await expect(page.getByLabel('Activo del gráfico 2')).toBeVisible();
   await expect(page.locator('.chart-tile')).toHaveCount(2);

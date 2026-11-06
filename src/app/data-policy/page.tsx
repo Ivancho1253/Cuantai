@@ -31,6 +31,18 @@ export default function DataPolicy() {
             'Binance proporciona datos spot. Twelve Data habilita búsqueda, cotizaciones e históricos estadounidenses con credenciales. Finnhub proporciona métricas y titulares según cobertura del plan. Cada valor incluye fuente, fecha, moneda y estado. La posibilidad técnica de consultar datos no otorga derechos de redistribución.',
           ],
           [
+            'Logos e identidad visual',
+            'Los logos identifican a las empresas, administradoras de fondos y proyectos cripto. Los CEDEARs muestran la marca del emisor subyacente y las monedas tradicionales usan símbolos monetarios. Las marcas pertenecen a sus titulares; su presencia no implica afiliación. El catálogo inicial utiliza imágenes locales y los activos nuevos consultan las fuentes de logos según cobertura. Cuando una imagen no está disponible se muestra un ícono neutro.',
+          ],
+          [
+            'Gráficos oficiales de TradingView',
+            'Los gráficos de precios usan el widget oficial y los datos de TradingView, también al explorar la demo. Cuantai no les envía velas ni calcula sus indicadores. La cobertura y la demora dependen de TradingView y del mercado. Los precios de tablas, cálculos de cartera e investigación usan sus proveedores propios y no se extraen del widget. Se guarda la configuración de apertura; no se guardan en Cuantai los dibujos o cambios internos del widget.',
+          ],
+          [
+            'Estados financieros',
+            'Financials muestra una selección de conceptos anuales US-GAAP de SEC EDGAR, mediante consulta identificada o archivo importado. Cada columna conserva un período fiscal, una versión y su presentación de origen. No se mezclan comparativos de documentos posteriores, períodos trimestrales ni cifras en distintas monedas. Los valores ausentes no se estiman. El flujo libre simplificado se identifica como un cálculo y no se aplica al sector financiero. Esta selección no reemplaza los estados completos ni sus notas.',
+          ],
+          [
             'Argentina y CEDEARs',
             'Las especies BYMA en ARS y USD son instrumentos separados del subyacente. El feed BYMA requiere autorización y actualmente admite un archivo normalizado de datos autorizados. No se consulta ni scrapea un endpoint de BYMA sin contrato. Los precios manuales se identifican como tales.',
           ],
@@ -48,7 +60,7 @@ export default function DataPolicy() {
           ],
           [
             'Alcance de esta versión',
-            'La ingesta de estados financieros, DCF, alertas en segundo plano, TWR/XIRR, holdings ETF y herramientas avanzadas de dibujo siguen pendientes. El reporte de cartera es un diagnóstico determinístico de concentración. No es una evaluación exhaustiva de riesgo ni asesoramiento personalizado.',
+            'La conciliación trimestral y de reexpresiones comparativas, IFRS, DCF, alertas en segundo plano, TWR/XIRR, holdings ETF y herramientas avanzadas de dibujo siguen pendientes. El reporte de cartera es un diagnóstico determinístico de concentración. No es una evaluación exhaustiva de riesgo ni asesoramiento personalizado.',
           ],
         ].map(([title, text], i) => (
           <section key={title}>
@@ -60,11 +72,22 @@ export default function DataPolicy() {
           </section>
         ))}
         <p className="form-hint">
-          TradingView Lightweight Charts™ v5.2.1 · Copyright (c) 2026 TradingView, Inc. ·{' '}
-          <a href="/licenses/lightweight-charts.txt">Apache License 2.0</a>. La biblioteca gráfica
-          conserva su atribución; los datos provienen de los proveedores indicados.
+          Los widgets oficiales conservan la atribución a TradingView y se conectan a sus dominios.
+          No se incluye información de tu cuenta, cartera ni credenciales en la configuración del
+          gráfico. La integración utiliza el widget público de TradingView y está sujeta a su
+          disponibilidad y políticas.
         </p>
         <div className="policy-sources">
+          <a
+            href="https://site.financialmodelingprep.com/developer/docs/company-image-api"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Logos de empresas · FMP ↗
+          </a>
+          <a href="https://github.com/spothq/cryptocurrency-icons" target="_blank" rel="noreferrer">
+            Cryptocurrency Icons ↗
+          </a>
           <a
             href="https://www.byma.com.ar/productos/productos-de-datos/market-data/apis"
             target="_blank"
@@ -73,7 +96,7 @@ export default function DataPolicy() {
             BYMA Market Data ↗
           </a>
           <a
-            href="https://tradingview.github.io/lightweight-charts/"
+            href="https://www.tradingview.com/widget-docs/widgets/charts/advanced-chart/"
             target="_blank"
             rel="noreferrer"
           >

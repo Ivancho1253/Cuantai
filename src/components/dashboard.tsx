@@ -7,20 +7,19 @@ import {
   ArrowRight,
   Sparkles,
   Plus,
-  ChevronDown,
   Globe2,
   ExternalLink,
-  SlidersHorizontal,
   MoveUpRight,
   Wallet,
 } from 'lucide-react';
 import { useApp } from './app-shell';
-import { api, number, dateLabel, cn } from '@/lib/utils';
+import { api, number, cn } from '@/lib/utils';
 import type { MarketSnapshot } from '@/lib/market/types';
-import { FinancialChart } from './financial-chart';
-import { Sparkline } from './sparkline';
+import { TradingViewChart } from './tradingview-chart';
+import { instruments } from '@/lib/market/catalog';
+import { tradingViewSymbol } from '@/lib/market/tradingview';
 import { MarketTable } from './market-table';
-import { DataBadge, ErrorState, Skeleton, AssetIcon } from './ui';
+import { ErrorState, Skeleton, AssetIcon } from './ui';
 const benchmarks = [
   ['NYSE:SPY:USD', 'S&P 500', 'SPY · ETF proxy'],
   ['NASDAQ:QQQ:USD', 'Nasdaq-100', 'QQQ · ETF proxy'],
@@ -30,20 +29,12 @@ const benchmarks = [
 export function Dashboard() {
   const { user, demo, href, openSearch } = useApp();
   const [selected, setSelected] = useState('NASDAQ:NVDA:USD');
-  const [period, setPeriod] = useState('3M');
   const [tab, setTab] = useState('Destacados');
   const overview = useQuery({
     queryKey: ['overview', demo],
     queryFn: () => api<MarketSnapshot[]>(`overview${demo ? '?demo=true' : ''}`),
   });
-  const chartData = useQuery({
-    queryKey: ['market', selected, '1D', demo],
-    queryFn: () =>
-      api<MarketSnapshot>(
-        `market?id=${encodeURIComponent(selected)}&timeframe=1D${demo ? '&demo=true' : ''}`,
-      ),
-  });
-  const selectedData = chartData.data;
+  const selectedInstrument = instruments.find((i) => i.id === selected);
   const data = overview.data ?? [];
   const filtered =
     tab === 'Cripto'
@@ -51,10 +42,6 @@ export function Dashboard() {
       : tab === 'ETFs'
         ? data.filter((d) => d.instrument.type === 'etf')
         : data.filter((d) => d.instrument.type === 'stock').slice(0, 6);
-  const chartCandles =
-    selectedData?.candles.slice(
-      period === '1M' ? -22 : period === '3M' ? -66 : period === '6M' ? -132 : -280,
-    ) ?? [];
   return (
     <div className="dashboard-page">
       <div className="overview-heading">
@@ -100,10 +87,7 @@ export function Dashboard() {
               </div>
               <div className="benchmark-bottom">
                 <small>{sub}</small>
-                <Sparkline
-                  values={item?.candles.slice(-24).map((c) => c.close) ?? []}
-                  positive={up}
-                />
+                <small className="muted">Ver gráfico</small>
               </div>
             </button>
           );
@@ -123,61 +107,10 @@ export function Dashboard() {
               <ArrowUpRight size={18} />
             </Link>
           </div>
-          <div className="overview-chart-header">
-            <div className="asset-cell">
-              {selectedData && <AssetIcon instrument={selectedData.instrument} />}
-              <div>
-                <button className="asset-select" onClick={openSearch}>
-                  {selectedData?.instrument.name ?? 'Cargando activo'} <ChevronDown size={14} />
-                </button>
-                <small>
-                  {selectedData?.instrument.symbol} · {selectedData?.instrument.exchange} ·{' '}
-                  {selectedData?.instrument.currency}
-                </small>
-              </div>
-            </div>
-            <DataBadge status={selectedData?.quote?.status ?? 'demo'} />
-          </div>
-          <div className="overview-price">
-            <strong>{number(selectedData?.quote?.price)}</strong>
-            <span
-              className={
-                Number(selectedData?.quote?.changePercent ?? 0) >= 0 ? 'positive' : 'negative'
-              }
-            >
-              {Number(selectedData?.quote?.changePercent ?? 0) >= 0 ? '+' : ''}
-              {number(selectedData?.quote?.changePercent)}%{' '}
-              <small>
-                {selectedData?.instrument.type === 'crypto' ? 'últimas 24h' : 'última sesión'}
-              </small>
-            </span>
-          </div>
-          <div className="chart-periods">
-            {['1M', '3M', '6M', '1Y'].map((p) => (
-              <button className={period === p ? 'active' : ''} key={p} onClick={() => setPeriod(p)}>
-                {p}
-              </button>
-            ))}
-            <Link href={href('charts')}>
-              <SlidersHorizontal size={13} /> Indicadores
-            </Link>
-          </div>
-          {chartData.isLoading ? (
-            <Skeleton className="chart-skeleton" />
-          ) : chartCandles.length ? (
-            <FinancialChart candles={chartCandles} chartType="area" height={260} volume={false} />
-          ) : (
-            <div className="chart-unavailable">
-              {selectedData?.error ?? 'Histórico no disponible'}
-            </div>
-          )}
-          <div className="chart-source">
-            <span>
-              {selectedData?.provenance.source ?? 'Cargando fuente'} ·{' '}
-              {dateLabel(selectedData?.provenance.asOf ?? '')}
-            </span>
-            <span>USD / USDT según instrumento</span>
-          </div>
+          <TradingViewChart
+            symbol={selectedInstrument ? tradingViewSymbol(selectedInstrument) : null}
+            height={490}
+          />
         </section>
         <aside className="insight-column">
           <section className="analyst-card">

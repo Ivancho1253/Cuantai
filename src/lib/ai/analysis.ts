@@ -1,6 +1,11 @@
 import OpenAI from 'openai';
 import { zodTextFormat } from 'openai/helpers/zod';
-import { assetFundamentals, marketNews, marketSnapshot } from '../market/service';
+import {
+  assetFundamentals,
+  assetFinancialStatements,
+  marketNews,
+  marketSnapshot,
+} from '../market/service';
 import {
   narrativeSchema,
   deterministicReport,
@@ -18,12 +23,21 @@ export async function createAnalysis(
   if (!process.env.OPENAI_API_KEY || !process.env.AI_MODEL) {
     return { ...report, question };
   }
-  const [fundamentals, news] = await Promise.all([
+  const [fundamentals, financials, news] = await Promise.all([
     assetFundamentals(snapshot.instrument, demo),
+    assetFinancialStatements(snapshot.instrument, demo),
     marketNews(snapshot.instrument, demo),
   ]);
+  const financialPeriods = financials.data?.periods.slice(0, 3) ?? [];
   const sources: ResearchSource[] = [
     ...report.sources,
+    ...financialPeriods.map((period, index) => ({
+      id: `financials-${index}`,
+      title: `SEC ${period.form} · ${financials.data!.entityName} · cierre ${period.end} · presentado ${period.filed}`,
+      url: period.url,
+      asOf: period.end,
+      retrievedAt: financials.data!.retrievedAt,
+    })),
     ...('provenance' in fundamentals && fundamentals.provenance
       ? [
           {
@@ -48,6 +62,18 @@ export async function createAnalysis(
     provenance: snapshot.provenance,
     metrics: report.metrics,
     fundamentals,
+    financialStatements: financials.data
+      ? {
+          ...financials.data,
+          periods: financialPeriods,
+          rows: financials.data.rows.map((row) => ({
+            ...row,
+            values: Object.fromEntries(
+              financialPeriods.map((period) => [period.id, row.values[period.id]]),
+            ),
+          })),
+        }
+      : financials,
     news: news.items.slice(0, 5),
     sources,
   };

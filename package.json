@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "npm run lint && npm run typecheck && npm test && npm run build",
-    "data:import-ratios": "node --env-file-if-exists=.env.local --import tsx scripts/import-cedear-ratios.ts"
+    "data:import-ratios": "node --env-file-if-exists=.env.local --import tsx scripts/import-cedear-ratios.ts",
+    "data:import-sec": "node --env-file-if-exists=.env.local --import tsx scripts/import-sec.ts"
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.7.8",
@@ -27,7 +28,6 @@
     "clsx": "^2.1.1",
     "decimal.js": "^10.6.0",
     "drizzle-orm": "^0.45.0",
-    "lightweight-charts": "5.2.1",
     "lucide-react": "^0.468.0",
     "motion": "^12.23.0",
     "next": "16.4.1",

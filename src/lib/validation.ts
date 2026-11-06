@@ -58,34 +58,46 @@ export const settingsSchema = z.object({
 export const workspaceSchema = z.object({
   id: z.string().optional(),
   name: z.string().min(1).max(80),
-  config: z.object({
-    instrumentIds: z.array(z.string()).min(1).max(4),
-    timeframe: z.enum(timeframes),
-    chartType: z.enum(['candles', 'line', 'area', 'bars']),
-    logarithmic: z.boolean(),
-    indicators: z
-      .array(
-        z.object({
-          id: z.string(),
-          kind: z.enum(['EMA', 'SMA', 'RSI', 'MACD', 'BB', 'ATR', 'OBV', 'VWAP']),
-          period: z.number().int().min(1).max(2000),
-          color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
-          visible: z.boolean(),
-        }),
-      )
-      .max(50),
-    drawings: z
-      .array(
-        z.object({
-          id: z.string(),
-          instrumentId: z.string(),
-          price: z.number().positive(),
-          label: z.string().max(80),
-          color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
-        }),
-      )
-      .max(100),
-  }),
+  config: z
+    .object({
+      instrumentIds: z.array(z.string()).min(1).max(4),
+      timeframe: z.enum(timeframes),
+      chartType: z.enum(['candles', 'line', 'area', 'bars']),
+      logarithmic: z.boolean(),
+      indicators: z
+        .array(
+          z.object({
+            id: z.string(),
+            kind: z.enum(['EMA', 'SMA', 'RSI', 'MACD', 'BB', 'ATR', 'OBV', 'VWAP']),
+            period: z.number().int().min(1).max(2000),
+            color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+            visible: z.boolean(),
+          }),
+        )
+        .max(50),
+      drawings: z
+        .array(
+          z.object({
+            id: z.string(),
+            instrumentId: z.string(),
+            price: z.number().positive(),
+            label: z.string().max(80),
+            color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+          }),
+        )
+        .max(100),
+    })
+    .strict()
+    .or(
+      z
+        .object({
+          provider: z.literal('tradingview'),
+          instrumentIds: z.array(z.string().min(1)).min(1).max(4),
+          timeframe: z.enum(timeframes),
+          chartType: z.enum(['candles', 'line', 'area', 'bars']),
+        })
+        .strict(),
+    ),
 });
 export const quoteInputSchema = z.object({
   instrumentId: z.string(),

@@ -19,6 +19,7 @@ export async function cached<T>(key: string, ttl: number, load: () => Promise<T>
 export async function fetchJson(
   url: URL | string,
   headers?: Record<string, string>,
+  beforeAttempt?: () => Promise<void>,
 ): Promise<unknown> {
   const host = new URL(url).host;
   const circuit = circuits.get(host);
@@ -28,6 +29,7 @@ export async function fetchJson(
       'CIRCUIT_OPEN',
     );
   for (let attempt = 0; attempt < 2; attempt++) {
+    await beforeAttempt?.();
     try {
       const response = await fetch(url, {
         headers,

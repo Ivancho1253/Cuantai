@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { ArrowUpRight, Star } from 'lucide-react';
 import { AssetIcon, DataBadge } from './ui';
-import { Sparkline } from './sparkline';
+import { tradingViewSymbol, tradingViewChartUrl } from '@/lib/market/tradingview';
 import { number, compact, cn } from '@/lib/utils';
 import type { MarketSnapshot } from '@/lib/market/types';
 import { useApp } from './app-shell';
@@ -25,7 +25,7 @@ export function MarketTable({
             <th>Precio</th>
             <th>Cambio</th>
             {!compactView && <th>Volumen</th>}
-            <th>Últimas sesiones</th>
+            <th>Gráfico</th>
             {!compactView && <th>Mercado</th>}
             <th>
               <span className="sr-only">Acciones</span>
@@ -70,7 +70,18 @@ export function MarketTable({
                 </td>
                 {!compactView && <td className="numeric muted">{compact(q?.volume)}</td>}
                 <td className="spark-cell">
-                  <Sparkline values={row.candles.slice(-25).map((c) => c.close)} positive={up} />
+                  {tradingViewSymbol(row.instrument) ? (
+                    <a
+                      className="text-link"
+                      href={tradingViewChartUrl(tradingViewSymbol(row.instrument)!)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      TradingView <ArrowUpRight size={12} />
+                    </a>
+                  ) : (
+                    <span className="muted">—</span>
+                  )}
                 </td>
                 {!compactView && (
                   <td>

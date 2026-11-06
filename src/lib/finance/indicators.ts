@@ -1,13 +1,5 @@
 import type { Candle } from '../market/types';
 export type Point = { time: number; value: number };
-export type IndicatorKind = 'SMA' | 'EMA' | 'RSI' | 'MACD' | 'BB' | 'ATR' | 'OBV' | 'VWAP';
-export type IndicatorConfig = {
-  id: string;
-  kind: IndicatorKind;
-  period: number;
-  color: string;
-  visible: boolean;
-};
 const validPeriod = (period: number) => {
   if (!Number.isInteger(period) || period < 1 || period > 2000)
     throw new Error('Period must be an integer between 1 and 2000');
@@ -121,7 +113,7 @@ export function obv(candles: Candle[]): Point[] {
     return { time: c.time, value };
   });
 }
-// UTC-session VWAP, intentionally unavailable on daily or longer intervals in the UI.
+// UTC-session VWAP research calculation; this does not feed TradingView charts.
 export function vwap(candles: Candle[]): Point[] {
   let total = 0,
     volume = 0,
@@ -167,10 +159,3 @@ export function technicalMetrics(candles: Candle[]) {
         : 'unavailable',
   };
 }
-export const defaultIndicators: IndicatorConfig[] = [
-  { id: 'ema20', kind: 'EMA', period: 20, color: '#c8ef84', visible: true },
-  { id: 'ema50', kind: 'EMA', period: 50, color: '#b79aff', visible: true },
-  { id: 'ema200', kind: 'EMA', period: 200, color: '#6c9fe8', visible: false },
-  { id: 'rsi', kind: 'RSI', period: 14, color: '#ba9aef', visible: true },
-  { id: 'macd', kind: 'MACD', period: 26, color: '#60b4df', visible: true },
-];

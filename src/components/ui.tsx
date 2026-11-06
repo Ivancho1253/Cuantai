@@ -4,7 +4,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { ArrowUpRight, X, Activity, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Instrument, Provenance } from '@/lib/market/types';
+import type { Provenance } from '@/lib/market/types';
+export { AssetIcon } from './asset-icon';
 export function Brand({ compact = false }: { compact?: boolean }) {
   return (
     <Link href="/" className="brand" aria-label="Cuantai, inicio">
@@ -83,30 +84,6 @@ export function Tip({ text, children }: { text: string; children: React.ReactNod
         </Tooltip.Content>
       </Tooltip.Portal>
     </Tooltip.Root>
-  );
-}
-export function AssetIcon({
-  instrument,
-  small = false,
-}: {
-  instrument: Instrument;
-  small?: boolean;
-}) {
-  const letter =
-    instrument.symbol === 'BTCUSDT'
-      ? '₿'
-      : instrument.symbol === 'ETHUSDT'
-        ? 'Ξ'
-        : instrument.symbol === 'SOLUSDT'
-          ? '◎'
-          : instrument.symbol.slice(0, 1);
-  return (
-    <span
-      className={cn('asset-icon', small && 'small')}
-      style={{ color: instrument.color, background: `${instrument.color}16` }}
-    >
-      {letter}
-    </span>
   );
 }
 export function DataBadge({ status = 'demo' }: { status?: Provenance['status'] }) {

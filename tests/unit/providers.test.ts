@@ -92,6 +92,19 @@ describe('provider boundaries', () => {
     await expect(fetchJson('https://quota.example.com')).rejects.toThrow('Cuota');
     expect(mock).toHaveBeenCalledTimes(1);
   });
+  it('counts provider access budgets on every HTTP attempt, including a retry', async () => {
+    const budget = vi.fn().mockResolvedValue(undefined);
+    const mock = vi
+      .fn()
+      .mockResolvedValueOnce(new Response('{}', { status: 503 }))
+      .mockResolvedValueOnce(new Response('{"ok":true}'));
+    vi.stubGlobal('fetch', mock);
+    expect(await fetchJson('https://retry-budget.example.test', undefined, budget)).toEqual({
+      ok: true,
+    });
+    expect(budget).toHaveBeenCalledTimes(2);
+    expect(mock).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe('cash instrument boundary', () => {

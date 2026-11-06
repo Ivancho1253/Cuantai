@@ -7,6 +7,8 @@ import { BinanceProvider } from './binance';
 import { TwelveDataProvider } from './twelve-data';
 import { BymaProvider } from './byma';
 import { FinnhubProvider } from './finnhub';
+import { SecProvider } from './sec';
+import type { FinancialStatementsResult } from '../finance/statements';
 import { cached } from './transport';
 import {
   ProviderError,
@@ -22,6 +24,10 @@ export function providerStatus() {
     binance: { configured: true, label: 'Binance public market data' },
     twelveData: { configured: Boolean(process.env.TWELVE_DATA_API_KEY), label: 'US stocks & ETFs' },
     finnhub: { configured: Boolean(process.env.FINNHUB_API_KEY), label: 'Fundamentals & news' },
+    sec: {
+      configured: Boolean(process.env.SEC_USER_AGENT || process.env.SEC_COMPANYFACTS_FILE),
+      label: 'SEC EDGAR · estados anuales',
+    },
     byma: {
       configured: Boolean(process.env.BYMA_AUTHORIZED_DATA_FILE),
       label: 'BYMA authorized export',
@@ -130,7 +136,7 @@ export async function marketSnapshot(
           adjusted: 'unknown',
         },
       timeframe,
-      error: errors.join(' ') || undefined,
+      error: [...new Set(errors)].join(' ') || undefined,
     };
   });
 }
@@ -159,6 +165,46 @@ export async function assetFundamentals(instrument: Instrument, demo = false) {
     return { metrics: [], error: e instanceof Error ? e.message : 'Fundamentales no disponibles' };
   }
 }
+export async function assetFinancialStatements(
+  instrument: Instrument,
+  demo = false,
+): Promise<FinancialStatementsResult> {
+  const issuer =
+    instrument.type === 'cedear' && instrument.underlyingId
+      ? await resolveInstrument(instrument.underlyingId)
+      : instrument;
+  if (
+    issuer.type !== 'stock' ||
+    issuer.country !== 'US' ||
+    !['NYSE', 'NASDAQ'].includes(issuer.exchange)
+  )
+    return {
+      data: null,
+      reason: 'NOT_APPLICABLE',
+      error:
+        'Los estados corporativos SEC US-GAAP no son aplicables a este instrumento. Los ETFs y las criptomonedas requieren otras fuentes.',
+    };
+  if (demo || dataMode() === 'demo')
+    return {
+      data: null,
+      reason: 'DEMO',
+      error:
+        'El modo demo no incluye balances ficticios. Los estados anuales se consultan en modo de datos reales con SEC EDGAR configurado.',
+    };
+  try {
+    const data = await new SecProvider().statements(issuer);
+    return { data: { ...data, requestedInstrumentId: instrument.id } };
+  } catch (error) {
+    return {
+      data: null,
+      reason: 'UNAVAILABLE',
+      error:
+        error instanceof ProviderError
+          ? error.message
+          : 'No se pudo validar o recuperar el archivo de estados financieros SEC.',
+    };
+  }
+}
 export async function marketNews(instrument?: Instrument, demo = false) {
   if (demo || dataMode() === 'demo')
     return {
@@ -167,9 +213,13 @@ export async function marketNews(instrument?: Instrument, demo = false) {
         'El modo demo no muestra titulares ficticios. Conectá Finnhub para consultar noticias.',
     };
   try {
+    const issuer =
+      instrument?.type === 'cedear' && instrument.underlyingId
+        ? await resolveInstrument(instrument.underlyingId)
+        : instrument;
     return {
       items: await cached(`news:${instrument?.id ?? 'all'}`, 300000, () =>
-        new FinnhubProvider().news(instrument),
+        new FinnhubProvider().news(issuer),
       ),
     };
   } catch (e) {

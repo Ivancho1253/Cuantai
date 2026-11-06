@@ -17,6 +17,7 @@ The app fails closed if a production private route lacks the database or authent
 - Google: register `<BETTER_AUTH_URL>/api/auth/callback/google` as the callback and set `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`.
 - Email recovery: configure a verified Resend sender with `RESEND_API_KEY` and `EMAIL_FROM`; absent credentials leave the recovery action disabled with an explicit explanation.
 - Market data: configure approved keys and display/redistribution entitlements, upstream budgets and `MARKET_DATA_MODE=live`. Validate each instrument/exchange mapping against the actual plan.
+- Annual statements: configure `SEC_USER_AGENT` with the application name and a real operator contact email. An imported `SEC_COMPANYFACTS_FILE` can replace network access on a Node host with persistent disk; serverless storage needs a separate adapter. SEC does not need an API key. Verify live access, issuer mapping and annual coverage before release; see [financial statement setup](FINANCIAL_STATEMENTS.md).
 - BYMA: ingest the contracted source into the normalized adapter. A local authorized file works only where the host has persistent accessible storage. Native BYMA and serverless ingestion need implementation after receiving the exact contract/specification.
 - AI: configure `OPENAI_API_KEY` and an explicit `AI_MODEL` supporting the Responses API, strict function calling and structured output. `AI_BASE_URL` is optional; a provider must support those APIs. Verify costs/retention/terms and run a credentialed smoke test before calling it production-ready.
 
