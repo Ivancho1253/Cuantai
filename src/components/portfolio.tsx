@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { assetHref } from '@/lib/market/asset-href';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   ArrowUpRight,
@@ -232,10 +233,7 @@ export function Portfolio() {
                             return (
                               <tr key={p.instrumentId}>
                                 <td>
-                                  <Link
-                                    className="asset-cell"
-                                    href={`/asset/${i.exchange}/${i.symbol}`}
-                                  >
+                                  <Link className="asset-cell" href={assetHref(i)}>
                                     <AssetIcon instrument={i} small />
                                     <div>
                                       <strong>{i.symbol}</strong>

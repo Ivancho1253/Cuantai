@@ -76,7 +76,7 @@ export function FinancialChart({
       layout: {
         background: { type: ColorType.Solid, color: 'transparent' },
         textColor: '#7d8795',
-        fontFamily: 'Inter, -apple-system, sans-serif',
+        fontFamily: getComputedStyle(container.current).fontFamily,
         fontSize: 10,
         attributionLogo: true,
       },

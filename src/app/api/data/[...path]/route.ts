@@ -9,6 +9,7 @@ import {
   searchInstruments,
   marketSnapshot,
   marketOverview,
+  marketListings,
   resolveInstrument,
   assetFundamentals,
   assetFinancialStatements,
@@ -48,6 +49,7 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
         'instruments',
         'market',
         'overview',
+        'market-catalog',
         'asset-overview',
         'fundamentals',
         'financials',
@@ -88,6 +90,32 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
       return json(await marketSnapshot(id, tf, demo));
     }
     if (method === 'GET' && route === 'overview') return json(await marketOverview(demo));
+    if (method === 'GET' && route === 'market-catalog') {
+      const page = z.coerce
+        .number()
+        .int()
+        .positive()
+        .max(100000)
+        .parse(url.searchParams.get('page') ?? '1');
+      const category = z
+        .enum([
+          'Todos',
+          'S&P 500',
+          'Estados Unidos',
+          'Cripto',
+          'Coin100',
+          'CEDEARs',
+          'Argentina',
+          'ETFs',
+        ])
+        .parse(url.searchParams.get('category') ?? 'Todos');
+      return json(
+        await marketListings(
+          { page, category, query: (url.searchParams.get('q') ?? '').slice(0, 100), pageSize: 50 },
+          demo,
+        ),
+      );
+    }
     if (method === 'GET' && route === 'asset-overview')
       return json(await assetOverview(z.string().min(1).parse(url.searchParams.get('id')), demo));
     if (method === 'GET' && route === 'fundamentals')

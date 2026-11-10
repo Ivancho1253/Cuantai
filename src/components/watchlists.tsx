@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { assetHref } from '@/lib/market/asset-href';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus, Star, Trash2, ArrowUpRight } from 'lucide-react';
 import { toast } from 'sonner';
@@ -240,7 +241,7 @@ function WatchlistRow({ instrument, onRemove }: { instrument: Instrument; onRemo
   const q = quote.data?.quote;
   return (
     <div className="watchlist-row">
-      <Link className="asset-cell" href={`/asset/${instrument.exchange}/${instrument.symbol}`}>
+      <Link className="asset-cell" href={assetHref(instrument)}>
         <AssetIcon instrument={instrument} />
         <div>
           <strong>{instrument.symbol}</strong>

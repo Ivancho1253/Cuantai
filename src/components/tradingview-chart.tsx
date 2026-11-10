@@ -15,18 +15,20 @@ export function TradingViewChart({
   timeframe = '1D',
   chartType = 'candles',
   height = 620,
+  theme: themeOverride,
 }: {
   symbol: string | null;
   timeframe?: Timeframe;
   chartType?: TradingViewChartType;
   height?: number;
+  theme?: 'dark' | 'light';
 }) {
   const root = useRef<HTMLDivElement>(null),
     host = useRef<HTMLDivElement>(null),
     fullButton = useRef<HTMLButtonElement>(null);
   const nativeActive = useRef(false);
   const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === 'light' ? 'light' : 'dark';
+  const theme = themeOverride ?? (resolvedTheme === 'light' ? 'light' : 'dark');
   const [expanded, setExpanded] = useState(false),
     [attempt, setAttempt] = useState(0);
   const configuration = `${symbol}|${timeframe}|${chartType}|${theme}|${attempt}`;

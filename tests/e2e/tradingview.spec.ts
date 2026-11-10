@@ -6,8 +6,8 @@ test('official embed receives exact symbols and fullscreen preserves the iframe'
   await installTradingViewFixture(page);
   const localMarketRequests: string[] = [];
   page.on('request', (request) => {
-    if (/\/api\/data\/(market|overview)(\?|$)/.test(request.url()))
-      localMarketRequests.push(request.url());
+    // The shell ribbon loads overview quotes; the chart must not load Cuantai candles.
+    if (/\/api\/data\/market(\?|$)/.test(request.url())) localMarketRequests.push(request.url());
   });
   await page.goto('/demo?view=charts');
   const chart = page.locator('.tv-chart').first();

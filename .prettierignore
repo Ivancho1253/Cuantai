@@ -6,3 +6,4 @@ playwright-report
 test-results
 artifacts
 next-env.d.ts
+src/lib/market/data/*.json

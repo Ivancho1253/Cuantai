@@ -29,6 +29,8 @@ Local PostgreSQL runs through **PGlite**, persists under `.data/postgres`, and a
 
 ## Working flows
 
+Markets includes the S&P 500, Coin100 (the top 100 cryptocurrencies by market capitalization) and the complete published BYMA CEDEAR program list, with pagination and search. Refresh it with `npm run data:sync-catalog`. [Catalog sources, refresh instructions and price/history coverage](docs/MARKET_CATALOG.md).
+
 1. Register → save onboarding preferences → dashboard → search JPM using **⌘K / Ctrl+K** → open the NYSE stock or a distinct BYMA listing.
 2. Open Charts → select an exact listing → use the official TradingView chart and its own market data/tools → expand to fullscreen. Layouts support one, two and four widgets. Cuantai saves opening assets, interval, style and layout; internal TradingView drawings/indicator changes are not stored by Cuantai. [Chart integration and limits](docs/TRADINGVIEW.md).
 3. Create a watchlist → add instruments → reload or log in again to recover them. The asset page can add a searched instrument to an existing list.

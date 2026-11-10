@@ -32,7 +32,7 @@ export function tradingViewSymbol(instrument: Instrument): string | null {
   if (instrument.id === 'NYSE:SPY:USD') return 'AMEX:SPY';
   if (instrument.id === 'NYSE:DIA:USD') return 'AMEX:DIA';
   if (instrument.exchange === 'BYMA') return `BCBA:${instrument.symbol}`;
-  if (['NASDAQ', 'NYSE', 'AMEX', 'BINANCE'].includes(instrument.exchange))
+  if (['NASDAQ', 'NYSE', 'AMEX', 'CBOE', 'BINANCE'].includes(instrument.exchange))
     return `${instrument.exchange}:${instrument.symbol}`;
   return null;
 }

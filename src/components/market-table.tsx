@@ -1,9 +1,13 @@
 'use client';
 import Link from 'next/link';
+import { assetHref } from '@/lib/market/asset-href';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { ArrowUpRight, Star } from 'lucide-react';
 import { AssetIcon, DataBadge } from './ui';
 import { tradingViewSymbol, tradingViewChartUrl } from '@/lib/market/tradingview';
-import { number, compact, cn } from '@/lib/utils';
+import { api, number, formatPrice, compact, cn } from '@/lib/utils';
+import { WatchlistPicker, type Watchlist } from './watchlists';
 import type { MarketSnapshot } from '@/lib/market/types';
 import { useApp } from './app-shell';
 export function MarketTable({
@@ -15,12 +19,32 @@ export function MarketTable({
   compactView?: boolean;
   onFavorite?: (id: string) => void;
 }) {
-  const { demo } = useApp();
+  const { demo, user } = useApp();
+  const [favorite, setFavorite] = useState<string | null>(null);
+  const ranked = rows.length > 0 && rows.every((row) => row.instrument.marketCapRank != null);
+  const lists = useQuery({
+    queryKey: ['watchlists'],
+    queryFn: () => api<Watchlist[]>('watchlists'),
+    enabled: Boolean(user) && !demo,
+  });
+  const favoriteIds = new Set(
+    user && !demo
+      ? lists.data?.flatMap((list) => list.items.map(({ instrument }) => instrument.id))
+      : [],
+  );
   return (
     <div className="table-scroll">
+      {favorite && (
+        <WatchlistPicker
+          instrumentId={favorite}
+          open
+          onOpenChange={(open) => !open && setFavorite(null)}
+        />
+      )}
       <table className="market-table">
         <thead>
           <tr>
+            {ranked && <th scope="col">Ranking</th>}
             <th>Activo</th>
             <th>Precio</th>
             <th>Cambio</th>
@@ -38,11 +62,9 @@ export function MarketTable({
             const up = Number(q?.changePercent ?? 0) >= 0;
             return (
               <tr key={row.instrument.id}>
+                {ranked && <td className="numeric muted">#{row.instrument.marketCapRank}</td>}
                 <td>
-                  <Link
-                    className="asset-cell"
-                    href={`/asset/${row.instrument.exchange}/${row.instrument.symbol}${demo ? '?demo=true' : ''}`}
-                  >
+                  <Link className="asset-cell" href={assetHref(row.instrument, demo)}>
                     <AssetIcon instrument={row.instrument} small />
                     <div>
                       <strong>
@@ -62,7 +84,7 @@ export function MarketTable({
                   </Link>
                 </td>
                 <td className="numeric">
-                  <strong>{number(q?.price)}</strong>
+                  <strong>{formatPrice(q?.price)}</strong>
                   <small>{row.instrument.currency}</small>
                 </td>
                 <td className={cn('numeric', up ? 'positive' : 'negative')}>
@@ -90,23 +112,35 @@ export function MarketTable({
                   </td>
                 )}
                 <td>
-                  {onFavorite ? (
+                  <div className="market-row-actions">
                     <button
-                      className="icon-button"
-                      aria-label={`Agregar ${row.instrument.symbol} a watchlist`}
-                      onClick={() => onFavorite(row.instrument.id)}
+                      className={cn(
+                        'icon-button',
+                        favoriteIds.has(row.instrument.id) && 'is-favorite',
+                      )}
+                      aria-label={`Guardar ${row.instrument.symbol} en watchlist`}
+                      title={
+                        favoriteIds.has(row.instrument.id)
+                          ? 'Guardado en favoritos · Administrar watchlists'
+                          : 'Guardar en favoritos'
+                      }
+                      onClick={() =>
+                        onFavorite ? onFavorite(row.instrument.id) : setFavorite(row.instrument.id)
+                      }
                     >
-                      <Star size={15} />
+                      <Star
+                        size={15}
+                        fill={favoriteIds.has(row.instrument.id) ? 'currentColor' : 'none'}
+                      />
                     </button>
-                  ) : (
                     <Link
                       className="icon-button"
                       aria-label={`Abrir ${row.instrument.symbol}`}
-                      href={`/asset/${row.instrument.exchange}/${row.instrument.symbol}${demo ? '?demo=true' : ''}`}
+                      href={assetHref(row.instrument, demo)}
                     >
                       <ArrowUpRight size={16} />
                     </Link>
-                  )}
+                  </div>
                 </td>
               </tr>
             );

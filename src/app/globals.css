@@ -45,12 +45,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
+  font-family: var(--font-sans), Arial, sans-serif;
   font-size: 13px;
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
@@ -204,7 +199,14 @@ svg {
 }
 .brand-dot {
   color: var(--accent);
-  margin-left: -10px;
+  margin-left: 1px;
+}
+.brand-wordmark {
+  display: inline-block;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -1.8px;
+  transform: skewX(-7deg);
 }
 .brand-mark {
   display: flex;
@@ -499,6 +501,7 @@ svg {
   font-size: 11px;
 }
 .table-scroll {
+  position: relative;
   overflow: auto;
   max-width: 100%;
 }
@@ -935,6 +938,164 @@ svg {
   width: 28px;
   height: 28px;
   margin-left: 3px;
+}
+.market-ticker {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  min-height: 48px;
+  border-bottom: 1px solid var(--line);
+  background: var(--sidebar);
+}
+.market-ticker-controls {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 8px;
+  padding: 8px 14px;
+  border-right: 1px solid var(--line);
+  background: var(--surface);
+}
+.market-ticker-modes {
+  display: flex;
+  gap: 3px;
+}
+.market-ticker-modes button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.market-ticker-modes button[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+}
+.market-ticker-viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  container-type: inline-size;
+}
+.market-ticker-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: market-ticker-scroll linear infinite;
+}
+.market-ticker-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-shrink: 0;
+  min-width: 100cqw;
+}
+.market-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  padding: 10px 22px;
+  border-right: 1px solid var(--line-soft);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.market-ticker-item:hover {
+  background: var(--surface-2);
+}
+.market-ticker-item strong {
+  font-weight: 700;
+}
+.market-ticker-item small {
+  color: var(--subtle);
+  font-size: 8px;
+}
+.ticker-change {
+  color: var(--muted);
+}
+.market-ticker-track.is-paused,
+.market-ticker-track:focus-within {
+  animation-play-state: paused;
+}
+.market-ticker-empty {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.market-ticker-empty a,
+.market-ticker-empty button,
+.market-row-actions .is-favorite {
+  color: var(--accent);
+}
+.market-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.catalog-coverage,
+.catalog-pagination,
+.catalog-pagination > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+}
+.catalog-coverage {
+  margin: -8px 0 24px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.catalog-coverage strong {
+  color: var(--accent);
+}
+.catalog-pagination {
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 11px;
+  color: var(--muted);
+}
+.catalog-pagination .button {
+  min-height: 32px;
+  padding: 7px;
+}
+.catalog-empty {
+  padding: 40px 20px;
+  color: var(--muted);
+}
+@keyframes market-ticker-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: 600px) {
+  .market-ticker {
+    flex-direction: column;
+  }
+  .market-ticker-controls {
+    justify-content: space-between;
+    padding: 4px 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .market-ticker-item {
+    padding: 10px 14px;
+  }
+  .market-ticker-empty {
+    flex-wrap: wrap;
+    gap: 6px 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .market-ticker .market-ticker-track {
+    animation-duration: 120s !important;
+  }
 }
 .demo-strip {
   display: flex;
@@ -2944,7 +3105,76 @@ svg {
 }
 /* Public product */
 .landing {
+  position: relative;
+  isolation: isolate;
   overflow: hidden;
+}
+.landing-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 10% 45%, #49c4a10b, transparent 45%),
+    radial-gradient(ellipse at 95% 85%, #c8ef8410, transparent 40%);
+}
+.landing-aurora {
+  position: absolute;
+  width: clamp(480px, 75vw, 1100px);
+  height: clamp(600px, 65vw, 1000px);
+  border-radius: 50%;
+  animation: landing-aurora-drift 22s ease-in-out infinite alternate;
+}
+.landing-aurora-green {
+  top: -280px;
+  left: -25%;
+  background: radial-gradient(ellipse, #92cc5940, #92cc5912 38%, transparent 68%);
+}
+.landing-aurora-teal {
+  top: -100px;
+  right: -30%;
+  background: radial-gradient(ellipse, #38bda536, #38bda510 38%, transparent 68%);
+  animation-duration: 28s;
+  animation-delay: -11s;
+  animation-direction: alternate-reverse;
+}
+.landing-aurora-lime {
+  top: 700px;
+  left: 15%;
+  background: radial-gradient(ellipse, #c8ef8426, #c8ef840a 38%, transparent 68%);
+  animation-duration: 26s;
+  animation-delay: -7s;
+}
+[data-theme='light'] .landing-aurora {
+  opacity: 0.65;
+}
+@keyframes landing-aurora-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(12%, 70px, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(24%, -35px, 0) scale(0.95);
+  }
+}
+@media (max-width: 600px) {
+  .landing-aurora {
+    width: 540px;
+    height: 700px;
+  }
+  .landing-aurora-green {
+    left: -380px;
+  }
+  .landing-aurora-teal {
+    right: -380px;
+  }
+  .landing-aurora-lime {
+    top: 650px;
+    left: -150px;
+  }
 }
 .landing-nav {
   height: 88px;
@@ -5614,10 +5844,15 @@ svg {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .landing-aurora {
+    animation: none;
+  }
   * {
     scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+  *:not(.market-ticker-track) {
+    animation-duration: 0.01ms !important;
   }
   .skeleton {
     animation: none;

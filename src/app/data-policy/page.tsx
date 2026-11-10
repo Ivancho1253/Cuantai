@@ -31,6 +31,10 @@ export default function DataPolicy() {
             'Binance proporciona datos spot. Twelve Data habilita búsqueda, cotizaciones e históricos estadounidenses con credenciales. Finnhub proporciona métricas y titulares según cobertura del plan. Cada valor incluye fuente, fecha, moneda y estado. La posibilidad técnica de consultar datos no otorga derechos de redistribución.',
           ],
           [
+            'Cobertura del catálogo',
+            'Markets permite buscar las acciones del S&P 500 según State Street SPY, Coin100 y todos los programas CEDEAR del listado público de BYMA, contrastados con Caja de Valores. Coin100 reúne las 100 criptomonedas con mayor capitalización según CoinGecko, incluidas stablecoins y monedas envueltas; es una selección de activos y no una cotización de un índice financiero licenciado. Cada importación conserva su fecha; la composición y los listados pueden cambiar. Los activos sin cotizaciones, gráficos o historial OHLCV disponibles se identifican como tales. Las especies de CEDEARs en pesos y dólares mantienen su identidad y moneda.',
+          ],
+          [
             'Logos e identidad visual',
             'Los logos identifican a las empresas, administradoras de fondos y proyectos cripto. Los CEDEARs muestran la marca del emisor subyacente y las monedas tradicionales usan símbolos monetarios. Las marcas pertenecen a sus titulares; su presencia no implica afiliación. El catálogo inicial utiliza imágenes locales y los activos nuevos consultan las fuentes de logos según cobertura. Cuando una imagen no está disponible se muestra un ícono neutro.',
           ],
@@ -78,6 +82,20 @@ export default function DataPolicy() {
           disponibilidad y políticas.
         </p>
         <div className="policy-sources">
+          <a
+            href="https://docs.coingecko.com/reference/coins-markets"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Ranking CoinGecko ↗
+          </a>
+          <a
+            href="https://www.ssga.com/us/en/individual/etfs/state-street-spdr-sp-500-etf-trust-spy"
+            target="_blank"
+            rel="noreferrer"
+          >
+            State Street SPY ↗
+          </a>
           <a
             href="https://site.financialmodelingprep.com/developer/docs/company-image-api"
             target="_blank"

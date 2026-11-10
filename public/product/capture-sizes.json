@@ -1,0 +1,50 @@
+{
+  "dashboard": {
+    "width": 2124,
+    "height": 1480
+  },
+  "markets": {
+    "width": 2124,
+    "height": 1480
+  },
+  "charts": {
+    "width": 2124,
+    "height": 1480
+  },
+  "charts-detail": {
+    "width": 1992,
+    "height": 1240
+  },
+  "analyst": {
+    "width": 2124,
+    "height": 1480
+  },
+  "research": {
+    "width": 2124,
+    "height": 1480
+  },
+  "research-detail": {
+    "width": 592,
+    "height": 734
+  },
+  "portfolio": {
+    "width": 2124,
+    "height": 1480
+  },
+  "portfolio-detail": {
+    "width": 1416,
+    "height": 896
+  },
+  "watchlists": {
+    "width": 2124,
+    "height": 1480
+  },
+  "news": {
+    "width": 2124,
+    "height": 1480
+  },
+  "settings": {
+    "width": 2124,
+    "height": 1480
+  }
+}

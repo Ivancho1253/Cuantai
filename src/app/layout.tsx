@@ -1,6 +1,16 @@
 import type { Metadata, Viewport } from 'next';
+import localFont from 'next/font/local';
 import { Providers } from '@/components/providers';
 import './globals.css';
+
+const manrope = localFont({
+  src: './fonts/Manrope-Variable.ttf',
+  variable: '--font-sans',
+  weight: '200 800',
+  display: 'swap',
+  fallback: ['Arial', 'sans-serif'],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.BETTER_AUTH_URL ?? 'http://localhost:3000'),
   title: {
@@ -26,7 +36,12 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#0b0e11' };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html
+      lang="es"
+      className={manrope.variable}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body>
         <Providers>{children}</Providers>
       </body>

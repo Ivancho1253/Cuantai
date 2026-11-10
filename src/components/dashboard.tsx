@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { assetHref } from '@/lib/market/asset-href';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowUpRight,
@@ -153,7 +154,7 @@ export function Dashboard() {
               .filter((i) => ['AAPL', 'JPM', 'ETHUSDT'].includes(i.instrument.symbol))
               .map((i) => (
                 <Link
-                  href={`/asset/${i.instrument.exchange}/${i.instrument.symbol}${demo ? '?demo=true' : ''}`}
+                  href={assetHref(i.instrument, demo)}
                   className="radar-row"
                   key={i.instrument.id}
                 >

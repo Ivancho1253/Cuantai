@@ -27,6 +27,9 @@ export type Instrument = {
   color: string;
   underlyingId?: string;
   providerSymbol?: string;
+  marketCapRank?: number;
+  cedearKind?: 'stock' | 'etf';
+  cedearRatio?: string;
   source: string;
 };
 export const timeframes = ['1m', '5m', '15m', '30m', '1h', '4h', '1D', '1W', '1M'] as const;

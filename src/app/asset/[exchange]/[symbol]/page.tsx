@@ -5,6 +5,7 @@ import { getSession } from '@/lib/auth';
 import { getDb } from '@/lib/db';
 import { instrumentTable } from '@/lib/db/schema';
 import { instruments } from '@/lib/market/catalog';
+import { findDiscoveryListing } from '@/lib/market/discovery';
 import { AppShell } from '@/components/app-shell';
 import { AssetPage } from '@/components/asset-page';
 export const dynamic = 'force-dynamic';
@@ -18,7 +19,9 @@ export default async function Asset({
   const { exchange, symbol } = await params;
   const query = await searchParams;
   const session = await getSession(await headers());
-  let instrument = instruments.find((i) => i.exchange === exchange && i.symbol === symbol);
+  let instrument =
+    instruments.find((i) => i.exchange === exchange && i.symbol === symbol) ??
+    findDiscoveryListing(exchange, symbol);
   if (!instrument) {
     const db = await getDb();
     const [row] = await db

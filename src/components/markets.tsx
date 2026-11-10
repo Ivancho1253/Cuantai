@@ -1,131 +1,174 @@
 'use client';
-import { useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search, ArrowUpRight, Globe2 } from 'lucide-react';
+import { Search, Globe2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useApp } from './app-shell';
 import { api } from '@/lib/utils';
-import type { Instrument, MarketSnapshot } from '@/lib/market/types';
-import { SectionTitle, AssetIcon, ErrorState, Skeleton } from './ui';
+import type { MarketSnapshot } from '@/lib/market/types';
+import { SectionTitle, ErrorState, Skeleton } from './ui';
 import { MarketTable } from './market-table';
+
+type CatalogPage = {
+  rows: MarketSnapshot[];
+  total: number;
+  page: number;
+  pageSize: number;
+  counts: { sp500: number; crypto: number; cedears: number; cedearListings: number; total: number };
+  dates: { sp500: string; crypto: string; cedears: string };
+};
 export function Markets() {
   const { demo } = useApp();
   const [market, setMarket] = useState('Todos');
   const [search, setSearch] = useState('');
+  const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
   const [sort, setSort] = useState('default');
-  const overview = useQuery({
-    queryKey: ['overview', demo],
-    queryFn: () => api<MarketSnapshot[]>(`overview${demo ? '?demo=true' : ''}`),
-  });
-  const results = useQuery({
-    queryKey: ['instrument-search', search, demo],
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setQuery(search);
+      setPage(1);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [search]);
+  const catalog = useQuery({
+    queryKey: ['market-catalog', market, query, page, demo],
     queryFn: () =>
-      api<{ instruments: Instrument[]; error?: string }>(
-        `instruments?q=${encodeURIComponent(search)}${demo ? '&demo=true' : ''}`,
+      api<CatalogPage>(
+        `market-catalog?${new URLSearchParams({ category: market, q: query, page: String(page), ...(demo ? { demo: 'true' } : {}) })}`,
       ),
   });
-  let rows = (overview.data ?? []).filter(
-    (r) =>
-      (market === 'Todos' ||
-        (market === 'Estados Unidos' && r.instrument.country === 'US') ||
-        (market === 'Cripto' && r.instrument.type === 'crypto') ||
-        (market === 'Argentina' && r.instrument.country === 'AR') ||
-        (market === 'ETFs' && r.instrument.type === 'etf')) &&
-      `${r.instrument.symbol} ${r.instrument.name}`.toLowerCase().includes(search.toLowerCase()),
-  );
+  const data = catalog.data;
+  const rows = [...(data?.rows ?? [])];
   if (sort !== 'default')
-    rows = [...rows].sort((a, b) =>
-      sort === 'volume'
-        ? Number(b.quote?.volume ?? 0) - Number(a.quote?.volume ?? 0)
+    rows.sort((a, b) => {
+      if (!a.quote) return b.quote ? 1 : 0;
+      if (!b.quote) return -1;
+      return sort === 'volume'
+        ? Number(b.quote.volume ?? 0) - Number(a.quote.volume ?? 0)
         : sort === 'gainers'
-          ? Number(b.quote?.changePercent ?? 0) - Number(a.quote?.changePercent ?? 0)
-          : Number(a.quote?.changePercent ?? 0) - Number(b.quote?.changePercent ?? 0),
-    );
-  const related =
-    results.data?.instruments.filter(
-      (i) =>
-        !rows.some((r) => r.instrument.id === i.id) &&
-        (market !== 'Argentina' || i.country === 'AR'),
-    ) ?? [];
+          ? Number(b.quote.changePercent) - Number(a.quote.changePercent)
+          : Number(a.quote.changePercent) - Number(b.quote.changePercent);
+    });
+  const pages = data ? Math.max(1, Math.ceil(data.total / data.pageSize)) : 1;
   return (
     <>
       <SectionTitle
         eyebrow="MARKET EXPLORER"
         title="Un mundo de oportunidades."
-        description="Descubrí instrumentos. Entendé qué estás mirando."
+        description="S&P 500, Coin100 y todos los CEDEARs del listado de BYMA. Buscá por ticker o nombre."
         action={
           <span className="outlined-chip">
             <Globe2 size={14} /> Cobertura multimercado
           </span>
         }
       />
+      {data && (
+        <div className="catalog-coverage">
+          <span>
+            <strong>{data.counts.sp500}</strong> acciones del S&P 500
+          </span>
+          <span>
+            <strong>{data.counts.crypto}</strong> criptomonedas · Coin100
+          </span>
+          <span>
+            <strong>{data.counts.cedears}</strong> programas CEDEAR
+          </span>
+        </div>
+      )}
       <div className="panel markets-panel">
         <div className="market-filters">
-          <div className="tabs">
-            {['Todos', 'Estados Unidos', 'Cripto', 'Argentina', 'ETFs'].map((t) => (
-              <button key={t} onClick={() => setMarket(t)} className={market === t ? 'active' : ''}>
-                {t}
-              </button>
-            ))}
+          <div className="tabs" role="group" aria-label="Filtrar mercado">
+            {['Todos', 'S&P 500', 'Coin100', 'CEDEARs', 'Estados Unidos', 'Argentina', 'ETFs'].map(
+              (t) => (
+                <button
+                  key={t}
+                  aria-pressed={market === t}
+                  onClick={() => {
+                    setMarket(t);
+                    setPage(1);
+                  }}
+                  className={market === t ? 'active' : ''}
+                >
+                  {t}
+                </button>
+              ),
+            )}
           </div>
           <div className="market-search">
             <Search size={16} />
             <input
               value={search}
               aria-label="Filtrar instrumentos"
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(event) => {
+                setSearch(event.target.value);
+                setPage(1);
+              }}
               placeholder="Ticker o nombre..."
             />
           </div>
           <select
-            aria-label="Ordenar instrumentos"
+            aria-label="Ordenar página de instrumentos"
             value={sort}
-            onChange={(e) => setSort(e.target.value)}
+            onChange={(event) => setSort(event.target.value)}
           >
-            <option value="default">Destacados</option>
-            <option value="gainers">Mayores subas</option>
-            <option value="losers">Mayores bajas</option>
-            <option value="volume">Mayor volumen</option>
+            <option value="default">
+              {market === 'Coin100' ? 'Ranking por capitalización' : 'Destacados'}
+            </option>
+            <option value="gainers">Subas de esta página</option>
+            <option value="losers">Bajas de esta página</option>
+            <option value="volume">Volumen de esta página</option>
           </select>
         </div>
-        {overview.isLoading ? (
+        {catalog.isPending ? (
           <Skeleton className="table-skeleton" />
-        ) : overview.isError ? (
-          <ErrorState message={overview.error.message} />
-        ) : (
+        ) : catalog.isError ? (
+          <ErrorState message={catalog.error.message} retry={() => catalog.refetch()} />
+        ) : rows.length ? (
           <MarketTable rows={rows} />
+        ) : (
+          <div className="catalog-empty" role="status">
+            No se encontraron activos. Probá otro ticker o nombre.
+          </div>
+        )}
+        {data && (
+          <nav className="catalog-pagination" aria-label="Páginas de activos">
+            <span>
+              {data.total
+                ? `${(data.page - 1) * data.pageSize + 1}–${Math.min(data.page * data.pageSize, data.total)} de ${data.total.toLocaleString('es-AR')} activos`
+                : '0 activos'}
+            </span>
+            <div>
+              <button
+                className="button button-secondary"
+                disabled={data.page <= 1}
+                onClick={() => setPage(data.page - 1)}
+                aria-label="Página anterior"
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <span>
+                Página {data.page} de {pages}
+              </span>
+              <button
+                className="button button-secondary"
+                disabled={data.page >= pages}
+                onClick={() => setPage(data.page + 1)}
+                aria-label="Página siguiente"
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
+          </nav>
         )}
         <div className="table-note">
-          Catálogo inicial de descubrimiento; no representa la composición completa de ningún
-          índice. El buscador consulta proveedores al habilitar el modo real.
+          S&P 500: cartera de acciones publicada por State Street SPY
+          {data ? ` · ${data.dates.sp500}` : ''}. Coin100: top 100 por capitalización de CoinGecko,
+          incluidas stablecoins y monedas envueltas
+          {data ? ` · ${data.dates.crypto.slice(0, 10)}` : ''}. CEDEARs: listado BYMA y datos de
+          Caja de Valores{data ? ` · ${data.dates.cedears}` : ''}. Las cotizaciones dependen de la
+          cobertura y cuota de cada fuente; los datos de demostración se identifican como DEMO.
         </div>
       </div>
-      {related.length > 0 && (
-        <section className="related-instruments">
-          <h2>Más instrumentos y especies relacionadas</h2>
-          <div className="related-grid">
-            {related.slice(0, 16).map((i) => (
-              <Link
-                key={i.id}
-                href={`/asset/${i.exchange}/${i.symbol}${demo ? '?demo=true' : ''}`}
-                className="panel related-card"
-              >
-                <AssetIcon instrument={i} />
-                <div>
-                  <strong>
-                    {i.symbol} <span className="type-tag">{i.type.toUpperCase()}</span>
-                  </strong>
-                  <p>{i.name}</p>
-                  <small>
-                    {i.exchange} · {i.currency}
-                  </small>
-                </div>
-                <ArrowUpRight size={16} />
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
     </>
   );
 }

@@ -15,9 +15,9 @@ export function Brand({ compact = false }: { compact?: boolean }) {
         <i />
       </span>
       {!compact && (
-        <>
+        <span className="brand-wordmark">
           cuantai<span className="brand-dot">.</span>
-        </>
+        </span>
       )}
     </Link>
   );

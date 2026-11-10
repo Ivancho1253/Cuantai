@@ -2,6 +2,8 @@ import { eq } from 'drizzle-orm';
 import { getDb } from '../db';
 import { instrumentTable } from '../db/schema';
 import { instruments, findInstrument, searchCatalog } from './catalog';
+import { discoverInstruments, findDiscoveryInstrument } from './discovery';
+import { CoinGeckoProvider } from './coingecko';
 import { demoHistory } from './demo';
 import { BinanceProvider } from './binance';
 import { TwelveDataProvider } from './twelve-data';
@@ -42,12 +44,20 @@ export async function resolveInstrument(id: string): Promise<Instrument> {
   const seed = findInstrument(id);
   if (seed) return seed;
   const db = await getDb();
+  const discovery = findDiscoveryInstrument(id);
+  if (discovery) {
+    await db.insert(instrumentTable).values({ id, data: discovery }).onConflictDoNothing();
+    return discovery;
+  }
   const rows = await db.select().from(instrumentTable).where(eq(instrumentTable.id, id));
   if (!rows[0]) throw new ProviderError('Instrumento no encontrado.', 'NOT_FOUND');
   return rows[0].data;
 }
 export async function searchInstruments(query: string, live = false) {
-  const found = searchCatalog(query);
+  const found = [
+    ...searchCatalog(query),
+    ...discoverInstruments({ query, pageSize: 100 }).instruments,
+  ];
   let error: string | undefined;
   if (live && query.length >= 2) {
     const results = await Promise.allSettled([
@@ -72,7 +82,8 @@ export async function searchInstruments(query: string, live = false) {
   return {
     instruments: unique,
     error,
-    catalog: 'Curated discovery seed + configured provider search; not index membership',
+    catalog:
+      'SPY equity holdings + SEC exchanges + active CoinGecko coins + configured provider search',
   };
 }
 export async function marketSnapshot(
@@ -101,11 +112,13 @@ export async function marketSnapshot(
   if (forceDemo || dataMode() === 'demo') return demoHistory(instrument, timeframe);
   return cached(`market:${id}:${timeframe}`, 30000, async () => {
     const provider =
-      instrument.exchange === 'BINANCE'
-        ? new BinanceProvider()
-        : instrument.exchange === 'BYMA'
-          ? new BymaProvider()
-          : new TwelveDataProvider();
+      instrument.exchange === 'COINGECKO'
+        ? new CoinGeckoProvider()
+        : instrument.exchange === 'BINANCE'
+          ? new BinanceProvider()
+          : instrument.exchange === 'BYMA'
+            ? new BymaProvider()
+            : new TwelveDataProvider();
     const result = await Promise.allSettled([
       provider.quote(instrument),
       provider.history(instrument, timeframe),
@@ -149,6 +162,57 @@ export async function marketOverview(demo = false) {
         return { ...snapshot, candles: snapshot.candles.slice(-40) };
       }),
   );
+}
+
+export async function marketListings(
+  options: Parameters<typeof discoverInstruments>[0],
+  demo = false,
+) {
+  const page = discoverInstruments(options);
+  const isDemo = demo || dataMode() === 'demo';
+  let cryptoQuotes = new Map<string, Quote>();
+  if (!isDemo) {
+    try {
+      cryptoQuotes = await new CoinGeckoProvider().quotes(
+        page.instruments.filter((i) => i.exchange === 'COINGECKO'),
+      );
+    } catch {
+      /* Keep every catalog listing visible when its provider is unavailable. */
+    }
+  }
+  const rows = await Promise.all(
+    page.instruments.map(async (instrument) => {
+      if (isDemo) return { ...demoHistory(instrument), candles: [] };
+      let quote: Quote | null = null;
+      let error: string | undefined;
+      try {
+        quote =
+          instrument.exchange === 'COINGECKO'
+            ? (cryptoQuotes.get(instrument.id) ?? null)
+            : await cached<Quote>(`listing-quote:${instrument.id}`, 60000, () =>
+                (instrument.exchange === 'BINANCE'
+                  ? new BinanceProvider()
+                  : instrument.exchange === 'BYMA'
+                    ? new BymaProvider()
+                    : new TwelveDataProvider()
+                ).quote(instrument),
+              );
+      } catch (cause) {
+        error = cause instanceof Error ? cause.message : 'Cotización no disponible';
+      }
+      const provenance = quote ?? {
+        source: instrument.source,
+        url: '',
+        asOf: '',
+        retrievedAt: new Date().toISOString(),
+        status: 'unavailable' as const,
+        delayMinutes: null,
+        adjusted: 'unknown' as const,
+      };
+      return { instrument, quote, candles: [], provenance, timeframe: '1D' as const, error };
+    }),
+  );
+  return { ...page, rows };
 }
 export async function assetFundamentals(instrument: Instrument, demo = false) {
   if (demo || dataMode() === 'demo')

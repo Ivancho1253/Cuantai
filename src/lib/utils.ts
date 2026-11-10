@@ -21,6 +21,10 @@ export const compact = (value: string | number | null | undefined) =>
     : new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(
         Number(value),
       );
+export const formatPrice = (value: string | number | null | undefined) =>
+  value != null && Number(value) !== 0 && Math.abs(Number(value)) < 0.01
+    ? new Intl.NumberFormat('en-US', { maximumSignificantDigits: 6 }).format(Number(value))
+    : number(value);
 export const dateLabel = (value: string) =>
   value
     ? new Date(value).toLocaleDateString('es-AR', {

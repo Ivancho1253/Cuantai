@@ -1,6 +1,7 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { assetHref } from '@/lib/market/asset-href';
 import { useRouter } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTheme } from 'next-themes';
@@ -31,6 +32,7 @@ import type { Instrument } from '@/lib/market/types';
 import { authClient } from '@/lib/auth-client';
 import { defaultPreferences } from '@/lib/preferences';
 import { toast } from 'sonner';
+import { MarketTicker } from './market-ticker';
 export type AppUser = { id: string; name: string; email: string };
 const AppContext = createContext<{
   user: AppUser | null;
@@ -276,6 +278,7 @@ export function AppShell({
               </Link>
             </div>
           </header>
+          <MarketTicker />
           {(demo || status.data?.mode === 'demo') && (
             <div className="demo-strip">
               <span className="demo-indicator" /> Datos demo de Cuantai · 14 mar 2025. Gráficos:
@@ -326,7 +329,7 @@ export function AppShell({
             results.data?.instruments.slice(0, 15).map((i) => (
               <Link
                 key={i.id}
-                href={`/asset/${i.exchange}/${i.symbol}${demo ? '?demo=true' : ''}`}
+                href={assetHref(i, demo)}
                 className="search-result"
                 onClick={() => setSearchOpen(false)}
               >
