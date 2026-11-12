@@ -319,7 +319,7 @@ test('registration, onboarding, watchlist and chart UI survive reload', async ({
   await expect(page).toHaveURL(/\/onboarding/);
   await page.getByRole('button', { name: 'Entrar a mi workspace' }).click();
   await expect(page).toHaveURL(/\/dashboard/);
-  await page.getByRole('link', { name: 'Watchlists', exact: true }).click();
+  await page.getByRole('link', { name: 'Seguimiento', exact: true }).click();
   await page.getByRole('button', { name: 'Nueva watchlist' }).click();
   await page.getByLabel('Nombre de watchlist').fill('Mis ideas');
   await page.getByRole('button', { name: 'Crear watchlist', exact: true }).click();
@@ -329,7 +329,7 @@ test('registration, onboarding, watchlist and chart UI survive reload', async ({
   await page.reload();
   await expect(page.locator('.watchlist-row')).toHaveCount(1);
   await expect(page.locator('.watchlist-row')).toContainText('NVDA');
-  await page.getByRole('link', { name: 'Charts', exact: true }).click();
+  await page.getByRole('link', { name: 'Gráficos', exact: true }).click();
   await expect(page.locator('.tv-chart iframe').first()).toBeVisible();
   await page.getByRole('button', { name: 'Guardar workspace', exact: true }).click();
   await page.getByLabel('Nombre del workspace').fill('Mi BTC');
@@ -356,7 +356,7 @@ test('responsive demo navigation and official TradingView layouts', async ({ pag
     true,
   );
   await page.getByRole('button', { name: 'Abrir menú' }).click();
-  await page.getByRole('link', { name: 'Markets', exact: true }).click();
+  await page.getByRole('link', { name: 'Mercados', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Un mundo de oportunidades.' })).toBeVisible();
   expect(errors).toEqual([]);
 });

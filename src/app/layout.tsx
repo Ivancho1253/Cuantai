@@ -2,12 +2,22 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { Providers } from '@/components/providers';
 import './globals.css';
+import './workspace.css';
 
 const manrope = localFont({
   src: './fonts/Manrope-Variable.ttf',
   variable: '--font-sans',
   weight: '200 800',
   display: 'swap',
+  fallback: ['Arial', 'sans-serif'],
+});
+
+const plexSans = localFont({
+  src: './fonts/IBMPlexSans-Variable.ttf',
+  variable: '--font-workspace',
+  weight: '100 700',
+  display: 'swap',
+  preload: false,
   fallback: ['Arial', 'sans-serif'],
 });
 
@@ -38,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="es"
-      className={manrope.variable}
+      className={`${manrope.variable} ${plexSans.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

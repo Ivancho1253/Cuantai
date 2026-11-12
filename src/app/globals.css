@@ -699,154 +699,11 @@ svg {
   display: flex;
   min-height: 100vh;
 }
-.sidebar {
-  width: 218px;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  background: var(--sidebar);
-  border-right: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-  padding: 28px 14px 0;
-  z-index: 40;
-}
-.sidebar-brand {
-  padding: 0 15px 25px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.sidebar-brand .brand {
-  font-size: 28px;
-}
-.workspace-label {
-  display: flex;
-  gap: 9px;
-  align-items: center;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 10px 9px;
-  margin: 0 0 26px;
-  font-size: 10px;
-}
-.workspace-label > div {
-  flex: 1;
-}
-.workspace-label small {
-  display: block;
-  font-size: 8px;
-  color: var(--subtle);
-  margin-top: 1px;
-}
-.workspace-avatar {
-  width: 27px;
-  height: 27px;
-  border-radius: 5px;
-  background: #c8ef8411;
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-}
-.workspace-label > svg {
-  color: var(--subtle);
-}
 .nav-label {
   font-size: 8px;
   color: var(--subtle);
   letter-spacing: 1.2px;
   margin: 0 14px 13px;
-}
-.nav-item {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin: 4px 0;
-  padding: 11px 13px;
-  border-radius: 6px;
-  font-size: 11px;
-  color: var(--muted);
-  position: relative;
-  min-height: 41px;
-}
-.nav-item svg {
-  stroke-width: 1.5;
-}
-.nav-item:hover {
-  background: var(--surface-2);
-  color: var(--text);
-}
-.nav-item.active {
-  background: #c8ef840b;
-  color: var(--accent);
-}
-.nav-item.active:before {
-  content: '';
-  position: absolute;
-  left: -14px;
-  top: 11px;
-  bottom: 11px;
-  width: 2px;
-  background: var(--accent);
-  border-radius: 2px;
-}
-.nav-tag {
-  font-size: 8px;
-  color: #ad9ad6;
-  border: 1px solid #ad9ad62b;
-  padding: 1px 4px;
-  border-radius: 3px;
-  margin-left: auto;
-}
-.nav-active-dot {
-  height: 4px;
-  width: 4px;
-  background: var(--accent);
-  border-radius: 50%;
-  margin-left: auto;
-}
-.sidebar-bottom {
-  margin-top: auto;
-  padding-top: 35px;
-}
-.sidebar-note {
-  background: linear-gradient(130deg, #c8ef8408, transparent 90%);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 16px 13px;
-  margin: 0 4px 20px;
-}
-.little-orbit {
-  color: var(--accent);
-  margin-bottom: 10px;
-}
-.sidebar-note strong {
-  font-size: 10px;
-  font-weight: 550;
-}
-.sidebar-note p {
-  font-size: 9px;
-  line-height: 1.8;
-  margin-top: 6px;
-}
-.sidebar-note a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 9px;
-  color: var(--accent);
-  margin-top: 16px;
-}
-.sidebar-user {
-  border-top: 1px solid var(--line);
-  margin: 16px -14px 0;
-  padding: 17px 17px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 .user-avatar {
   display: inline-flex;
@@ -860,21 +717,6 @@ svg {
   font-size: 10px;
   letter-spacing: 0.4px;
   flex-shrink: 0;
-}
-.sidebar-user > div {
-  flex: 1;
-  min-width: 0;
-}
-.sidebar-user strong {
-  display: block;
-  font-size: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.sidebar-user small {
-  font-size: 8px;
-  color: var(--subtle);
 }
 .app-main {
   margin-left: 218px;
@@ -4233,35 +4075,8 @@ svg {
   }
 }
 @media (max-width: 1200px) {
-  .sidebar {
-    width: 190px;
-    padding-inline: 10px;
-  }
   .app-main {
     margin-left: 190px;
-  }
-  .sidebar-brand {
-    padding-inline: 12px;
-  }
-  .sidebar-brand .brand {
-    font-size: 25px;
-  }
-  .sidebar-user {
-    margin-inline: -10px;
-    padding-inline: 13px;
-  }
-  .workspace-label {
-    font-size: 9px;
-  }
-  .workspace-label small {
-    font-size: 7px;
-  }
-  .nav-item {
-    font-size: 10px;
-    padding-inline: 10px;
-  }
-  .nav-item.active:before {
-    left: -10px;
   }
   .main-content {
     padding: 25px 23px;
@@ -4592,43 +4407,11 @@ svg {
   .mobile-only {
     display: inline-flex !important;
   }
-  .sidebar {
-    transform: translateX(-100%);
-    width: 230px;
-    padding-inline: 15px;
-    transition: transform 0.2s;
-  }
-  .sidebar-open {
-    transform: translateX(0);
-  }
   .sidebar-backdrop {
     position: fixed;
     inset: 0;
     background: #0009;
     z-index: 39;
-  }
-  .sidebar-brand {
-    padding-inline: 10px;
-  }
-  .sidebar-brand .brand {
-    font-size: 29px;
-  }
-  .workspace-label {
-    font-size: 11px;
-  }
-  .workspace-label small {
-    font-size: 8px;
-  }
-  .nav-item {
-    font-size: 12px;
-    padding: 12px;
-  }
-  .nav-item.active:before {
-    left: -15px;
-  }
-  .sidebar-user {
-    margin-inline: -15px;
-    padding-inline: 20px;
   }
   .app-main {
     margin-left: 0;

@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { assetHref } from '@/lib/market/asset-href';
 import { useRouter } from 'next/navigation';
@@ -9,7 +9,7 @@ import {
   LayoutDashboard,
   Globe2,
   CandlestickChart,
-  Sparkles,
+  ScanLine,
   Wallet,
   Star,
   Newspaper,
@@ -42,13 +42,28 @@ const AppContext = createContext<{
 }>({ user: null, demo: true, href: () => '/demo', openSearch: () => {} });
 export const useApp = () => useContext(AppContext);
 const navigation = [
-  ['dashboard', 'Overview', LayoutDashboard],
-  ['markets', 'Markets', Globe2],
-  ['charts', 'Charts', CandlestickChart],
-  ['analyst', 'AI Analyst', Sparkles],
-  ['portfolio', 'Portfolio', Wallet],
-  ['watchlists', 'Watchlists', Star],
-  ['news', 'News', Newspaper],
+  {
+    label: 'Mercado',
+    items: [
+      ['dashboard', 'Resumen', LayoutDashboard],
+      ['markets', 'Mercados', Globe2],
+      ['charts', 'Gráficos', CandlestickChart],
+    ],
+  },
+  {
+    label: 'Tu capital',
+    items: [
+      ['portfolio', 'Portafolio', Wallet],
+      ['watchlists', 'Seguimiento', Star],
+    ],
+  },
+  {
+    label: 'Investigación',
+    items: [
+      ['analyst', 'Analista IA', ScanLine],
+      ['news', 'Noticias', Newspaper],
+    ],
+  },
 ] as const;
 export function AppShell({
   children,
@@ -66,6 +81,8 @@ export function AppShell({
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
   const [mobile, setMobile] = useState(false);
+  const menuTrigger = useRef<HTMLButtonElement>(null);
+  const menuClose = useRef<HTMLButtonElement>(null);
   const [statusOpen, setStatusOpen] = useState(false);
   const [notifications, setNotifications] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
@@ -93,6 +110,24 @@ export function AppShell({
     }
   }
   const href = (view: string) => (demo ? `/demo?view=${view}` : `/${view}`);
+  useEffect(() => {
+    if (!mobile) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusFrame = requestAnimationFrame(() => menuClose.current?.focus());
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobile(false);
+        menuTrigger.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      cancelAnimationFrame(focusFrame);
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [mobile]);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -140,10 +175,14 @@ export function AppShell({
             onClick={() => setMobile(false)}
           />
         )}
-        <aside className={cn('sidebar', mobile && 'sidebar-open')}>
+        <aside id="workspace-navigation" className={cn('sidebar', mobile && 'sidebar-open')}>
           <div className="sidebar-brand">
-            <Brand />
+            <div>
+              <Brand />
+              <p className="sidebar-caption">Tu centro de inversión.</p>
+            </div>
             <button
+              ref={menuClose}
               className="icon-button mobile-only"
               onClick={() => setMobile(false)}
               aria-label="Cerrar menú"
@@ -151,62 +190,58 @@ export function AppShell({
               <PanelLeftClose size={18} />
             </button>
           </div>
-          <div className="workspace-label">
-            <span className="workspace-avatar">C</span>
-            <div>
-              Personal workspace
-              <small>{demo ? 'Exploración de producto' : 'Tu espacio privado'}</small>
-            </div>
-            <ChevronDown size={14} />
-          </div>
-          <div className="nav-label">WORKSPACE</div>
-          <nav aria-label="Navegación principal">
-            {navigation.map(([key, label, Icon]) => (
-              <Link
-                key={key}
-                href={href(key)}
-                onClick={() => setMobile(false)}
-                className={cn('nav-item', active === key && 'active')}
-                aria-current={active === key ? 'page' : undefined}
-              >
-                <Icon size={18} />
-                <span>{label}</span>
-                {key === 'analyst' && <span className="nav-tag">AI</span>}
-                {active === key && <span className="nav-active-dot" />}
-              </Link>
+          <button
+            className="sidebar-search"
+            onClick={() => {
+              setMobile(false);
+              setSearchOpen(true);
+            }}
+          >
+            <Search size={15} aria-hidden="true" />
+            <span>Buscar activo</span>
+            <kbd>Ctrl K</kbd>
+          </button>
+          <nav className="sidebar-navigation" aria-label="Navegación principal">
+            {navigation.map((group, index) => (
+              <div className="sidebar-nav-group" key={group.label}>
+                <div className="sidebar-group-heading">
+                  <span>{group.label}</span>
+                  <span aria-hidden="true">0{index + 1}</span>
+                </div>
+                {group.items.map(([key, label, Icon]) => (
+                  <Link
+                    key={key}
+                    href={href(key)}
+                    onClick={() => setMobile(false)}
+                    className={cn('nav-item', active === key && 'active')}
+                    aria-current={active === key ? 'page' : undefined}
+                  >
+                    <span>{label}</span>
+                    <Icon size={18} aria-hidden="true" />
+                  </Link>
+                ))}
+              </div>
             ))}
           </nav>
           <div className="sidebar-bottom">
-            <div className="sidebar-note">
-              <div className="little-orbit">
-                <Sparkles size={17} />
-              </div>
-              <strong>Una visión más completa.</strong>
-              <p>
-                Conectá los datos.
-                <br />
-                Entendé el contexto.
-              </p>
-              <Link href={href('analyst')}>
-                Explorar el analista <ArrowUpRight size={14} />
-              </Link>
-            </div>
             <Link
-              className={cn('nav-item', active === 'settings' && 'active')}
+              className={cn('nav-item sidebar-utility', active === 'settings' && 'active')}
               href={href('settings')}
+              onClick={() => setMobile(false)}
+              aria-current={active === 'settings' ? 'page' : undefined}
             >
-              <Settings2 size={18} />
-              Settings
+              <span>Ajustes</span>
+              <Settings2 size={16} aria-hidden="true" />
             </Link>
-            <Link className="nav-item" href="/data-policy">
-              <CircleHelp size={18} />
-              Datos y transparencia
+            <Link className="nav-item sidebar-utility" href="/data-policy">
+              <span>Fuentes y datos</span>
+              <CircleHelp size={16} aria-hidden="true" />
             </Link>
             <div className="sidebar-user">
               <span className="user-avatar">{user?.name.slice(0, 2).toUpperCase() ?? 'EX'}</span>
               <div>
                 <strong>{user?.name ?? 'Explorador'}</strong>
-                <small>{user ? 'Personal account' : 'Modo demo'}</small>
+                <small>{user ? 'Cuenta personal' : 'Estás en la demo'}</small>
               </div>
               {user ? (
                 <button
@@ -233,8 +268,11 @@ export function AppShell({
         <div className="app-main">
           <header className="topbar">
             <button
+              ref={menuTrigger}
               className="icon-button mobile-only"
               aria-label="Abrir menú"
+              aria-expanded={mobile}
+              aria-controls="workspace-navigation"
               onClick={() => setMobile(true)}
             >
               <Menu size={20} />

@@ -1,0 +1,383 @@
+/* Product typography is separate from the public site's wordmark and display type. */
+body:has(.app-layout) {
+  font-family: var(--font-workspace), Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.app-layout {
+  --workspace-sidebar-width: 256px;
+  font-variant-numeric: tabular-nums;
+}
+
+.app-layout .app-main {
+  margin-left: var(--workspace-sidebar-width);
+}
+
+.app-layout .sidebar {
+  width: var(--workspace-sidebar-width);
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 20px 0;
+  background: var(--sidebar);
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.sidebar .sidebar-brand {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px 24px;
+  align-items: flex-start;
+}
+
+.sidebar-brand .brand {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 30px;
+}
+
+.sidebar-caption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.01em;
+}
+
+.sidebar-search {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 38px;
+  flex-shrink: 0;
+  margin-bottom: 29px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  background: var(--bg);
+  text-align: left;
+  font-size: 12px;
+}
+
+.sidebar-search:hover {
+  border-color: var(--subtle);
+  color: var(--text);
+}
+
+.sidebar-search kbd {
+  margin-left: auto;
+  font: inherit;
+  font-size: 10px;
+  color: var(--subtle);
+  white-space: nowrap;
+}
+
+.sidebar-navigation {
+  display: grid;
+  gap: 24px;
+}
+
+.sidebar-group-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 11px;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 450;
+}
+
+.sidebar-group-heading > :last-child {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--subtle);
+}
+
+.sidebar .nav-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: space-between;
+  min-height: 42px;
+  gap: 14px;
+  margin: 2px 0;
+  padding: 10px 12px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 450;
+  line-height: 1.4;
+  letter-spacing: -0.15px;
+  color: color-mix(in srgb, var(--text) 64%, var(--sidebar));
+}
+
+.sidebar .nav-item svg {
+  color: var(--subtle);
+  stroke-width: 1.65;
+  flex-shrink: 0;
+}
+
+.sidebar .nav-item:hover {
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--text);
+}
+
+.sidebar .nav-item.active {
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  font-weight: 550;
+}
+
+.sidebar .nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--accent) 65%, var(--muted));
+}
+
+.sidebar .nav-item.active svg {
+  color: color-mix(in srgb, var(--accent) 50%, var(--muted));
+}
+
+.sidebar .sidebar-bottom {
+  margin-top: auto;
+  padding-top: 26px;
+}
+
+.sidebar .sidebar-utility {
+  min-height: 34px;
+  padding-block: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.sidebar .sidebar-utility.active::before {
+  top: 8px;
+  bottom: 8px;
+}
+
+.sidebar .sidebar-user {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  margin: 18px -20px 0;
+  padding: 19px 24px;
+  gap: 10px;
+}
+
+.sidebar-user .user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--surface-3);
+  color: var(--text);
+  border: 1px solid var(--line);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.sidebar-user strong {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.sidebar-user small {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.sidebar-user > div {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Keep useful density in data views without the previous tiny, light text. */
+.app-layout :is(.overview-heading h1, .section-title h1) {
+  font-size: clamp(28px, 2.5vw, 36px);
+  font-weight: 550;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.app-layout :is(.overview-heading p, .section-title p) {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.app-layout .eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+}
+
+.app-layout :is(.button, .tabs button, .tab, .global-search, input, select, textarea) {
+  font-size: 13px;
+}
+
+.app-layout .button {
+  font-weight: 500;
+}
+
+.app-layout :is(.market-select, .panel-subtitle) {
+  font-size: 12px;
+}
+
+.app-layout :is(.panel-header strong, .panel-heading) {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.app-layout .benchmark-top {
+  font-size: 12px;
+}
+
+.app-layout .benchmark-value {
+  font-size: clamp(23px, 2vw, 29px);
+  font-weight: 500;
+  letter-spacing: -0.6px;
+}
+
+.app-layout .benchmark-value > span {
+  font-size: 11px;
+}
+
+.app-layout .benchmark-bottom small {
+  font-size: 10px;
+}
+
+.app-layout .market-table {
+  font-size: 13px;
+}
+
+.app-layout .market-table th {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.app-layout :is(.market-table td > small, .instrument-name small) {
+  font-size: 11px;
+}
+
+.app-layout .analyst-card h2 {
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.app-layout .analyst-card p {
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.app-layout .analyst-card-top > span:nth-child(2) {
+  font-size: 10px;
+}
+
+@media (max-width: 1200px) {
+  .app-layout {
+    --workspace-sidebar-width: 236px;
+  }
+
+  .app-layout .sidebar {
+    padding-inline: 16px;
+  }
+
+  .sidebar .sidebar-user {
+    margin-inline: -16px;
+    padding-inline: 20px;
+  }
+
+  .app-layout .benchmark-bottom {
+    flex-wrap: wrap;
+    align-content: center;
+    gap: 0 8px;
+    height: auto;
+    min-height: 36px;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-layout {
+    --workspace-sidebar-width: min(284px, calc(100vw - 48px));
+  }
+
+  .app-layout .app-main {
+    margin-left: 0;
+  }
+
+  .app-layout .sidebar {
+    padding: 24px 20px 0;
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition:
+      transform 0.2s,
+      visibility 0.2s;
+  }
+
+  .app-layout .sidebar-open {
+    visibility: visible;
+    transform: translateX(0);
+    transition: transform 0.2s;
+  }
+
+  .sidebar .sidebar-user {
+    margin-inline: -20px;
+    padding-inline: 24px;
+  }
+
+  .sidebar-search {
+    min-height: 42px;
+    font-size: 13px;
+  }
+
+  .sidebar .nav-item {
+    min-height: 44px;
+  }
+
+  .sidebar .sidebar-utility {
+    min-height: 38px;
+  }
+
+  .app-layout .global-search {
+    font-size: 12px;
+  }
+
+  .app-layout .overview-heading {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .app-layout .overview-heading h1 {
+    max-width: none;
+  }
+
+  .app-layout .overview-heading > .button {
+    margin-top: 0;
+  }
+
+  .app-layout :is(.overview-heading p, .section-title p) {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-layout .sidebar {
+    transition: none;
+  }
+}
