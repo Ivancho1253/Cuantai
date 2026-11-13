@@ -1,0 +1,3237 @@
+{
+  "NASDAQ:AMZN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AMZN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AMZN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BRK.B:USD": {
+    "src": "/asset-logos/catalog/NYSE_BRK.B_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BRK.B.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DIA:USD": {
+    "src": "/asset-logos/catalog/NYSE_DIA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DIA.png",
+    "background": "#ffffff"
+  },
+  "BYMA:GGAL:ARS": {
+    "src": "/asset-logos/catalog/BYMA_GGAL_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GGAL.BA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:AAPL:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AAPL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AAPL.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:GOOGL:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_GOOGL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GOOGL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:JPM:USD": {
+    "src": "/asset-logos/catalog/NYSE_JPM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/JPM.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MSFT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MSFT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MSFT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NVDA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NVDA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NVDA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:QQQ:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_QQQ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/QQQ.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:KO:USD": {
+    "src": "/asset-logos/catalog/NYSE_KO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KO.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:META:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_META_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/META.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SPY:USD": {
+    "src": "/asset-logos/catalog/NYSE_SPY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SPY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TSLA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TSLA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TSLA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:A:USD": {
+    "src": "/asset-logos/catalog/NYSE_A_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/A.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ABBV:USD": {
+    "src": "/asset-logos/catalog/NYSE_ABBV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ABBV.png",
+    "background": "#1d2b34"
+  },
+  "COINGECKO:aave:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_aave_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png?1720472354",
+    "background": "#ffffff"
+  },
+  "COINGECKO:cardano:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_cardano_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/975/large/cardano.png?1696502090",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ABNB:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ABNB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ABNB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ABT:USD": {
+    "src": "/asset-logos/catalog/NYSE_ABT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ABT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ACGL:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ACGL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ACGL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ACN:USD": {
+    "src": "/asset-logos/catalog/NYSE_ACN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ACN.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ADBE:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ADBE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ADBE.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ADI:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ADI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ADI.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:ADM:USD": {
+    "src": "/asset-logos/catalog/NYSE_ADM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ADM.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ADP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ADP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ADP.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ADSK:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ADSK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ADSK.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:AEE:USD": {
+    "src": "/asset-logos/catalog/NYSE_AEE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AEE.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:AEP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AEP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AEP.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AES:USD": {
+    "src": "/asset-logos/catalog/NYSE_AES_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AES.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AFL:USD": {
+    "src": "/asset-logos/catalog/NYSE_AFL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AFL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AIG:USD": {
+    "src": "/asset-logos/catalog/NYSE_AIG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AIG.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:AIZ:USD": {
+    "src": "/asset-logos/catalog/NYSE_AIZ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AIZ.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:algorand:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_algorand_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/4380/large/download.png?1696504978",
+    "background": "#ffffff"
+  },
+  "NASDAQ:AKAM:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AKAM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AKAM.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ALGN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ALGN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ALGN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AJG:USD": {
+    "src": "/asset-logos/catalog/NYSE_AJG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AJG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ALL:USD": {
+    "src": "/asset-logos/catalog/NYSE_ALL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ALL.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:ALLE:USD": {
+    "src": "/asset-logos/catalog/NYSE_ALLE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ALLE.png",
+    "background": "#ffffff"
+  },
+  "BYMA:ALUA:ARS": {
+    "src": "/asset-logos/catalog/BYMA_ALUA_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ALUA.BA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:AMAT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AMAT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AMAT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AMCR:USD": {
+    "src": "/asset-logos/catalog/NYSE_AMCR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AMCR.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:AMD:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AMD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AMD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AME:USD": {
+    "src": "/asset-logos/catalog/NYSE_AME_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AME.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:AMGN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AMGN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AMGN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AMP:USD": {
+    "src": "/asset-logos/catalog/NYSE_AMP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AMP.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:ALB:USD": {
+    "src": "/asset-logos/catalog/NYSE_ALB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ALB.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:AMT:USD": {
+    "src": "/asset-logos/catalog/NYSE_AMT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AMT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AON:USD": {
+    "src": "/asset-logos/catalog/NYSE_AON_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AON.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ANET:USD": {
+    "src": "/asset-logos/catalog/NYSE_ANET_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ANET.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:AOS:USD": {
+    "src": "/asset-logos/catalog/NYSE_AOS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AOS.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:APA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_APA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/APA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:APD:USD": {
+    "src": "/asset-logos/catalog/NYSE_APD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/APD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:APH:USD": {
+    "src": "/asset-logos/catalog/NYSE_APH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/APH.png",
+    "background": "#ffffff"
+  },
+  "NYSE:APO:USD": {
+    "src": "/asset-logos/catalog/NYSE_APO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/APO.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:APP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_APP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/APP.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:APTV:USD": {
+    "src": "/asset-logos/catalog/NYSE_APTV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/APTV.png",
+    "background": "#1d2b34"
+  },
+  "COINGECKO:aster-2:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_aster-2_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/69040/large/_ASTER.png?1757326782",
+    "background": "#ffffff"
+  },
+  "NYSE:ARE:USD": {
+    "src": "/asset-logos/catalog/NYSE_ARE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ARE.png",
+    "background": "#1d2b34"
+  },
+  "COINGECKO:cosmos:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_cosmos_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/1481/large/cosmos_hub.png?1696502525",
+    "background": "#ffffff"
+  },
+  "COINGECKO:avalanche-2:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_avalanche-2_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png?1696512369",
+    "background": "#ffffff"
+  },
+  "NYSE:ATO:USD": {
+    "src": "/asset-logos/catalog/NYSE_ATO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ATO.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:AVGO:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AVGO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AVGO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ARES:USD": {
+    "src": "/asset-logos/catalog/NYSE_ARES_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ARES.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:arbitrum:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_arbitrum_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
+    "background": "#ffffff"
+  },
+  "NYSE:AVY:USD": {
+    "src": "/asset-logos/catalog/NYSE_AVY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AVY.png",
+    "background": "#ffffff"
+  },
+  "NYSE:AWK:USD": {
+    "src": "/asset-logos/catalog/NYSE_AWK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AWK.png",
+    "background": "#1d2b34"
+  },
+  "NASDAQ:AXON:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_AXON_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AXON.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:AXP:USD": {
+    "src": "/asset-logos/catalog/NYSE_AXP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AXP.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BA:USD": {
+    "src": "/asset-logos/catalog/NYSE_BA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BA.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:AZO:USD": {
+    "src": "/asset-logos/catalog/NYSE_AZO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AZO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BAC:USD": {
+    "src": "/asset-logos/catalog/NYSE_BAC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BAC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BALL:USD": {
+    "src": "/asset-logos/catalog/NYSE_BALL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BALL.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:bitcoin-cash:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_bitcoin-cash_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png?1696501932",
+    "background": "#ffffff"
+  },
+  "COINGECKO:beldex:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_beldex_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/5111/large/Beldex.png?1696505631",
+    "background": "#ffffff"
+  },
+  "NYSE:BAX:USD": {
+    "src": "/asset-logos/catalog/NYSE_BAX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BAX.png",
+    "background": "#1d2b34"
+  },
+  "BYMA:BBAR:ARS": {
+    "src": "/asset-logos/catalog/BYMA_BBAR_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BBAR.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BBY:USD": {
+    "src": "/asset-logos/catalog/NYSE_BBY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BBY.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:bfusd:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_bfusd_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/68227/large/bfusd.png?1755132827",
+    "background": "#ffffff"
+  },
+  "NYSE:BDX:USD": {
+    "src": "/asset-logos/catalog/NYSE_BDX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BDX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BE:USD": {
+    "src": "/asset-logos/catalog/NYSE_BE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BE.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:bitget-token:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_bitget-token_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/11610/large/Bitget_logo.png?1736925727",
+    "background": "#ffffff"
+  },
+  "NYSE:BF.B:USD": {
+    "src": "/asset-logos/catalog/NYSE_BF.B_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BF.B.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BG:USD": {
+    "src": "/asset-logos/catalog/NYSE_BG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:BIIB:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_BIIB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BIIB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BEN:USD": {
+    "src": "/asset-logos/catalog/NYSE_BEN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BEN.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:BKNG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_BKNG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BKNG.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:binancecoin:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_binancecoin_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
+    "background": "#ffffff"
+  },
+  "NASDAQ:BKR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_BKR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BKR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BLK:USD": {
+    "src": "/asset-logos/catalog/NYSE_BLK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BLK.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:BMY:USD": {
+    "src": "/asset-logos/catalog/NYSE_BMY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BMY.png",
+    "background": "#ffffff"
+  },
+  "BYMA:BMA:ARS": {
+    "src": "/asset-logos/catalog/BYMA_BMA_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BMA.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BNY:USD": {
+    "src": "/asset-logos/catalog/NYSE_BNY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BNY.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:bitcoin:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_bitcoin_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
+    "background": "#ffffff"
+  },
+  "COINGECKO:bitway:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_bitway_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/71205/large/BTW_Token_200x200.png?1786291907",
+    "background": "#ffffff"
+  },
+  "NYSE:BR:USD": {
+    "src": "/asset-logos/catalog/NYSE_BR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BR.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:blackrock-usd-institutional-digital-liquidity-fund:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_blackrock-usd-institutional-digital-liquidity-fund_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+    "background": "#ffffff"
+  },
+  "NYSE:BRO:USD": {
+    "src": "/asset-logos/catalog/NYSE_BRO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BRO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BSX:USD": {
+    "src": "/asset-logos/catalog/NYSE_BSX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BSX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:C:USD": {
+    "src": "/asset-logos/catalog/NYSE_C_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/C.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BX:USD": {
+    "src": "/asset-logos/catalog/NYSE_BX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:BXP:USD": {
+    "src": "/asset-logos/catalog/NYSE_BXP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BXP.png",
+    "background": "#ffffff"
+  },
+  "BYMA:BYMA:ARS": {
+    "src": "/asset-logos/catalog/BYMA_BYMA_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BYMA.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CAH:USD": {
+    "src": "/asset-logos/catalog/NYSE_CAH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CAH.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CARR:USD": {
+    "src": "/asset-logos/catalog/NYSE_CARR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CARR.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CASY:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CASY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CASY.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CAT:USD": {
+    "src": "/asset-logos/catalog/NYSE_CAT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CAT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CB:USD": {
+    "src": "/asset-logos/catalog/NYSE_CB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CB.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:canton-network:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_canton-network_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/70468/large/Canton-Ticker_%281%29.png?1762826299",
+    "background": "#ffffff"
+  },
+  "CBOE:CBOE:USD": {
+    "src": "/asset-logos/catalog/CBOE_CBOE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CBOE.png",
+    "background": "#1d2b34"
+  },
+  "COINGECKO:pancakeswap-token:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_pancakeswap-token_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+    "background": "#ffffff"
+  },
+  "NYSE:CCI:USD": {
+    "src": "/asset-logos/catalog/NYSE_CCI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CCI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CBRE:USD": {
+    "src": "/asset-logos/catalog/NYSE_CBRE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CBRE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CCL:USD": {
+    "src": "/asset-logos/catalog/NYSE_CCL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CCL.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CDNS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CDNS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CDNS.png",
+    "background": "#1d2b34"
+  },
+  "NASDAQ:CDW:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CDW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CDW.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CEG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CEG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CEG.png",
+    "background": "#1d2b34"
+  },
+  "BYMA:CEPU:ARS": {
+    "src": "/asset-logos/catalog/BYMA_CEPU_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CEPU.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CF:USD": {
+    "src": "/asset-logos/catalog/NYSE_CF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CF.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CFG:USD": {
+    "src": "/asset-logos/catalog/NYSE_CFG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CFG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CHRW:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CHRW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CHRW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CIEN:USD": {
+    "src": "/asset-logos/catalog/NYSE_CIEN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CIEN.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CHTR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CHTR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CHTR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CI:USD": {
+    "src": "/asset-logos/catalog/NYSE_CI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CI.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CINF:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CINF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CINF.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CHD:USD": {
+    "src": "/asset-logos/catalog/NYSE_CHD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CHD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CL:USD": {
+    "src": "/asset-logos/catalog/NYSE_CL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CLX:USD": {
+    "src": "/asset-logos/catalog/NYSE_CLX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CLX.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CMCSA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CMCSA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CMCSA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CME:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CME_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CME.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CMS:USD": {
+    "src": "/asset-logos/catalog/NYSE_CMS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CMS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CMI:USD": {
+    "src": "/asset-logos/catalog/NYSE_CMI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CMI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CNC:USD": {
+    "src": "/asset-logos/catalog/NYSE_CNC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CNC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CNP:USD": {
+    "src": "/asset-logos/catalog/NYSE_CNP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CNP.png",
+    "background": "#ffffff"
+  },
+  "NYSE:COF:USD": {
+    "src": "/asset-logos/catalog/NYSE_COF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/COF.png",
+    "background": "#ffffff"
+  },
+  "NYSE:COHR:USD": {
+    "src": "/asset-logos/catalog/NYSE_COHR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/COHR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CMG:USD": {
+    "src": "/asset-logos/catalog/NYSE_CMG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CMG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:COIN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_COIN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/COIN.png",
+    "background": "#ffffff"
+  },
+  "BYMA:COME:ARS": {
+    "src": "/asset-logos/catalog/BYMA_COME_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/COME.BA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:COO:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_COO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/COO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:COP:USD": {
+    "src": "/asset-logos/catalog/NYSE_COP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/COP.png",
+    "background": "#ffffff"
+  },
+  "NYSE:COR:USD": {
+    "src": "/asset-logos/catalog/NYSE_COR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/COR.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:COST:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_COST_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/COST.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CPAY:USD": {
+    "src": "/asset-logos/catalog/NYSE_CPAY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CPAY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CPRT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CPRT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CPRT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CPT:USD": {
+    "src": "/asset-logos/catalog/NYSE_CPT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CPT.png",
+    "background": "#ffffff"
+  },
+  "BYMA:CRES:ARS": {
+    "src": "/asset-logos/catalog/BYMA_CRES_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CRES.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CRM:USD": {
+    "src": "/asset-logos/catalog/NYSE_CRM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CRM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CRL:USD": {
+    "src": "/asset-logos/catalog/NYSE_CRL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CRL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CRH:USD": {
+    "src": "/asset-logos/catalog/NYSE_CRH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CRH.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CRWD:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CRWD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CRWD.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CSGP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CSGP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CSGP.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CSX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CSX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CSX.png",
+    "background": "#1d2b34"
+  },
+  "NASDAQ:CSCO:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CSCO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CSCO.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:CTAS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CTAS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CTAS.png",
+    "background": "#1d2b34"
+  },
+  "NASDAQ:CTSH:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_CTSH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CTSH.png",
+    "background": "#ffffff"
+  },
+  "BYMA:CVH:ARS": {
+    "src": "/asset-logos/catalog/BYMA_CVH_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CVH.BA.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:crypto-com-chain:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_crypto-com-chain_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/7310/large/CRO.png?1794186148",
+    "background": "#ffffff"
+  },
+  "COINGECKO:dai:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_dai_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+    "background": "#ffffff"
+  },
+  "NYSE:CVNA:USD": {
+    "src": "/asset-logos/catalog/NYSE_CVNA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CVNA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CVX:USD": {
+    "src": "/asset-logos/catalog/NYSE_CVX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CVX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:CVS:USD": {
+    "src": "/asset-logos/catalog/NYSE_CVS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/CVS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:D:USD": {
+    "src": "/asset-logos/catalog/NYSE_D_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/D.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DAL:USD": {
+    "src": "/asset-logos/catalog/NYSE_DAL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DAL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DD:USD": {
+    "src": "/asset-logos/catalog/NYSE_DD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DD.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:DDOG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_DDOG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DDOG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:DASH:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_DASH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DASH.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DECK:USD": {
+    "src": "/asset-logos/catalog/NYSE_DECK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DECK.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DELL:USD": {
+    "src": "/asset-logos/catalog/NYSE_DELL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DELL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DG:USD": {
+    "src": "/asset-logos/catalog/NYSE_DG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DE:USD": {
+    "src": "/asset-logos/catalog/NYSE_DE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DGX:USD": {
+    "src": "/asset-logos/catalog/NYSE_DGX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DGX.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:dash:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_dash_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/19/large/dash-logo.png?1696501423",
+    "background": "#ffffff"
+  },
+  "NYSE:DHI:USD": {
+    "src": "/asset-logos/catalog/NYSE_DHI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DHI.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:DHR:USD": {
+    "src": "/asset-logos/catalog/NYSE_DHR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DHR.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:dogecoin:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_dogecoin_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/5/large/dogecoin.png?1696501409",
+    "background": "#ffffff"
+  },
+  "NYSE:DLR:USD": {
+    "src": "/asset-logos/catalog/NYSE_DLR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DLR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DIS:USD": {
+    "src": "/asset-logos/catalog/NYSE_DIS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DIS.png",
+    "background": "#1d2b34"
+  },
+  "NASDAQ:DLTR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_DLTR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DLTR.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:polkadot:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_polkadot_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/12171/large/polkadot.jpg?1766533446",
+    "background": "#ffffff"
+  },
+  "NYSE:DOC:USD": {
+    "src": "/asset-logos/catalog/NYSE_DOC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DOC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DOV:USD": {
+    "src": "/asset-logos/catalog/NYSE_DOV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DOV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DOW:USD": {
+    "src": "/asset-logos/catalog/NYSE_DOW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DOW.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:DPZ:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_DPZ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DPZ.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DRI:USD": {
+    "src": "/asset-logos/catalog/NYSE_DRI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DRI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DTE:USD": {
+    "src": "/asset-logos/catalog/NYSE_DTE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DTE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DUK:USD": {
+    "src": "/asset-logos/catalog/NYSE_DUK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DUK.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DVA:USD": {
+    "src": "/asset-logos/catalog/NYSE_DVA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DVA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:DVN:USD": {
+    "src": "/asset-logos/catalog/NYSE_DVN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DVN.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:DXCM:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_DXCM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DXCM.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:EBAY:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_EBAY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EBAY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ECHO:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ECHO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ECHO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ECL:USD": {
+    "src": "/asset-logos/catalog/NYSE_ECL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ECL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ED:USD": {
+    "src": "/asset-logos/catalog/NYSE_ED_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ED.png",
+    "background": "#ffffff"
+  },
+  "BYMA:EDN:ARS": {
+    "src": "/asset-logos/catalog/BYMA_EDN_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EDN.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EIX:USD": {
+    "src": "/asset-logos/catalog/NYSE_EIX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EIX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EG:USD": {
+    "src": "/asset-logos/catalog/NYSE_EG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EL:USD": {
+    "src": "/asset-logos/catalog/NYSE_EL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EFX:USD": {
+    "src": "/asset-logos/catalog/NYSE_EFX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EFX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ELV:USD": {
+    "src": "/asset-logos/catalog/NYSE_ELV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ELV.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:ethena:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ethena_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+    "background": "#ffffff"
+  },
+  "NYSE:EME:USD": {
+    "src": "/asset-logos/catalog/NYSE_EME_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EME.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EMR:USD": {
+    "src": "/asset-logos/catalog/NYSE_EMR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EMR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EOG:USD": {
+    "src": "/asset-logos/catalog/NYSE_EOG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EOG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:EQIX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_EQIX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EQIX.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:ethereum-classic:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ethereum-classic_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/453/large/ethereum-classic-logo.png?1696501717",
+    "background": "#ffffff"
+  },
+  "COINGECKO:ethereum:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ethereum_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+    "background": "#ffffff"
+  },
+  "NYSE:EQT:USD": {
+    "src": "/asset-logos/catalog/NYSE_EQT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EQT.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:ether-fi:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ether-fi_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
+    "background": "#ffffff"
+  },
+  "NYSE:ES:USD": {
+    "src": "/asset-logos/catalog/NYSE_ES_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ES.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ERIE:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ERIE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ERIE.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:spiko-amundi-overnight-swap-fund-eur:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_spiko-amundi-overnight-swap-fund-eur_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/102172591/large/Fund_eurSAF0.png?1774104814",
+    "background": "#ffffff"
+  },
+  "NYSE:ESS:USD": {
+    "src": "/asset-logos/catalog/NYSE_ESS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ESS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ETN:USD": {
+    "src": "/asset-logos/catalog/NYSE_ETN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ETN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ETR:USD": {
+    "src": "/asset-logos/catalog/NYSE_ETR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ETR.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:EVRG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_EVRG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EVRG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EW:USD": {
+    "src": "/asset-logos/catalog/NYSE_EW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EW.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:EXC:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_EXC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EXC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:EXE:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_EXE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EXE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EXPD:USD": {
+    "src": "/asset-logos/catalog/NYSE_EXPD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EXPD.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:EXPE:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_EXPE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EXPE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:EXR:USD": {
+    "src": "/asset-logos/catalog/NYSE_EXR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/EXR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:F:USD": {
+    "src": "/asset-logos/catalog/NYSE_F_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/F.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FANG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FANG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FANG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FAST:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FAST_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FAST.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:FDS:USD": {
+    "src": "/asset-logos/catalog/NYSE_FDS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FDS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FDX:USD": {
+    "src": "/asset-logos/catalog/NYSE_FDX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FDX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FCX:USD": {
+    "src": "/asset-logos/catalog/NYSE_FCX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FCX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FDXF:USD": {
+    "src": "/asset-logos/catalog/NYSE_FDXF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FDXF.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FE:USD": {
+    "src": "/asset-logos/catalog/NYSE_FE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FE.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:figure-heloc:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_figure-heloc_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/68480/large/figure.png?1755863954",
+    "background": "#ffffff"
+  },
+  "NYSE:FERG:USD": {
+    "src": "/asset-logos/catalog/NYSE_FERG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FERG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FFIV:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FFIV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FFIV.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:filecoin:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_filecoin_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/12817/large/filecoin.png?1696512609",
+    "background": "#ffffff"
+  },
+  "NYSE:FICO:USD": {
+    "src": "/asset-logos/catalog/NYSE_FICO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FICO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FIS:USD": {
+    "src": "/asset-logos/catalog/NYSE_FIS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FIS.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FISV:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FISV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FISV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FITB:USD": {
+    "src": "/asset-logos/catalog/NYSE_FITB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FITB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FIX:USD": {
+    "src": "/asset-logos/catalog/NYSE_FIX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FIX.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FOX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FOX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FOX.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FOXA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FOXA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FOXA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FRT:USD": {
+    "src": "/asset-logos/catalog/NYSE_FRT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FRT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FLEX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FLEX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FLEX.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FSLR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FSLR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FSLR.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:FTNT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_FTNT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FTNT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:FTV:USD": {
+    "src": "/asset-logos/catalog/NYSE_FTV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/FTV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GD:USD": {
+    "src": "/asset-logos/catalog/NYSE_GD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GDDY:USD": {
+    "src": "/asset-logos/catalog/NYSE_GDDY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GDDY.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:gho:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_gho_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/30663/large/gho-token-logo.png?1720517092",
+    "background": "#ffffff"
+  },
+  "NASDAQ:GEHC:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_GEHC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GEHC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:GEN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_GEN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GEN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GEV:USD": {
+    "src": "/asset-logos/catalog/NYSE_GEV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GEV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GE:USD": {
+    "src": "/asset-logos/catalog/NYSE_GE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GIS:USD": {
+    "src": "/asset-logos/catalog/NYSE_GIS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GIS.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:GILD:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_GILD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GILD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GL:USD": {
+    "src": "/asset-logos/catalog/NYSE_GL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GLW:USD": {
+    "src": "/asset-logos/catalog/NYSE_GLW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GLW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GNRC:USD": {
+    "src": "/asset-logos/catalog/NYSE_GNRC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GNRC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:GOOG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_GOOG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GOOG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GM:USD": {
+    "src": "/asset-logos/catalog/NYSE_GM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GM.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:the-open-network:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_the-open-network_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/17980/large/Gram_Circular_Badge.png?1781524778",
+    "background": "#ffffff"
+  },
+  "NYSE:GPC:USD": {
+    "src": "/asset-logos/catalog/NYSE_GPC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GPC.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:gatechain-token:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_gatechain-token_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/8183/large/200X200.png?1735246724",
+    "background": "#ffffff"
+  },
+  "NYSE:GPN:USD": {
+    "src": "/asset-logos/catalog/NYSE_GPN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GPN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GRMN:USD": {
+    "src": "/asset-logos/catalog/NYSE_GRMN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GRMN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GS:USD": {
+    "src": "/asset-logos/catalog/NYSE_GS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:GWW:USD": {
+    "src": "/asset-logos/catalog/NYSE_GWW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GWW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HAL:USD": {
+    "src": "/asset-logos/catalog/NYSE_HAL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HAL.png",
+    "background": "#ffffff"
+  },
+  "BYMA:HARG:ARS": {
+    "src": "/asset-logos/catalog/BYMA_HARG_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HARG.BA.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:hedera-hashgraph:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_hedera-hashgraph_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/3688/large/hbar.png?1696504364",
+    "background": "#ffffff"
+  },
+  "NASDAQ:HAS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_HAS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HAS.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:HBAN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_HBAN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HBAN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HCA:USD": {
+    "src": "/asset-logos/catalog/NYSE_HCA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HCA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HD:USD": {
+    "src": "/asset-logos/catalog/NYSE_HD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HIG:USD": {
+    "src": "/asset-logos/catalog/NYSE_HIG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HIG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HII:USD": {
+    "src": "/asset-logos/catalog/NYSE_HII_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HII.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:HLT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_HLT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HLT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:HONA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_HONA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HONA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:HON:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_HON_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HON.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:HOOD:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_HOOD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HOOD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HPE:USD": {
+    "src": "/asset-logos/catalog/NYSE_HPE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HPE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HPQ:USD": {
+    "src": "/asset-logos/catalog/NYSE_HPQ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HPQ.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:HSIC:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_HSIC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HSIC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HRL:USD": {
+    "src": "/asset-logos/catalog/NYSE_HRL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HRL.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:HST:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_HST_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HST.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:htx-dao:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_htx-dao_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/35491/large/Frame_1321318576.png?1708908626",
+    "background": "#ffffff"
+  },
+  "COINGECKO:hyperliquid:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_hyperliquid_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
+    "background": "#ffffff"
+  },
+  "NYSE:HSY:USD": {
+    "src": "/asset-logos/catalog/NYSE_HSY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HSY.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:HUBB:USD": {
+    "src": "/asset-logos/catalog/NYSE_HUBB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HUBB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HUM:USD": {
+    "src": "/asset-logos/catalog/NYSE_HUM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HUM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:HWM:USD": {
+    "src": "/asset-logos/catalog/NYSE_HWM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HWM.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:internet-computer:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_internet-computer_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/14495/large/Internet_Computer_logo.png?1696514180",
+    "background": "#ffffff"
+  },
+  "NASDAQ:IBKR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_IBKR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IBKR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:IBM:USD": {
+    "src": "/asset-logos/catalog/NYSE_IBM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IBM.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:ICE:USD": {
+    "src": "/asset-logos/catalog/NYSE_ICE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ICE.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:IDXX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_IDXX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IDXX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:IEX:USD": {
+    "src": "/asset-logos/catalog/NYSE_IEX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IEX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:IFF:USD": {
+    "src": "/asset-logos/catalog/NYSE_IFF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IFF.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ILMN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ILMN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ILMN.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:INCY:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_INCY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/INCY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:INTC:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_INTC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/INTC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:INTU:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_INTU_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/INTU.png",
+    "background": "#ffffff"
+  },
+  "NYSE:INVH:USD": {
+    "src": "/asset-logos/catalog/NYSE_INVH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/INVH.png",
+    "background": "#ffffff"
+  },
+  "NYSE:IP:USD": {
+    "src": "/asset-logos/catalog/NYSE_IP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IP.png",
+    "background": "#ffffff"
+  },
+  "NYSE:IQV:USD": {
+    "src": "/asset-logos/catalog/NYSE_IQV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IQV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:IR:USD": {
+    "src": "/asset-logos/catalog/NYSE_IR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IR.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:injective-protocol:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_injective-protocol_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/12882/large/Other_200x200.png?1738782212",
+    "background": "#ffffff"
+  },
+  "NYSE:IRM:USD": {
+    "src": "/asset-logos/catalog/NYSE_IRM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IRM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:IT:USD": {
+    "src": "/asset-logos/catalog/NYSE_IT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ISRG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ISRG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ISRG.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:janus-henderson-anemoy-aaa-clo-fund:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_janus-henderson-anemoy-aaa-clo-fund_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/70446/large/jaaa.png?1762078666",
+    "background": "#ffffff"
+  },
+  "NYSE:ITW:USD": {
+    "src": "/asset-logos/catalog/NYSE_ITW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ITW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:J:USD": {
+    "src": "/asset-logos/catalog/NYSE_J_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/J.png",
+    "background": "#ffffff"
+  },
+  "NYSE:IVZ:USD": {
+    "src": "/asset-logos/catalog/NYSE_IVZ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IVZ.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:JBHT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_JBHT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/JBHT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:JBL:USD": {
+    "src": "/asset-logos/catalog/NYSE_JBL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/JBL.png",
+    "background": "#1d2b34"
+  },
+  "COINGECKO:just:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_just_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/11095/large/JUST.jpg?1696511035",
+    "background": "#ffffff"
+  },
+  "COINGECKO:kaspa:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_kaspa_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/25751/large/kaspa-icon-exchanges.png?1696524837",
+    "background": "#ffffff"
+  },
+  "NYSE:JCI:USD": {
+    "src": "/asset-logos/catalog/NYSE_JCI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/JCI.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:kucoin-shares:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_kucoin-shares_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/1047/large/sa9z79.png?1696502152",
+    "background": "#ffffff"
+  },
+  "COINGECKO:jupiter-exchange-solana:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_jupiter-exchange-solana_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/34188/large/jup.png?1704266489",
+    "background": "#ffffff"
+  },
+  "NASDAQ:JKHY:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_JKHY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/JKHY.png",
+    "background": "#ffffff"
+  },
+  "NYSE:JNJ:USD": {
+    "src": "/asset-logos/catalog/NYSE_JNJ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/JNJ.png",
+    "background": "#ffffff"
+  },
+  "NYSE:KEY:USD": {
+    "src": "/asset-logos/catalog/NYSE_KEY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KEY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:KDP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_KDP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KDP.png",
+    "background": "#ffffff"
+  },
+  "NYSE:KEYS:USD": {
+    "src": "/asset-logos/catalog/NYSE_KEYS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KEYS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:KHC:USD": {
+    "src": "/asset-logos/catalog/NYSE_KHC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KHC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:KIM:USD": {
+    "src": "/asset-logos/catalog/NYSE_KIM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KIM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:KKR:USD": {
+    "src": "/asset-logos/catalog/NYSE_KKR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KKR.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:KMB:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_KMB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KMB.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:KLAC:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_KLAC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KLAC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:KMI:USD": {
+    "src": "/asset-logos/catalog/NYSE_KMI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KMI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:KR:USD": {
+    "src": "/asset-logos/catalog/NYSE_KR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/KR.png",
+    "background": "#1d2b34"
+  },
+  "COINGECKO:leo-token:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_leo-token_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/8418/large/leo-token.png?1696508607",
+    "background": "#ffffff"
+  },
+  "NYSE:L:USD": {
+    "src": "/asset-logos/catalog/NYSE_L_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/L.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LDOS:USD": {
+    "src": "/asset-logos/catalog/NYSE_LDOS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LDOS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LEN:USD": {
+    "src": "/asset-logos/catalog/NYSE_LEN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LEN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LH:USD": {
+    "src": "/asset-logos/catalog/NYSE_LH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LH.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:chainlink:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_chainlink_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/877/large/Chainlink_Logo_500.png?1760023405",
+    "background": "#ffffff"
+  },
+  "NYSE:LHX:USD": {
+    "src": "/asset-logos/catalog/NYSE_LHX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LHX.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:lighter:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_lighter_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/71121/large/lighter.png?1765888098",
+    "background": "#ffffff"
+  },
+  "NYSE:LII:USD": {
+    "src": "/asset-logos/catalog/NYSE_LII_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LII.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:LIN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_LIN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LIN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LLY:USD": {
+    "src": "/asset-logos/catalog/NYSE_LLY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LLY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:LITE:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_LITE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LITE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LMT:USD": {
+    "src": "/asset-logos/catalog/NYSE_LMT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LMT.png",
+    "background": "#1d2b34"
+  },
+  "NASDAQ:LNT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_LNT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LNT.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:litecoin:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_litecoin_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/2/large/litecoin.png?1696501400",
+    "background": "#ffffff"
+  },
+  "BYMA:LOMA:ARS": {
+    "src": "/asset-logos/catalog/BYMA_LOMA_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LOMA.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LOW:USD": {
+    "src": "/asset-logos/catalog/NYSE_LOW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LOW.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:LRCX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_LRCX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LRCX.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:LULU:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_LULU_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LULU.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:memecore:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_memecore_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/53247/large/square-bg-transparent.png?1752637478",
+    "background": "#ffffff"
+  },
+  "NYSE:LUV:USD": {
+    "src": "/asset-logos/catalog/NYSE_LUV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LUV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LYV:USD": {
+    "src": "/asset-logos/catalog/NYSE_LYV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LYV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LYB:USD": {
+    "src": "/asset-logos/catalog/NYSE_LYB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LYB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MA:USD": {
+    "src": "/asset-logos/catalog/NYSE_MA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MAA:USD": {
+    "src": "/asset-logos/catalog/NYSE_MAA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MAA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:LVS:USD": {
+    "src": "/asset-logos/catalog/NYSE_LVS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LVS.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MAR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MAR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MAR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MCD:USD": {
+    "src": "/asset-logos/catalog/NYSE_MCD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MCD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MAS:USD": {
+    "src": "/asset-logos/catalog/NYSE_MAS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MAS.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MCHP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MCHP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MCHP.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MCK:USD": {
+    "src": "/asset-logos/catalog/NYSE_MCK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MCK.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MCO:USD": {
+    "src": "/asset-logos/catalog/NYSE_MCO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MCO.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MDLZ:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MDLZ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MDLZ.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MET:USD": {
+    "src": "/asset-logos/catalog/NYSE_MET_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MET.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MDT:USD": {
+    "src": "/asset-logos/catalog/NYSE_MDT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MDT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MGM:USD": {
+    "src": "/asset-logos/catalog/NYSE_MGM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MGM.png",
+    "background": "#ffffff"
+  },
+  "BYMA:MIRG:ARS": {
+    "src": "/asset-logos/catalog/BYMA_MIRG_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MIRG.BA.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:mantle:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_mantle_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/30980/large/MNT_Token_Logo.png?1765516974",
+    "background": "#ffffff"
+  },
+  "NYSE:MKC:USD": {
+    "src": "/asset-logos/catalog/NYSE_MKC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MKC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MLM:USD": {
+    "src": "/asset-logos/catalog/NYSE_MLM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MLM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MMM:USD": {
+    "src": "/asset-logos/catalog/NYSE_MMM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MMM.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MNST:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MNST_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MNST.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:morpho:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_morpho_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/29837/large/Morpho-token-icon.png?1726771230",
+    "background": "#ffffff"
+  },
+  "NYSE:MO:USD": {
+    "src": "/asset-logos/catalog/NYSE_MO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MOS:USD": {
+    "src": "/asset-logos/catalog/NYSE_MOS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MOS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MPC:USD": {
+    "src": "/asset-logos/catalog/NYSE_MPC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MPC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MPWR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MPWR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MPWR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MRK:USD": {
+    "src": "/asset-logos/catalog/NYSE_MRK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MRK.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MRNA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MRNA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MRNA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MRSH:USD": {
+    "src": "/asset-logos/catalog/NYSE_MRSH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MRSH.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MRVL:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MRVL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MRVL.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:MSCI:USD": {
+    "src": "/asset-logos/catalog/NYSE_MSCI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MSCI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MSI:USD": {
+    "src": "/asset-logos/catalog/NYSE_MSI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MSI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MTB:USD": {
+    "src": "/asset-logos/catalog/NYSE_MTB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MTB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MTD:USD": {
+    "src": "/asset-logos/catalog/NYSE_MTD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MTD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:MS:USD": {
+    "src": "/asset-logos/catalog/NYSE_MS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MS.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:MU:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_MU_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/MU.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:near:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_near_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367",
+    "background": "#ffffff"
+  },
+  "NYSE:NCLH:USD": {
+    "src": "/asset-logos/catalog/NYSE_NCLH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NCLH.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NDAQ:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NDAQ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NDAQ.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NDSN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NDSN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NDSN.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:nexo:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_nexo_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/3695/large/CG-nexo-token-200x200_2x.png?1730414360",
+    "background": "#ffffff"
+  },
+  "NYSE:NEE:USD": {
+    "src": "/asset-logos/catalog/NYSE_NEE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NEE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:NEM:USD": {
+    "src": "/asset-logos/catalog/NYSE_NEM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NEM.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NFLX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NFLX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NFLX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:NI:USD": {
+    "src": "/asset-logos/catalog/NYSE_NI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:NKE:USD": {
+    "src": "/asset-logos/catalog/NYSE_NKE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NKE.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:NOC:USD": {
+    "src": "/asset-logos/catalog/NYSE_NOC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NOC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:NOW:USD": {
+    "src": "/asset-logos/catalog/NYSE_NOW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NOW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:NRG:USD": {
+    "src": "/asset-logos/catalog/NYSE_NRG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NRG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:NSC:USD": {
+    "src": "/asset-logos/catalog/NYSE_NSC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NSC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NTAP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NTAP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NTAP.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:NUE:USD": {
+    "src": "/asset-logos/catalog/NYSE_NUE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NUE.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NTRS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NTRS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NTRS.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:midnight-3:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_midnight-3_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/71015/large/midnight.png?1765193080",
+    "background": "#ffffff"
+  },
+  "NYSE:NVR:USD": {
+    "src": "/asset-logos/catalog/NYSE_NVR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NVR.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NXPI:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NXPI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NXPI.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NWSA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NWSA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NWSA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:NWS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_NWS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/NWS.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:okb:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_okb_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/4463/large/WeChat_Image_20220118095654.png?1696505053",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ODFL:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ODFL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ODFL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:OKE:USD": {
+    "src": "/asset-logos/catalog/NYSE_OKE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/OKE.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:OKTA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_OKTA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/OKTA.png",
+    "background": "#1d2b34"
+  },
+  "COINGECKO:ondo-finance:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ondo-finance_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/26580/large/ONDO.png?1696525656",
+    "background": "#ffffff"
+  },
+  "NYSE:O:USD": {
+    "src": "/asset-logos/catalog/NYSE_O_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/O.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ON:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ON_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ON.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:OMC:USD": {
+    "src": "/asset-logos/catalog/NYSE_OMC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/OMC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ORCL:USD": {
+    "src": "/asset-logos/catalog/NYSE_ORCL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ORCL.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ORLY:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ORLY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ORLY.png",
+    "background": "#ffffff"
+  },
+  "NYSE:OTIS:USD": {
+    "src": "/asset-logos/catalog/NYSE_OTIS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/OTIS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:OXY:USD": {
+    "src": "/asset-logos/catalog/NYSE_OXY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/OXY.png",
+    "background": "#ffffff"
+  },
+  "NYSE:P:USD": {
+    "src": "/asset-logos/catalog/NYSE_P_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/P.png",
+    "background": "#ffffff"
+  },
+  "BYMA:PAMP:ARS": {
+    "src": "/asset-logos/catalog/BYMA_PAMP_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PAMP.BA.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:pax-gold:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_pax-gold_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/9519/large/asset-paxg.png?1785284785",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PANW:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PANW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PANW.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PAYX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PAYX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PAYX.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:pearl-2:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_pearl-2_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/102173580/large/pearl.png?1780324634",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PCAR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PCAR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PCAR.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:pepe:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_pepe_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+    "background": "#ffffff"
+  },
+  "NYSE:PCG:USD": {
+    "src": "/asset-logos/catalog/NYSE_PCG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PCG.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:open-usd:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_open-usd_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/102174264/large/open_standard.png?1782864430",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PEP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PEP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PEP.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PEG:USD": {
+    "src": "/asset-logos/catalog/NYSE_PEG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PEG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PFE:USD": {
+    "src": "/asset-logos/catalog/NYSE_PFE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PFE.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PFG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PFG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PFG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PGR:USD": {
+    "src": "/asset-logos/catalog/NYSE_PGR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PGR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PHM:USD": {
+    "src": "/asset-logos/catalog/NYSE_PHM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PHM.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:pieverse:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_pieverse_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/68773/large/pieverse.png?1756546685",
+    "background": "#ffffff"
+  },
+  "NYSE:PH:USD": {
+    "src": "/asset-logos/catalog/NYSE_PH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PH.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PG:USD": {
+    "src": "/asset-logos/catalog/NYSE_PG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PKG:USD": {
+    "src": "/asset-logos/catalog/NYSE_PKG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PKG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PLD:USD": {
+    "src": "/asset-logos/catalog/NYSE_PLD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PLD.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PLTR:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PLTR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PLTR.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PM:USD": {
+    "src": "/asset-logos/catalog/NYSE_PM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PNC:USD": {
+    "src": "/asset-logos/catalog/NYSE_PNC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PNC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PNR:USD": {
+    "src": "/asset-logos/catalog/NYSE_PNR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PNR.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:polygon-ecosystem-token:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_polygon-ecosystem-token_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/32440/large/pol.png?1759114181",
+    "background": "#ffffff"
+  },
+  "NYSE:PNW:USD": {
+    "src": "/asset-logos/catalog/NYSE_PNW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PNW.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PODD:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PODD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PODD.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:pi-network:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_pi-network_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/54342/large/pi_network.jpg?1739347576",
+    "background": "#ffffff"
+  },
+  "NYSE:PPG:USD": {
+    "src": "/asset-logos/catalog/NYSE_PPG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PPG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PPL:USD": {
+    "src": "/asset-logos/catalog/NYSE_PPL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PPL.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:pump-fun:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_pump-fun_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/67164/large/pump.jpg?1751949376",
+    "background": "#ffffff"
+  },
+  "NYSE:PSA:USD": {
+    "src": "/asset-logos/catalog/NYSE_PSA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PSA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PSX:USD": {
+    "src": "/asset-logos/catalog/NYSE_PSX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PSX.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:paypal-usd:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_paypal-usd_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/31212/large/PYUSD_Token_Logo_2x.png?1765987788",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PTC:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PTC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PTC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:PWR:USD": {
+    "src": "/asset-logos/catalog/NYSE_PWR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PWR.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:quant-network:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_quant-network_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/3370/large/5ZOu7brX_400x400.jpg?1696504070",
+    "background": "#ffffff"
+  },
+  "NYSE:PRU:USD": {
+    "src": "/asset-logos/catalog/NYSE_PRU_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PRU.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:PYPL:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_PYPL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/PYPL.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:rain:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_rain_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
+    "background": "#ffffff"
+  },
+  "NYSE:Q:USD": {
+    "src": "/asset-logos/catalog/NYSE_Q_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/Q.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:QCOM:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_QCOM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/QCOM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:RCL:USD": {
+    "src": "/asset-logos/catalog/NYSE_RCL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RCL.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:RDDT:USD": {
+    "src": "/asset-logos/catalog/NYSE_RDDT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RDDT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:REG:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_REG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/REG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:REGN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_REGN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/REGN.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:RF:USD": {
+    "src": "/asset-logos/catalog/NYSE_RF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RF.png",
+    "background": "#ffffff"
+  },
+  "BYMA:RICH:ARS": {
+    "src": "/asset-logos/catalog/BYMA_RICH_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RICH.BA.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:ripple-usd:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ripple-usd_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/39651/large/RLUSD_200x200_%281%29.png?1727376633",
+    "background": "#ffffff"
+  },
+  "NYSE:RJF:USD": {
+    "src": "/asset-logos/catalog/NYSE_RJF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RJF.png",
+    "background": "#ffffff"
+  },
+  "NYSE:RL:USD": {
+    "src": "/asset-logos/catalog/NYSE_RL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:RMD:USD": {
+    "src": "/asset-logos/catalog/NYSE_RMD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RMD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ROK:USD": {
+    "src": "/asset-logos/catalog/NYSE_ROK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ROK.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ROL:USD": {
+    "src": "/asset-logos/catalog/NYSE_ROL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ROL.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ROP:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ROP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ROP.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:render-token:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_render-token_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/11636/large/rndr.png?1696511529",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ROST:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ROST_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ROST.png",
+    "background": "#ffffff"
+  },
+  "NYSE:RSG:USD": {
+    "src": "/asset-logos/catalog/NYSE_RSG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RSG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:RTX:USD": {
+    "src": "/asset-logos/catalog/NYSE_RTX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RTX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:RVTY:USD": {
+    "src": "/asset-logos/catalog/NYSE_RVTY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/RVTY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:SBAC:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_SBAC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SBAC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:SBUX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_SBUX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SBUX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SCHW:USD": {
+    "src": "/asset-logos/catalog/NYSE_SCHW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SCHW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SHW:USD": {
+    "src": "/asset-logos/catalog/NYSE_SHW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SHW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SJM:USD": {
+    "src": "/asset-logos/catalog/NYSE_SJM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SJM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SLB:USD": {
+    "src": "/asset-logos/catalog/NYSE_SLB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SLB.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:SMCI:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_SMCI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SMCI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SNA:USD": {
+    "src": "/asset-logos/catalog/NYSE_SNA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SNA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:SNDK:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_SNDK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SNDK.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:shiba-inu:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_shiba-inu_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+    "background": "#ffffff"
+  },
+  "COINGECKO:solana:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_solana_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+    "background": "#ffffff"
+  },
+  "COINGECKO:sky:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_sky_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/39925/large/sky.jpg?1724827980",
+    "background": "#ffffff"
+  },
+  "NASDAQ:SNPS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_SNPS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SNPS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SO:USD": {
+    "src": "/asset-logos/catalog/NYSE_SO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SOLV:USD": {
+    "src": "/asset-logos/catalog/NYSE_SOLV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SOLV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SPG:USD": {
+    "src": "/asset-logos/catalog/NYSE_SPG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SPG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SPGI:USD": {
+    "src": "/asset-logos/catalog/NYSE_SPGI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SPGI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SRE:USD": {
+    "src": "/asset-logos/catalog/NYSE_SRE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SRE.png",
+    "background": "#ffffff"
+  },
+  "NYSE:STE:USD": {
+    "src": "/asset-logos/catalog/NYSE_STE_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/STE.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:blockstack:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_blockstack_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/2069/large/Stacks_Logo_png.png?1709979332",
+    "background": "#ffffff"
+  },
+  "NASDAQ:STLD:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_STLD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/STLD.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:sui:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_sui_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/26375/large/sui-ocean-square.png?1727791290",
+    "background": "#ffffff"
+  },
+  "NYSE:STT:USD": {
+    "src": "/asset-logos/catalog/NYSE_STT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/STT.png",
+    "background": "#1d2b34"
+  },
+  "NASDAQ:STX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_STX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/STX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:STZ:USD": {
+    "src": "/asset-logos/catalog/NYSE_STZ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/STZ.png",
+    "background": "#ffffff"
+  },
+  "BYMA:SUPV:ARS": {
+    "src": "/asset-logos/catalog/BYMA_SUPV_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SUPV.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SWK:USD": {
+    "src": "/asset-logos/catalog/NYSE_SWK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SWK.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SYF:USD": {
+    "src": "/asset-logos/catalog/NYSE_SYF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SYF.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SYK:USD": {
+    "src": "/asset-logos/catalog/NYSE_SYK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SYK.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:SWKS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_SWKS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SWKS.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:bittensor:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_bittensor_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/28452/large/ARUsPeNQ_400x400.jpeg?1696527447",
+    "background": "#ffffff"
+  },
+  "NYSE:SW:USD": {
+    "src": "/asset-logos/catalog/NYSE_SW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SYY:USD": {
+    "src": "/asset-logos/catalog/NYSE_SYY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SYY.png",
+    "background": "#ffffff"
+  },
+  "NYSE:T:USD": {
+    "src": "/asset-logos/catalog/NYSE_T_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/T.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TDG:USD": {
+    "src": "/asset-logos/catalog/NYSE_TDG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TDG.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TDY:USD": {
+    "src": "/asset-logos/catalog/NYSE_TDY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TDY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TECH:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TECH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TECH.png",
+    "background": "#ffffff"
+  },
+  "BYMA:TECO2:ARS": {
+    "src": "/asset-logos/catalog/BYMA_TECO2_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TECO2.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TEL:USD": {
+    "src": "/asset-logos/catalog/NYSE_TEL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TEL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TFC:USD": {
+    "src": "/asset-logos/catalog/NYSE_TFC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TFC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TER:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TER_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TER.png",
+    "background": "#ffffff"
+  },
+  "BYMA:TGNO4:ARS": {
+    "src": "/asset-logos/catalog/BYMA_TGNO4_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TGNO4.BA.png",
+    "background": "#ffffff"
+  },
+  "BYMA:TGSU2:ARS": {
+    "src": "/asset-logos/catalog/BYMA_TGSU2_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TGSU2.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TGT:USD": {
+    "src": "/asset-logos/catalog/NYSE_TGT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TGT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TJX:USD": {
+    "src": "/asset-logos/catalog/NYSE_TJX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TJX.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TKO:USD": {
+    "src": "/asset-logos/catalog/NYSE_TKO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TKO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TMO:USD": {
+    "src": "/asset-logos/catalog/NYSE_TMO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TMO.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TMUS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TMUS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TMUS.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TPL:USD": {
+    "src": "/asset-logos/catalog/NYSE_TPL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TPL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TPR:USD": {
+    "src": "/asset-logos/catalog/NYSE_TPR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TPR.png",
+    "background": "#ffffff"
+  },
+  "BYMA:TRAN:ARS": {
+    "src": "/asset-logos/catalog/BYMA_TRAN_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TRAN.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TRGP:USD": {
+    "src": "/asset-logos/catalog/NYSE_TRGP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TRGP.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:tron:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_tron_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/1094/large/photo_2026-04-13_09-59-16.png?1776048311",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TRMB:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TRMB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TRMB.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TROW:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TROW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TROW.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TRV:USD": {
+    "src": "/asset-logos/catalog/NYSE_TRV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TRV.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TSCO:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TSCO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TSCO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TSN:USD": {
+    "src": "/asset-logos/catalog/NYSE_TSN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TSN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TT:USD": {
+    "src": "/asset-logos/catalog/NYSE_TT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TTWO:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TTWO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TTWO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TWLO:USD": {
+    "src": "/asset-logos/catalog/NYSE_TWLO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TWLO.png",
+    "background": "#ffffff"
+  },
+  "BYMA:TXAR:ARS": {
+    "src": "/asset-logos/catalog/BYMA_TXAR_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TXAR.BA.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TXN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TXN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TXN.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TXT:USD": {
+    "src": "/asset-logos/catalog/NYSE_TXT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TXT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:TYL:USD": {
+    "src": "/asset-logos/catalog/NYSE_TYL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TYL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:UBER:USD": {
+    "src": "/asset-logos/catalog/NYSE_UBER_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/UBER.png",
+    "background": "#1d2b34"
+  },
+  "NASDAQ:UAL:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_UAL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/UAL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:UDR:USD": {
+    "src": "/asset-logos/catalog/NYSE_UDR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/UDR.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:uniswap:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_uniswap_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/12504/large/uniswap-logo.png?1720676669",
+    "background": "#ffffff"
+  },
+  "NYSE:UHS:USD": {
+    "src": "/asset-logos/catalog/NYSE_UHS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/UHS.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ULTA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ULTA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ULTA.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:UNH:USD": {
+    "src": "/asset-logos/catalog/NYSE_UNH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/UNH.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:UNP:USD": {
+    "src": "/asset-logos/catalog/NYSE_UNP_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/UNP.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:united-stables:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_united-stables_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/71157/large/united-stables-logo.jpg?1766061640",
+    "background": "#ffffff"
+  },
+  "NYSE:UPS:USD": {
+    "src": "/asset-logos/catalog/NYSE_UPS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/UPS.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:usd1-wlfi:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_usd1-wlfi_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/54977/large/USD1_1000x1000_transparent.png?1749297002",
+    "background": "#ffffff"
+  },
+  "COINGECKO:usual-usd:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_usual-usd_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/38272/large/USD0LOGO.png?1716962811",
+    "background": "#ffffff"
+  },
+  "COINGECKO:usd-coin:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_usd-coin_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+    "background": "#ffffff"
+  },
+  "COINGECKO:usdd:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_usdd_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/25380/large/UUSD.jpg?1696524513",
+    "background": "#ffffff"
+  },
+  "COINGECKO:ethena-usde:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ethena-usde_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+    "background": "#ffffff"
+  },
+  "COINGECKO:falcon-finance:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_falcon-finance_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/54558/large/ff_200_X_200.png?1740741076",
+    "background": "#ffffff"
+  },
+  "COINGECKO:global-dollar:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_global-dollar_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+    "background": "#ffffff"
+  },
+  "NYSE:URI:USD": {
+    "src": "/asset-logos/catalog/NYSE_URI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/URI.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:usds:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_usds_USD.webp",
+    "source": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+    "background": "#ffffff"
+  },
+  "COINGECKO:tether:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_tether_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+    "background": "#ffffff"
+  },
+  "COINGECKO:hashnote-usyc:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_hashnote-usyc_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/51054/large/Hashnote_SDYC_200x200.png?1730370965",
+    "background": "#ffffff"
+  },
+  "COINGECKO:superstate-short-duration-us-government-securities-fund-ustb:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_superstate-short-duration-us-government-securities-fund-ustb_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/35012/large/Invesco_icon_lg.png?1780816895",
+    "background": "#ffffff"
+  },
+  "COINGECKO:ondo-us-dollar-yield:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ondo-us-dollar-yield_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+    "background": "#ffffff"
+  },
+  "NYSE:USB:USD": {
+    "src": "/asset-logos/catalog/NYSE_USB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/USB.png",
+    "background": "#ffffff"
+  },
+  "BYMA:VALO:ARS": {
+    "src": "/asset-logos/catalog/BYMA_VALO_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VALO.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:V:USD": {
+    "src": "/asset-logos/catalog/NYSE_V_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/V.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:VEEV:USD": {
+    "src": "/asset-logos/catalog/NYSE_VEEV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VEEV.png",
+    "background": "#ffffff"
+  },
+  "NYSE:VICI:USD": {
+    "src": "/asset-logos/catalog/NYSE_VICI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VICI.png",
+    "background": "#ffffff"
+  },
+  "NYSE:VLO:USD": {
+    "src": "/asset-logos/catalog/NYSE_VLO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VLO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:VLTO:USD": {
+    "src": "/asset-logos/catalog/NYSE_VLTO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VLTO.png",
+    "background": "#ffffff"
+  },
+  "NYSE:VMC:USD": {
+    "src": "/asset-logos/catalog/NYSE_VMC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VMC.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:usdgo:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_usdgo_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/102172077/large/USDGO_Primary_Icon.png?1789694084",
+    "background": "#ffffff"
+  },
+  "NASDAQ:VRSK:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_VRSK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VRSK.png",
+    "background": "#ffffff"
+  },
+  "NYSE:VRT:USD": {
+    "src": "/asset-logos/catalog/NYSE_VRT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VRT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:VRSN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_VRSN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VRSN.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:venice-token:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_venice-token_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/54023/large/VVV_Token_Transparent.png?1741856877",
+    "background": "#ffffff"
+  },
+  "NYSE:VST:USD": {
+    "src": "/asset-logos/catalog/NYSE_VST_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VST.png",
+    "background": "#ffffff"
+  },
+  "NYSE:VTR:USD": {
+    "src": "/asset-logos/catalog/NYSE_VTR_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VTR.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:VTRS:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_VTRS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VTRS.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:whitebit:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_whitebit_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/27045/large/wbt_token.png?1696526096",
+    "background": "#ffffff"
+  },
+  "NASDAQ:VRTX:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_VRTX_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VRTX.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:VZ:USD": {
+    "src": "/asset-logos/catalog/NYSE_VZ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VZ.png",
+    "background": "#ffffff"
+  },
+  "NYSE:WAB:USD": {
+    "src": "/asset-logos/catalog/NYSE_WAB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WAB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:WAT:USD": {
+    "src": "/asset-logos/catalog/NYSE_WAT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WAT.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:WDC:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_WDC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WDC.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:WDAY:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_WDAY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WDAY.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:worldcoin-wld:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_worldcoin-wld_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/31069/large/worldcoin.jpeg?1696529903",
+    "background": "#ffffff"
+  },
+  "COINGECKO:world-liberty-financial:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_world-liberty-financial_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/50767/large/wlfi.png?1756438915",
+    "background": "#ffffff"
+  },
+  "NYSE:WELL:USD": {
+    "src": "/asset-logos/catalog/NYSE_WELL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WELL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:WFC:USD": {
+    "src": "/asset-logos/catalog/NYSE_WFC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WFC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:WEC:USD": {
+    "src": "/asset-logos/catalog/NYSE_WEC_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WEC.png",
+    "background": "#ffffff"
+  },
+  "NYSE:WMB:USD": {
+    "src": "/asset-logos/catalog/NYSE_WMB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WMB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:WM:USD": {
+    "src": "/asset-logos/catalog/NYSE_WM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WM.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:WMT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_WMT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WMT.png",
+    "background": "#ffffff"
+  },
+  "NYSE:WRB:USD": {
+    "src": "/asset-logos/catalog/NYSE_WRB_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WRB.png",
+    "background": "#ffffff"
+  },
+  "NYSE:WSM:USD": {
+    "src": "/asset-logos/catalog/NYSE_WSM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WSM.png",
+    "background": "#1d2b34"
+  },
+  "COINGECKO:tether-gold:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_tether-gold_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/10481/large/logo.png?1774627372",
+    "background": "#ffffff"
+  },
+  "COINGECKO:xdce-crowd-sale:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_xdce-crowd-sale_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/2912/large/xdc-icon.png?1696503661",
+    "background": "#ffffff"
+  },
+  "NYSE:WY:USD": {
+    "src": "/asset-logos/catalog/NYSE_WY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:WYNN:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_WYNN_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WYNN.png",
+    "background": "#1d2b34"
+  },
+  "NYSE:WST:USD": {
+    "src": "/asset-logos/catalog/NYSE_WST_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WST.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:WTW:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_WTW_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/WTW.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:stellar:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_stellar_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/100/large/fmpFRHHQ_400x400.jpg?1735231350",
+    "background": "#ffffff"
+  },
+  "COINGECKO:monero:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_monero_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/69/large/monero_logo.png?1696501460",
+    "background": "#ffffff"
+  },
+  "COINGECKO:ripple:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_ripple_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1696501442",
+    "background": "#ffffff"
+  },
+  "NASDAQ:XEL:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_XEL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/XEL.png",
+    "background": "#ffffff"
+  },
+  "NYSE:XOM:USD": {
+    "src": "/asset-logos/catalog/NYSE_XOM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/XOM.png",
+    "background": "#ffffff"
+  },
+  "NYSE:XYZ:USD": {
+    "src": "/asset-logos/catalog/NYSE_XYZ_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/XYZ.png",
+    "background": "#ffffff"
+  },
+  "NYSE:XYL:USD": {
+    "src": "/asset-logos/catalog/NYSE_XYL_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/XYL.png",
+    "background": "#ffffff"
+  },
+  "BYMA:YPFD:ARS": {
+    "src": "/asset-logos/catalog/BYMA_YPFD_ARS.png",
+    "source": "https://images.financialmodelingprep.com/symbol/YPFD.BA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:YUM:USD": {
+    "src": "/asset-logos/catalog/NYSE_YUM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/YUM.png",
+    "background": "#ffffff"
+  },
+  "COINGECKO:zcash:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_zcash_USD.png",
+    "source": "https://coin-images.coingecko.com/coins/images/486/large/Brandmark-Yellow_%281%29.png?1785810558",
+    "background": "#ffffff"
+  },
+  "COINGECKO:layerzero:USD": {
+    "src": "/asset-logos/catalog/COINGECKO_layerzero_USD.jpg",
+    "source": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
+    "background": "#ffffff"
+  },
+  "NYSE:ZBH:USD": {
+    "src": "/asset-logos/catalog/NYSE_ZBH_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ZBH.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:ZBRA:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_ZBRA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ZBRA.png",
+    "background": "#ffffff"
+  },
+  "NYSE:ZTS:USD": {
+    "src": "/asset-logos/catalog/NYSE_ZTS_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ZTS.png",
+    "background": "#ffffff"
+  },
+  "ARCA:AGG:USD": {
+    "src": "/asset-logos/catalog/ARCA_AGG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/AGG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:BND:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_BND_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/BND.png",
+    "background": "#ffffff"
+  },
+  "ARCA:DIA:USD": {
+    "src": "/asset-logos/catalog/ARCA_DIA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/DIA.png",
+    "background": "#ffffff"
+  },
+  "CBOE:ARKK:USD": {
+    "src": "/asset-logos/catalog/CBOE_ARKK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/ARKK.png",
+    "background": "#1d2b34"
+  },
+  "ARCA:HYG:USD": {
+    "src": "/asset-logos/catalog/ARCA_HYG_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/HYG.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:IBIT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_IBIT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IBIT.png",
+    "background": "#ffffff"
+  },
+  "ARCA:IVV:USD": {
+    "src": "/asset-logos/catalog/ARCA_IVV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IVV.png",
+    "background": "#ffffff"
+  },
+  "ARCA:GLD:USD": {
+    "src": "/asset-logos/catalog/ARCA_GLD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/GLD.png",
+    "background": "#ffffff"
+  },
+  "ARCA:IWM:USD": {
+    "src": "/asset-logos/catalog/ARCA_IWM_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/IWM.png",
+    "background": "#ffffff"
+  },
+  "ARCA:LQD:USD": {
+    "src": "/asset-logos/catalog/ARCA_LQD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/LQD.png",
+    "background": "#ffffff"
+  },
+  "ARCA:SCHD:USD": {
+    "src": "/asset-logos/catalog/ARCA_SCHD_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SCHD.png",
+    "background": "#ffffff"
+  },
+  "NYSE:SGOV:USD": {
+    "src": "/asset-logos/catalog/NYSE_SGOV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SGOV.png",
+    "background": "#ffffff"
+  },
+  "ARCA:SLV:USD": {
+    "src": "/asset-logos/catalog/ARCA_SLV_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SLV.png",
+    "background": "#ffffff"
+  },
+  "ARCA:SPY:USD": {
+    "src": "/asset-logos/catalog/ARCA_SPY_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/SPY.png",
+    "background": "#ffffff"
+  },
+  "NASDAQ:TLT:USD": {
+    "src": "/asset-logos/catalog/NASDAQ_TLT_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/TLT.png",
+    "background": "#ffffff"
+  },
+  "ARCA:VEA:USD": {
+    "src": "/asset-logos/catalog/ARCA_VEA_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VEA.png",
+    "background": "#ffffff"
+  },
+  "ARCA:VOO:USD": {
+    "src": "/asset-logos/catalog/ARCA_VOO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VOO.png",
+    "background": "#ffffff"
+  },
+  "ARCA:VTI:USD": {
+    "src": "/asset-logos/catalog/ARCA_VTI_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VTI.png",
+    "background": "#ffffff"
+  },
+  "ARCA:VWO:USD": {
+    "src": "/asset-logos/catalog/ARCA_VWO_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/VWO.png",
+    "background": "#ffffff"
+  },
+  "ARCA:XLF:USD": {
+    "src": "/asset-logos/catalog/ARCA_XLF_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/XLF.png",
+    "background": "#ffffff"
+  },
+  "ARCA:XLK:USD": {
+    "src": "/asset-logos/catalog/ARCA_XLK_USD.png",
+    "source": "https://images.financialmodelingprep.com/symbol/XLK.png",
+    "background": "#ffffff"
+  }
+}

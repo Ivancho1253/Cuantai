@@ -1,4 +1,5 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -20,7 +21,9 @@ type Workspace = {
   name: string;
   config:
     | TradingViewWorkspaceConfig
-    | (Omit<TradingViewWorkspaceConfig, 'provider'> & { provider?: undefined });
+    | (Omit<TradingViewWorkspaceConfig, 'provider'> & {
+        provider?: undefined;
+      });
 };
 export function ChartWorkspace({
   initialId = 'BINANCE:BTCUSDT:USDT',
@@ -29,6 +32,7 @@ export function ChartWorkspace({
   initialId?: string;
   embedded?: boolean;
 }) {
+  const uiText = useUiText();
   const { demo, user } = useApp();
   const qc = useQueryClient();
   const [ids, setIds] = useState([initialId]),
@@ -88,113 +92,127 @@ export function ChartWorkspace({
   }
   return (
     <div className="workspace-page tv-workspace">
-      {!embedded && (
-        <SectionTitle
-          eyebrow="TRADINGVIEW CHARTS"
-          title="El mercado, desde TradingView."
-          description="Gráficos, cotizaciones e indicadores del widget oficial de TradingView."
-          action={
-            <Button variant="secondary" onClick={() => setSaveModal(true)}>
-              <Save size={15} /> Guardar workspace
-            </Button>
-          }
-        />
+      {uiText(
+        !embedded && (
+          <SectionTitle
+            eyebrow={uiText('TRADINGVIEW CHARTS')}
+            title={uiText('El mercado, desde TradingView.')}
+            description={uiText(
+              'Gr\u00E1ficos, cotizaciones e indicadores del widget oficial de TradingView.',
+            )}
+            action={
+              <Button variant="secondary" onClick={() => setSaveModal(true)}>
+                <Save size={15} />
+                {uiText(' Guardar workspace')}
+              </Button>
+            }
+          />
+        ),
       )}
       <div className="terminal-toolbar">
         <label>
-          Período al abrir
+          {uiText('Per\u00EDodo al abrir')}
           <select
-            aria-label="Temporalidad inicial"
+            aria-label={uiText('Temporalidad inicial')}
             value={timeframe}
             onChange={(e) => setTimeframe(e.target.value as Timeframe)}
           >
-            {timeframes.map((tf) => (
-              <option key={tf}>{tf}</option>
-            ))}
+            {uiText(timeframes.map((tf) => <option key={tf}>{uiText(tf)}</option>))}
           </select>
         </label>
         <label>
-          Estilo al abrir
+          {uiText('Estilo al abrir')}
           <select
-            aria-label="Tipo de gráfico"
+            aria-label={uiText('Tipo de gr\u00E1fico')}
             value={chartType}
             onChange={(e) => setChartType(e.target.value as TradingViewChartType)}
           >
-            <option value="candles">Velas</option>
-            <option value="line">Línea</option>
-            <option value="area">Área</option>
-            <option value="bars">Barras OHLC</option>
+            <option value="candles">{uiText('Velas')}</option>
+            <option value="line">{uiText('L\u00EDnea')}</option>
+            <option value="area">{uiText('\u00C1rea')}</option>
+            <option value="bars">{uiText('Barras OHLC')}</option>
           </select>
         </label>
         <div className="layout-buttons">
-          {[
-            [1, Square],
-            [2, Columns2],
-            [4, LayoutGrid],
-          ].map(([count, Icon]) => {
-            const I = Icon as typeof Square;
-            return (
-              <button
-                key={String(count)}
-                aria-label={`${count} gráficos`}
-                aria-pressed={ids.length === count}
-                className={ids.length === count ? 'active' : ''}
-                onClick={() => layout(count as number)}
-              >
-                <I size={15} />
-              </button>
-            );
-          })}
+          {uiText(
+            [
+              [1, Square],
+              [2, Columns2],
+              [4, LayoutGrid],
+            ].map(([count, Icon]) => {
+              const I = Icon as typeof Square;
+              return (
+                <button
+                  key={String(count)}
+                  aria-label={uiText('{0} gr\u00E1ficos', [count])}
+                  aria-pressed={ids.length === count}
+                  className={ids.length === count ? 'active' : ''}
+                  onClick={() => layout(count as number)}
+                >
+                  <I size={15} />
+                </button>
+              );
+            }),
+          )}
         </div>
       </div>
       <div className="workspace-meta">
-        <span>{name}</span>
+        <span>{uiText(name)}</span>
         <div>
-          {Boolean(workspaces.data?.length) && (
-            <label className="workspace-picker">
-              <FolderOpen size={13} />
-              <select
-                aria-label="Recuperar workspace"
-                value={workspaceId ?? ''}
-                onChange={(e) => load(e.target.value)}
-              >
-                <option value="">Abrir guardado…</option>
-                {workspaces.data!.map((w) => (
-                  <option value={w.id} key={w.id}>
-                    {w.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+          {uiText(
+            Boolean(workspaces.data?.length) && (
+              <label className="workspace-picker">
+                <FolderOpen size={13} />
+                <select
+                  aria-label={uiText('Recuperar workspace')}
+                  value={workspaceId ?? ''}
+                  onChange={(e) => load(e.target.value)}
+                >
+                  <option value="">{uiText('Abrir guardado\u2026')}</option>
+                  {uiText(
+                    workspaces.data!.map((w) => (
+                      <option value={w.id} key={w.id}>
+                        {uiText(w.name)}
+                      </option>
+                    )),
+                  )}
+                </select>
+              </label>
+            ),
           )}
           <button className="text-link" onClick={() => setSaveModal(true)}>
-            <Save size={13} /> Guardar
+            <Save size={13} />
+            {uiText(' Guardar')}
           </button>
         </div>
       </div>
       <div className={cn('chart-grid', ids.length > 1 && 'chart-grid-multiple')}>
-        {ids.map((id, index) => (
-          <ChartTile
-            key={index}
-            id={id}
-            index={index}
-            setId={(newId) => setIds(ids.map((old, n) => (n === index ? newId : old)))}
-            timeframe={timeframe}
-            chartType={chartType}
-            height={ids.length === 1 ? 650 : 480}
-          />
-        ))}
+        {uiText(
+          ids.map((id, index) => (
+            <ChartTile
+              key={index}
+              id={id}
+              index={index}
+              setId={(newId) => setIds(ids.map((old, n) => (n === index ? newId : old)))}
+              timeframe={timeframe}
+              chartType={chartType}
+              height={ids.length === 1 ? 650 : 480}
+            />
+          )),
+        )}
       </div>
       <p className="terminal-footnote">
-        Los datos y las herramientas de cada gráfico provienen de TradingView, incluso en la demo.
-        La disponibilidad y demora dependen de TradingView y del mercado. Los indicadores y dibujos
-        se gestionan dentro del widget; Cuantai guarda solo la configuración de apertura.
+        {uiText(
+          'Los datos y las herramientas de cada gr\u00E1fico provienen de TradingView, incluso en la demo. La disponibilidad y demora dependen de TradingView y del mercado. Los indicadores y dibujos se gestionan dentro del widget; Cuantai guarda solo la configuraci\u00F3n de apertura.',
+        )}
       </p>
       <Modal
         open={saveModal}
         onOpenChange={setSaveModal}
-        title="Guardar tu perspectiva"
-        description="Guardá activos, distribución, período y estilo de apertura. Los cambios internos del widget no se guardan en Cuantai."
+        title={uiText('Guardar tu perspectiva')}
+        description={uiText(
+          'Guard\u00E1 activos, distribuci\u00F3n, per\u00EDodo y estilo de apertura. Los cambios internos del widget no se guardan en Cuantai.',
+        )}
       >
         <form
           className="form-stack"
@@ -204,17 +222,20 @@ export function ChartWorkspace({
           }}
         >
           <label>
-            Nombre del workspace
+            {uiText('Nombre del workspace')}
             <input value={name} onChange={(e) => setName(e.target.value)} maxLength={80} required />
           </label>
-          {!user || demo ? (
-            <p className="info-strip">
-              Necesitás iniciar sesión. <Link href="/register">Crear cuenta</Link>
-            </p>
-          ) : (
-            <Button type="submit" disabled={saving}>
-              {saving ? 'Guardando…' : 'Guardar workspace'}
-            </Button>
+          {uiText(
+            !user || demo ? (
+              <p className="info-strip">
+                {uiText('Necesit\u00E1s iniciar sesi\u00F3n. ')}
+                <Link href="/register">{uiText('Crear cuenta')}</Link>
+              </p>
+            ) : (
+              <Button type="submit" disabled={saving}>
+                {uiText(saving ? 'Guardando…' : 'Guardar workspace')}
+              </Button>
+            ),
           )}
         </form>
       </Modal>
@@ -236,6 +257,7 @@ function ChartTile({
   chartType: TradingViewChartType;
   height: number;
 }) {
+  const uiText = useUiText();
   const seed = instruments.find((i) => i.id === id);
   const metadata = useQuery({
     queryKey: ['instrument', id],
@@ -247,35 +269,41 @@ function ChartTile({
     <section className="panel chart-tile">
       <div className="chart-tile-header">
         <div className="asset-cell">
-          {instrument && <AssetIcon instrument={instrument} small />}
+          {uiText(instrument && <AssetIcon instrument={instrument} small />)}
           <select
-            aria-label={`Activo del gráfico ${index + 1}`}
+            aria-label={uiText('Activo del gr\u00E1fico {0}', [index + 1])}
             value={id}
             onChange={(e) => setId(e.target.value)}
           >
-            {!seed && <option value={id}>{instrument?.name ?? id}</option>}
-            {instruments
-              .filter((i) => i.type !== 'cash')
-              .map((i) => (
-                <option value={i.id} key={i.id}>
-                  {i.symbol} · {i.exchange} · {i.currency}
-                </option>
-              ))}
+            {uiText(!seed && <option value={id}>{uiText(instrument?.name ?? id)}</option>)}
+            {uiText(
+              instruments
+                .filter((i) => i.type !== 'cash')
+                .map((i) => (
+                  <option value={i.id} key={i.id}>
+                    {uiText(i.symbol)} · {uiText(i.exchange)} · {uiText(i.currency)}
+                  </option>
+                )),
+            )}
           </select>
         </div>
-        <span className="outlined-chip">Datos de TradingView</span>
+        <span className="outlined-chip">{uiText('Datos de TradingView')}</span>
       </div>
-      {instrument ? (
-        <TradingViewChart
-          symbol={tradingViewSymbol(instrument)}
-          timeframe={timeframe}
-          chartType={chartType}
-          height={height}
-        />
-      ) : (
-        <div className="chart-unavailable">
-          {metadata.isError ? 'No se pudo identificar el activo.' : 'Identificando activo…'}
-        </div>
+      {uiText(
+        instrument ? (
+          <TradingViewChart
+            symbol={tradingViewSymbol(instrument)}
+            timeframe={timeframe}
+            chartType={chartType}
+            height={height}
+          />
+        ) : (
+          <div className="chart-unavailable">
+            {uiText(
+              metadata.isError ? 'No se pudo identificar el activo.' : 'Identificando activo…',
+            )}
+          </div>
+        ),
       )}
     </section>
   );

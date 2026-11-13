@@ -1,3 +1,5 @@
+'use client';
+import { useText as useUiText } from './locale-provider';
 import { useId } from 'react';
 export function Sparkline({
   values,
@@ -8,6 +10,7 @@ export function Sparkline({
   positive?: boolean;
   fill?: boolean;
 }) {
+  const uiText = useUiText();
   const id = useId().replace(/:/g, '');
   if (values.length < 2) return <span className="muted">—</span>;
   const min = Math.min(...values),
@@ -24,7 +27,7 @@ export function Sparkline({
           <stop offset="100%" stopColor={color} stopOpacity="0" />
         </linearGradient>
       </defs>
-      {fill && <polygon points={`0,42 ${points} 140,42`} fill={`url(#${id})`} />}
+      {uiText(fill && <polygon points={`0,42 ${points} 140,42`} fill={`url(#${id})`} />)}
       <polyline
         points={points}
         fill="none"

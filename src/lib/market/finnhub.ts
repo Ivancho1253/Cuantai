@@ -77,6 +77,8 @@ export class FinnhubProvider implements FundamentalsProvider, NewsProvider {
           source: z.string(),
           datetime: z.number(),
           category: z.string().optional(),
+          image: z.string().optional(),
+          summary: z.string().optional(),
         }),
       )
       .parse(raw);
@@ -92,6 +94,8 @@ export class FinnhubProvider implements FundamentalsProvider, NewsProvider {
         source: n.source,
         publishedAt: new Date(n.datetime * 1000).toISOString(),
         category: n.category ?? 'Markets',
+        ...(n.image && /^https:\/\//.test(n.image) ? { imageUrl: n.image } : {}),
+        ...(n.summary ? { summary: n.summary } : {}),
       }));
   }
 }

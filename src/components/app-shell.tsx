@@ -1,4 +1,5 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { assetHref } from '@/lib/market/asset-href';
@@ -33,7 +34,12 @@ import { authClient } from '@/lib/auth-client';
 import { defaultPreferences } from '@/lib/preferences';
 import { toast } from 'sonner';
 import { MarketTicker } from './market-ticker';
-export type AppUser = { id: string; name: string; email: string };
+import { LanguageSwitcher, useLocale, isLocale } from './locale-provider';
+export type AppUser = {
+  id: string;
+  name: string;
+  email: string;
+};
 const AppContext = createContext<{
   user: AppUser | null;
   demo: boolean;
@@ -76,6 +82,7 @@ export function AppShell({
   user?: AppUser | null;
   demo?: boolean;
 }) {
+  const uiText = useUiText();
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -87,15 +94,27 @@ export function AppShell({
   const [notifications, setNotifications] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const qc = useQueryClient();
+  const { setLocale } = useLocale();
   const preferences = useQuery({
     queryKey: ['settings'],
-    queryFn: () => api<{ preferences: Record<string, unknown> }>('settings'),
+    queryFn: () =>
+      api<{
+        preferences: Record<string, unknown>;
+      }>('settings'),
     enabled: Boolean(user) && !demo,
   });
   useEffect(() => {
     const theme = preferences.data?.preferences.theme;
     if (typeof theme === 'string' && ['dark', 'light', 'system'].includes(theme)) setTheme(theme);
   }, [preferences.data?.preferences.theme, setTheme]);
+  useEffect(() => {
+    const language = preferences.data?.preferences.language;
+    if (
+      isLocale(language) &&
+      !document.cookie.split(';').some((part) => part.trim().startsWith('cuantai_lang='))
+    )
+      setLocale(language);
+  }, [preferences.data?.preferences.language, setLocale]);
   async function toggleTheme() {
     const theme = resolvedTheme === 'dark' ? 'light' : 'dark';
     setTheme(theme);
@@ -145,9 +164,10 @@ export function AppShell({
   const results = useQuery({
     queryKey: ['search', query, demo],
     queryFn: () =>
-      api<{ instruments: Instrument[]; error?: string }>(
-        `instruments?q=${encodeURIComponent(query)}${demo ? '&demo=true' : ''}`,
-      ),
+      api<{
+        instruments: Instrument[];
+        error?: string;
+      }>(`instruments?q=${encodeURIComponent(query)}${demo ? '&demo=true' : ''}`),
     enabled: searchOpen,
   });
   const status = useQuery({
@@ -155,73 +175,100 @@ export function AppShell({
     queryFn: () =>
       api<{
         mode: string;
-        binance: { configured: boolean; label: string };
-        twelveData: { configured: boolean; label: string };
-        finnhub: { configured: boolean; label: string };
-        byma: { configured: boolean; label: string };
-        ai: { configured: boolean; label: string };
+        binance: {
+          configured: boolean;
+          label: string;
+        };
+        twelveData: {
+          configured: boolean;
+          label: string;
+        };
+        finnhub: {
+          configured: boolean;
+          label: string;
+        };
+        news: {
+          configured: boolean;
+          label: string;
+        };
+        byma: {
+          configured: boolean;
+          label: string;
+        };
+        ai: {
+          configured: boolean;
+          label: string;
+        };
       }>('status'),
   });
   return (
     <AppContext.Provider value={{ user, demo, href, openSearch: () => setSearchOpen(true) }}>
       <div className="app-layout">
         <a className="skip-link" href="#main-content">
-          Ir al contenido
+          {uiText('Ir al contenido')}
         </a>
-        {mobile && (
-          <button
-            className="sidebar-backdrop"
-            aria-label="Cerrar menú"
-            onClick={() => setMobile(false)}
-          />
+        {uiText(
+          mobile && (
+            <button
+              className="sidebar-backdrop"
+              aria-label={uiText('Cerrar men\u00FA')}
+              onClick={() => setMobile(false)}
+            />
+          ),
         )}
         <aside id="workspace-navigation" className={cn('sidebar', mobile && 'sidebar-open')}>
           <div className="sidebar-brand">
             <div>
               <Brand />
-              <p className="sidebar-caption">Tu centro de inversión.</p>
+              <p className="sidebar-caption">{uiText('Tu centro de inversi\u00F3n.')}</p>
             </div>
             <button
               ref={menuClose}
               className="icon-button mobile-only"
               onClick={() => setMobile(false)}
-              aria-label="Cerrar menú"
+              aria-label={uiText('Cerrar men\u00FA')}
             >
               <PanelLeftClose size={18} />
             </button>
           </div>
           <button
             className="sidebar-search"
+            aria-label={uiText('Buscar activo')}
+            title={uiText('Buscar activo \u00B7 Ctrl K')}
             onClick={() => {
               setMobile(false);
               setSearchOpen(true);
             }}
           >
             <Search size={15} aria-hidden="true" />
-            <span>Buscar activo</span>
-            <kbd>Ctrl K</kbd>
+            <span>{uiText('Buscar activo')}</span>
+            <kbd>{uiText('Ctrl K')}</kbd>
           </button>
-          <nav className="sidebar-navigation" aria-label="Navegación principal">
-            {navigation.map((group, index) => (
-              <div className="sidebar-nav-group" key={group.label}>
-                <div className="sidebar-group-heading">
-                  <span>{group.label}</span>
-                  <span aria-hidden="true">0{index + 1}</span>
+          <nav className="sidebar-navigation" aria-label={uiText('Navegaci\u00F3n principal')}>
+            {uiText(
+              navigation.map((group, index) => (
+                <div className="sidebar-nav-group" key={group.label}>
+                  <div className="sidebar-group-heading">
+                    <span>{uiText(group.label)}</span>
+                    <span aria-hidden="true">0{uiText(index + 1)}</span>
+                  </div>
+                  {uiText(
+                    group.items.map(([key, label, Icon]) => (
+                      <Link
+                        key={key}
+                        href={href(key)}
+                        onClick={() => setMobile(false)}
+                        className={cn('nav-item', active === key && 'active')}
+                        aria-current={active === key ? 'page' : undefined}
+                      >
+                        <span>{uiText(label)}</span>
+                        <Icon size={18} aria-hidden="true" />
+                      </Link>
+                    )),
+                  )}
                 </div>
-                {group.items.map(([key, label, Icon]) => (
-                  <Link
-                    key={key}
-                    href={href(key)}
-                    onClick={() => setMobile(false)}
-                    className={cn('nav-item', active === key && 'active')}
-                    aria-current={active === key ? 'page' : undefined}
-                  >
-                    <span>{label}</span>
-                    <Icon size={18} aria-hidden="true" />
-                  </Link>
-                ))}
-              </div>
-            ))}
+              )),
+            )}
           </nav>
           <div className="sidebar-bottom">
             <Link
@@ -230,37 +277,45 @@ export function AppShell({
               onClick={() => setMobile(false)}
               aria-current={active === 'settings' ? 'page' : undefined}
             >
-              <span>Ajustes</span>
+              <span>{uiText('Ajustes')}</span>
               <Settings2 size={16} aria-hidden="true" />
             </Link>
             <Link className="nav-item sidebar-utility" href="/data-policy">
-              <span>Fuentes y datos</span>
+              <span>{uiText('Fuentes y datos')}</span>
               <CircleHelp size={16} aria-hidden="true" />
             </Link>
             <div className="sidebar-user">
-              <span className="user-avatar">{user?.name.slice(0, 2).toUpperCase() ?? 'EX'}</span>
+              <span className="user-avatar" title={uiText(user?.name ?? 'Explorador')}>
+                {uiText(user?.name.slice(0, 2).toUpperCase() ?? 'EX')}
+              </span>
               <div>
-                <strong>{user?.name ?? 'Explorador'}</strong>
-                <small>{user ? 'Cuenta personal' : 'Estás en la demo'}</small>
+                <strong>{uiText(user?.name ?? 'Explorador')}</strong>
+                <small>{uiText(user ? 'Cuenta personal' : 'Estás en la demo')}</small>
               </div>
-              {user ? (
-                <button
-                  className="icon-button"
-                  title="Cerrar sesión"
-                  aria-label="Cerrar sesión"
-                  onClick={async () => {
-                    await authClient.signOut();
-                    qc.clear();
-                    router.replace('/login');
-                    router.refresh();
-                  }}
-                >
-                  <LogOut size={16} />
-                </button>
-              ) : (
-                <Link href="/register" className="icon-button" aria-label="Crear cuenta">
-                  <ArrowUpRight size={16} />
-                </Link>
+              {uiText(
+                user ? (
+                  <button
+                    className="icon-button"
+                    title={uiText('Cerrar sesi\u00F3n')}
+                    aria-label={uiText('Cerrar sesi\u00F3n')}
+                    onClick={async () => {
+                      await authClient.signOut();
+                      qc.clear();
+                      router.replace('/login');
+                      router.refresh();
+                    }}
+                  >
+                    <LogOut size={16} />
+                  </button>
+                ) : (
+                  <Link
+                    href="/register"
+                    className="icon-button"
+                    aria-label={uiText('Crear cuenta')}
+                  >
+                    <ArrowUpRight size={16} />
+                  </Link>
+                ),
               )}
             </div>
           </div>
@@ -270,7 +325,7 @@ export function AppShell({
             <button
               ref={menuTrigger}
               className="icon-button mobile-only"
-              aria-label="Abrir menú"
+              aria-label={uiText('Abrir men\u00FA')}
               aria-expanded={mobile}
               aria-controls="workspace-navigation"
               onClick={() => setMobile(true)}
@@ -279,26 +334,32 @@ export function AppShell({
             </button>
             <button className="global-search" onClick={() => setSearchOpen(true)}>
               <Search size={16} />
-              <span>Buscar activos, mercados...</span>
+              <span>{uiText('Buscar activos, mercados...')}</span>
               <kbd>
-                <Command size={10} /> K
+                <Command size={10} />
+                {uiText(' K')}
               </kbd>
             </button>
             <div className="topbar-actions">
+              <LanguageSwitcher persist={Boolean(user) && !demo} />
               <Link className="market-select" href={href('markets')}>
-                <Globe2 size={14} /> Global markets <ChevronDown size={12} />
+                <Globe2 size={14} />
+                {uiText(' Global markets ')}
+                <ChevronDown size={12} />
               </Link>
               <span className="topbar-divider" />
               <button className="status-trigger" onClick={() => setStatusOpen(true)}>
-                {demo || status.data?.mode === 'demo' ? (
-                  <DataBadge status="demo" />
-                ) : (
-                  <span className="outlined-chip">Fuentes de datos</span>
+                {uiText(
+                  demo || status.data?.mode === 'demo' ? (
+                    <DataBadge status="demo" />
+                  ) : (
+                    <span className="outlined-chip">{uiText('Fuentes de datos')}</span>
+                  ),
                 )}
               </button>
               <button
                 className="icon-button theme-toggle"
-                aria-label="Cambiar tema"
+                aria-label={uiText('Cambiar tema')}
                 onClick={toggleTheme}
               >
                 <Sun size={17} className="theme-icon-dark" />
@@ -306,45 +367,64 @@ export function AppShell({
               </button>
               <button
                 className="icon-button"
-                aria-label="Notificaciones"
+                aria-label={uiText('Notificaciones')}
                 onClick={() => setNotifications(true)}
               >
                 <Bell size={18} />
               </button>
-              <Link href={href('settings')} className="user-avatar top-avatar" aria-label="Perfil">
-                {user?.name.slice(0, 1) ?? 'C'}
+              <Link
+                href={href('settings')}
+                className="user-avatar top-avatar"
+                aria-label={uiText('Perfil')}
+              >
+                {uiText(user?.name.slice(0, 1) ?? 'C')}
               </Link>
             </div>
           </header>
           <MarketTicker />
-          {(demo || status.data?.mode === 'demo') && (
-            <div className="demo-strip">
-              <span className="demo-indicator" /> Datos demo de Cuantai · 14 mar 2025. Gráficos:
-              fuente TradingView.{' '}
-              <Link href={demo ? '/register' : href('settings')}>
-                {demo ? 'Crear mi espacio' : 'Ver proveedores'} <ArrowUpRight size={12} />
-              </Link>
-            </div>
+          {uiText(
+            (demo || status.data?.mode === 'demo') && (
+              <div className="demo-strip">
+                <span className="demo-indicator" />
+                {uiText(
+                  ' Datos demo de Cuantai \u00B7 14 mar 2025. Gr\u00E1ficos: fuente TradingView.',
+                )}
+                {uiText(' ')}
+                <Link href={demo ? '/register' : href('settings')}>
+                  {uiText(demo ? 'Crear mi espacio' : 'Ver proveedores')} <ArrowUpRight size={12} />
+                </Link>
+              </div>
+            ),
           )}
           <main className="main-content" id="main-content">
-            {children}
+            {uiText(children)}
           </main>
           <footer className="app-footer">
             <span>
-              <span className="connection-dot" /> Cuantai workspace
+              <span className="connection-dot" />
+              {uiText(' Cuantai workspace')}
             </span>
-            <span>Datos con contexto. Decisiones con criterio.</span>
+            <span>{uiText('Datos con contexto. Decisiones con criterio.')}</span>
             <Link href="/data-policy">
-              Fuentes y metodología <ArrowUpRight size={11} />
+              {uiText('Fuentes y metodolog\u00EDa ')}
+              <ArrowUpRight size={11} />
             </Link>
+            <a
+              className="developer-credit"
+              href="https://www.linkedin.com/in/ivangcabrera/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Dev by Ivan Cabrera
+            </a>
           </footer>
         </div>
       </div>
       <Modal
         open={searchOpen}
         onOpenChange={setSearchOpen}
-        title="Encontrá tu próximo análisis"
-        description="Buscá por ticker, nombre, mercado o moneda."
+        title={uiText('Encontr\u00E1 tu pr\u00F3ximo an\u00E1lisis')}
+        description={uiText('Busc\u00E1 por ticker, nombre, mercado o moneda.')}
         className="search-modal"
       >
         <div className="search-modal-input">
@@ -353,80 +433,91 @@ export function AppShell({
             autoFocus
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="AAPL, Bitcoin, JPM, BYMA..."
-            aria-label="Buscar instrumentos"
+            placeholder={uiText('AAPL, Bitcoin, JPM, BYMA...')}
+            aria-label={uiText('Buscar instrumentos')}
           />
-          <kbd>ESC</kbd>
+          <kbd>{uiText('ESC')}</kbd>
         </div>
         <div className="search-results">
-          {results.isLoading ? (
-            <p className="muted">Buscando instrumentos...</p>
-          ) : results.isError ? (
-            <p role="alert">{results.error.message}</p>
-          ) : (
-            results.data?.instruments.slice(0, 15).map((i) => (
-              <Link
-                key={i.id}
-                href={assetHref(i, demo)}
-                className="search-result"
-                onClick={() => setSearchOpen(false)}
-              >
-                <AssetIcon instrument={i} />
-                <div>
-                  <strong>
-                    {i.symbol}
-                    <small>{i.name}</small>
-                  </strong>
-                </div>
-                <span>
-                  {i.exchange} · {i.currency}
-                </span>
-                <ArrowUpRight size={16} />
-              </Link>
-            ))
+          {uiText(
+            results.isLoading ? (
+              <p className="muted">{uiText('Buscando instrumentos...')}</p>
+            ) : results.isError ? (
+              <p role="alert">{uiText(results.error.message)}</p>
+            ) : (
+              results.data?.instruments.slice(0, 15).map((i) => (
+                <Link
+                  key={i.id}
+                  href={assetHref(i, demo)}
+                  className="search-result"
+                  onClick={() => setSearchOpen(false)}
+                >
+                  <AssetIcon instrument={i} />
+                  <div>
+                    <strong>
+                      {uiText(i.symbol)}
+                      <small>{uiText(i.name)}</small>
+                    </strong>
+                  </div>
+                  <span>
+                    {uiText(i.exchange)} · {uiText(i.currency)}
+                  </span>
+                  <ArrowUpRight size={16} />
+                </Link>
+              ))
+            ),
           )}
-          {results.data?.instruments.length === 0 && (
-            <p className="muted">No hay resultados. Probá con otro ticker.</p>
+          {uiText(
+            results.data?.instruments.length === 0 && (
+              <p className="muted">{uiText('No hay resultados. Prob\u00E1 con otro ticker.')}</p>
+            ),
           )}
         </div>
         <div className="search-modal-footer">
-          Instrumentos separados por mercado y moneda <kbd>⌘ K</kbd>
+          {uiText('Instrumentos separados por mercado y moneda ')}
+          <kbd>{uiText('\u2318 K')}</kbd>
         </div>
       </Modal>
       <Modal
         open={statusOpen}
         onOpenChange={setStatusOpen}
-        title="Estado de los proveedores"
-        description="Disponibilidad de configuración. No implica validación de licencia o conectividad."
+        title={uiText('Estado de los proveedores')}
+        description={uiText(
+          'Disponibilidad de configuraci\u00F3n. No implica validaci\u00F3n de licencia o conectividad.',
+        )}
       >
         <div className="provider-list">
-          {status.data &&
-            (['binance', 'twelveData', 'finnhub', 'byma', 'ai'] as const).map((key) => (
-              <div key={key}>
-                <span>{status.data[key].label}</span>
-                <span className={status.data[key].configured ? 'positive' : 'muted'}>
-                  {status.data[key].configured ? 'Configurado' : 'Sin credenciales'}
-                </span>
-              </div>
-            ))}
+          {uiText(
+            status.data &&
+              (['binance', 'twelveData', 'finnhub', 'news', 'byma', 'ai'] as const).map((key) => (
+                <div key={key}>
+                  <span>{uiText(status.data[key].label)}</span>
+                  <span className={status.data[key].configured ? 'positive' : 'muted'}>
+                    {uiText(status.data[key].configured ? 'Configurado' : 'Sin credenciales')}
+                  </span>
+                </div>
+              )),
+          )}
         </div>
         <p className="form-hint">
-          Cada cotización muestra su fuente, fecha y condición. Los datos demo no representan el
-          mercado actual.
+          {uiText(
+            'Cada cotizaci\u00F3n muestra su fuente, fecha y condici\u00F3n. Los datos demo no representan el mercado actual.',
+          )}
         </p>
       </Modal>
       <Modal
         open={notifications}
         onOpenChange={setNotifications}
-        title="Tu centro de actividad"
-        description="Las alertas automáticas aún no están habilitadas."
+        title={uiText('Tu centro de actividad')}
+        description={uiText('Las alertas autom\u00E1ticas a\u00FAn no est\u00E1n habilitadas.')}
       >
         <div className="notification-item">
           <Bell size={25} />
-          <h3>Un espacio sin ruido.</h3>
+          <h3>{uiText('Un espacio sin ruido.')}</h3>
           <p>
-            Las alertas de precio requieren un proceso de servidor y un feed autorizado. Tus
-            watchlists ya pueden ayudarte a organizar el seguimiento.
+            {uiText(
+              'Las alertas de precio requieren un proceso de servidor y un feed autorizado. Tus watchlists ya pueden ayudarte a organizar el seguimiento.',
+            )}
           </p>
           <Button
             onClick={() => {
@@ -434,7 +525,7 @@ export function AppShell({
               toast.info('Accedé a Watchlists desde el menú para crear tu lista.');
             }}
           >
-            Entendido
+            {uiText('Entendido')}
           </Button>
         </div>
       </Modal>

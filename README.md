@@ -21,6 +21,7 @@ Open **http://localhost:3000**. Use this hostname consistently because authentic
 - `/register` — create your own account, then complete optional investment preferences.
 - `/dashboard`, `/charts`, `/watchlists`, `/portfolio`, `/analyst`, `/settings` — private workspace.
 - `/asset/NYSE/JPM` — listing-specific asset page; `?demo=true` explicitly selects demo data.
+- **Acciones ARG** includes 80 verified BYMA local shares, with 71 ordered by dated 40-session ADTV and the remaining listings after them. Search also supports index membership, such as `MSCI Merval`. [Argentine catalog, sources and refresh](docs/ARGENTINA_CATALOG.md).
 - Asset summaries show daily/weekly/monthly/annual price performance, sourced technical/fundamental conclusions, historical risk, news and private conversations. A small TradingView preview opens the complete chart through **Ver gráfico**. [Sources, calculations and chat limits](docs/ASSET_INTELLIGENCE.md).
 - All catalog assets have local company/fund/crypto logos or currency symbols, shared across the app. CEDEARs use the underlying issuer's mark. [Logo sources and discovery coverage](docs/ASSET_LOGOS.md).
 - `/data-policy` — data sources, methodology and current product limits.
@@ -58,7 +59,7 @@ Browser tests use installed Google Chrome locally. In CI they use Playwright Chr
 
 - Set `MARKET_DATA_MODE=live` to use configured providers. Public `/demo` remains synthetic.
 - Binance Spot uses a public data endpoint without a trading API key. Prices are denominated in **USDT**, which is not assumed equal to USD.
-- Configure Twelve Data for US search/quotes/OHLCV, and Finnhub for stock metrics/news. Budgets are configurable; availability and redistribution rights depend on your contract.
+- Configure Twelve Data for US search/quotes/OHLCV, and Finnhub for stock metrics/news. Public CNBC, MarketWatch and Yahoo Finance RSS feeds provide headline links without a key, including in demo mode. Real news does not turn synthetic demo prices into live data. [Research, questions and news](docs/RESEARCH.md).
 - SEC annual US-GAAP facts need a descriptive `SEC_USER_AGENT` with a real operator email, or `SEC_COMPANYFACTS_FILE` with an imported SEC bundle. No SEC API key is required. Demo mode keeps financial statements empty; switch to live mode to consult sourced facts. Network access still needs an operator-configured smoke test.
 - BYMA supports a validated, normalized **authorized export**, or private manual portfolio prices. A direct native BYMA connector requires the contracted API specification and authorization. No endpoint or market price is fabricated.
 - CEDEAR ratio history can be imported with `npm run data:import-ratios -- /absolute/path/authorized-ratios.json`. No unverified ratios ship as production facts.
@@ -69,3 +70,7 @@ Read [architecture](docs/ARCHITECTURE.md), [providers](docs/PROVIDERS.md), [data
 ## Attribution
 
 Price charts use the **official hosted TradingView Advanced Chart widget**, including TradingView's own data and visible attribution. The previous custom renderer and Lightweight Charts dependency have been removed. Availability/delays depend on TradingView and each market. Table quotes, portfolio accounting and research use their separate providers; the widget is not a quote API for those modules. See [TradingView integration](docs/TRADINGVIEW.md) and [provider documentation](docs/PROVIDERS.md).
+
+Language switching, internal news reading and bulk portfolio import: see [setup, formats and wallet coverage](docs/IMPORTS_AND_LANGUAGES.md).
+
+US ETF coverage uses the Nasdaq Trader primary-listing directories. Refresh with `npm run data:sync-etfs`. [ETF catalog, source definitions and legacy listing compatibility](docs/ETF_CATALOG.md).

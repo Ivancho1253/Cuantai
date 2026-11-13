@@ -1,4 +1,5 @@
 import type { Candle, Instrument, MarketSnapshot, Timeframe } from './types';
+import { findInstrument } from './catalog';
 export const DEMO_AS_OF = '2025-03-14T20:00:00.000Z';
 const bases: Record<string, number> = {
   NVDA: 121.67,
@@ -20,6 +21,27 @@ const bases: Record<string, number> = {
   GGAL: 5980,
 };
 export function demoHistory(instrument: Instrument, timeframe: Timeframe = '1D'): MarketSnapshot {
+  if (
+    !findInstrument(instrument.id) ||
+    (!(instrument.symbol in bases) && instrument.type !== 'cedear')
+  )
+    return {
+      instrument,
+      candles: [],
+      quote: null,
+      timeframe,
+      provenance: {
+        source: 'Cuantai demo · sin muestra para este activo',
+        url: '/data-policy',
+        asOf: '',
+        retrievedAt: DEMO_AS_OF,
+        status: 'unavailable',
+        delayMinutes: null,
+        adjusted: 'unknown',
+      },
+      error:
+        'Este activo no tiene una cotización de demostración. Consultá el mercado fuera de la demo.',
+    };
   let seed = [...instrument.id].reduce((a, c) => a + c.charCodeAt(0) * 71, 11);
   const random = () => {
     seed = (seed * 1664525 + 1013904223) >>> 0;
@@ -30,7 +52,7 @@ export function demoHistory(instrument: Instrument, timeframe: Timeframe = '1D')
       ? instrument.currency === 'ARS'
         ? 14650
         : 12.5
-      : (bases[instrument.symbol] ?? 100);
+      : bases[instrument.symbol];
   const seconds: Record<Timeframe, number> = {
     '1m': 60,
     '5m': 300,

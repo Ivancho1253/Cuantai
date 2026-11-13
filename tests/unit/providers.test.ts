@@ -14,11 +14,12 @@ describe('provider boundaries', () => {
   it('never creates demo prices after a live provider failure', async () => {
     vi.stubEnv('MARKET_DATA_MODE', 'live');
     vi.stubEnv('TWELVE_DATA_API_KEY', '');
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}')));
     const snapshot = await marketSnapshot('NASDAQ:MSFT:USD', '1W');
     expect(snapshot.quote).toBeNull();
     expect(snapshot.candles).toEqual([]);
     expect(snapshot.provenance.status).toBe('unavailable');
-    expect(snapshot.error).toContain('TWELVE_DATA_API_KEY');
+    expect(snapshot.error).toContain('cotización verificable');
   });
   it('retains demo provenance and reproducible fixture timestamps', () => {
     const first = demoHistory(instruments[0]),

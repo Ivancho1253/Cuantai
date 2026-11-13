@@ -1,4 +1,5 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
 import Link from 'next/link';
 import { assetHref } from '@/lib/market/asset-href';
@@ -28,6 +29,7 @@ const benchmarks = [
   ['BINANCE:BTCUSDT:USDT', 'Bitcoin', 'BTC / USDT'],
 ];
 export function Dashboard() {
+  const uiText = useUiText();
   const { user, demo, href, openSearch } = useApp();
   const [selected, setSelected] = useState('NASDAQ:NVDA:USD');
   const [tab, setTab] = useState('Destacados');
@@ -48,63 +50,81 @@ export function Dashboard() {
       <div className="overview-heading">
         <div>
           <div className="eyebrow">
-            <span className="tiny-line" /> TU VENTAJA EMPIEZA CON CLARIDAD
+            <span className="tiny-line" />
+            {uiText(' TU VENTAJA EMPIEZA CON CLARIDAD')}
           </div>
           <h1>
-            El mercado, en perspectiva<span>.</span>
+            {uiText('El mercado, en perspectiva')}
+            <span>.</span>
           </h1>
           <p>
-            {user ? `Hola, ${user.name.split(' ')[0]}. ` : ''}Tu universo de inversión, conectado en
-            un solo lugar.
+            {user ? uiText('Hola, {0}. ', [user.name.split(' ')[0]]) : ''}
+            {uiText('Tu universo de inversi\u00F3n, conectado en un solo lugar.')}
           </p>
         </div>
         <Link className="button button-secondary" href={href('charts')}>
-          <CandlesIcon /> Abrir terminal <ArrowUpRight size={15} />
+          <CandlesIcon />
+          {uiText(' Abrir terminal ')}
+          <ArrowUpRight size={15} />
         </Link>
       </div>
       <div className="benchmark-grid">
-        {benchmarks.map(([id, name, sub]) => {
-          const item = data.find((d) => d.instrument.id === id);
-          const up = Number(item?.quote?.changePercent ?? 0) >= 0;
-          return (
-            <button
-              className={cn('benchmark-card', selected === id && 'selected')}
-              key={id}
-              onClick={() => setSelected(id)}
-            >
-              <div className="benchmark-top">
-                <span>{name}</span>
-                <ArrowUpRight size={14} />
-              </div>
-              <div className="benchmark-value">
-                {overview.isLoading ? (
-                  <Skeleton className="price-skeleton" />
-                ) : (
-                  number(item?.quote?.price)
-                )}
-                <span className={up ? 'positive' : 'negative'}>
-                  {item?.quote ? `${up ? '+' : ''}${number(item.quote.changePercent)}%` : '—'}
-                </span>
-              </div>
-              <div className="benchmark-bottom">
-                <small>{sub}</small>
-                <small className="muted">Ver gráfico</small>
-              </div>
-            </button>
-          );
-        })}
+        {uiText(
+          benchmarks.map(([id, name, sub]) => {
+            const item = data.find((d) => d.instrument.id === id);
+            const up = Number(item?.quote?.changePercent ?? 0) >= 0;
+            return (
+              <button
+                className={cn('benchmark-card', selected === id && 'selected')}
+                key={id}
+                onClick={() => setSelected(id)}
+              >
+                <div className="benchmark-top">
+                  <span>{uiText(name)}</span>
+                  <ArrowUpRight size={14} />
+                </div>
+                <div className="benchmark-value">
+                  {uiText(
+                    overview.isLoading ? (
+                      <Skeleton className="price-skeleton" />
+                    ) : (
+                      number(item?.quote?.price)
+                    ),
+                  )}
+                  <span className={up ? 'positive' : 'negative'}>
+                    {uiText(
+                      item?.quote ? `${up ? '+' : ''}${number(item.quote.changePercent)}%` : '—',
+                    )}
+                  </span>
+                </div>
+                <div className="benchmark-bottom">
+                  <small>{uiText(sub)}</small>
+                  <small className="muted">{uiText('Ver gr\u00E1fico')}</small>
+                </div>
+              </button>
+            );
+          }),
+        )}
       </div>
-      {overview.isError && (
-        <ErrorState message={overview.error.message} retry={() => overview.refetch()} />
+      {uiText(
+        overview.isError && (
+          <ErrorState message={overview.error.message} retry={() => overview.refetch()} />
+        ),
       )}
       <div className="dashboard-middle">
         <section className="panel main-chart-panel">
           <div className="panel-header">
             <div className="panel-heading">
-              Market overview <span className="subtle-dot" />{' '}
-              <span className="muted normal-weight">Tu foco de hoy</span>
+              {uiText('Market overview ')}
+              <span className="subtle-dot" />
+              {uiText(' ')}
+              <span className="muted normal-weight">{uiText('Tu foco de hoy')}</span>
             </div>
-            <Link className="icon-button" href={href('charts')} aria-label="Expandir gráfico">
+            <Link
+              className="icon-button"
+              href={href('charts')}
+              aria-label={uiText('Expandir gr\u00E1fico')}
+            >
               <ArrowUpRight size={18} />
             </Link>
           </div>
@@ -119,63 +139,76 @@ export function Dashboard() {
               <span className="ai-icon">
                 <Sparkles size={18} />
               </span>
-              <span>CUANTAI INTELLIGENCE</span>
-              <span className="ai-small">AI</span>
+              <span>{uiText('CUANTAI INTELLIGENCE')}</span>
+              <span className="ai-small">{uiText('AI')}</span>
             </div>
             <h2>
-              Detrás de cada movimiento,
+              {uiText('Detr\u00E1s de cada movimiento,')}
               <br />
-              <em>hay una historia.</em>
+              <em>{uiText('hay una historia.')}</em>
             </h2>
             <p>
-              Conectá precio, tendencia y contexto. Transformá los datos en una tesis que puedas
-              entender.
+              {uiText(
+                'Conect\u00E1 precio, tendencia y contexto. Transform\u00E1 los datos en una tesis que puedas entender.',
+              )}
             </p>
             <div className="analysis-preview">
               <div>
-                <span className="analysis-line" /> Evidencia antes que conclusiones
+                <span className="analysis-line" />
+                {uiText(' Evidencia antes que conclusiones')}
               </div>
               <div>
-                <span className="analysis-line purple" /> Escenarios, riesgos y fuentes
+                <span className="analysis-line purple" />
+                {uiText(' Escenarios, riesgos y fuentes')}
               </div>
             </div>
             <Link href={href('analyst')} className="analyst-cta">
-              Explorar AI Analyst <ArrowUpRight size={17} />
+              {uiText('Explorar AI Analyst ')}
+              <ArrowUpRight size={17} />
             </Link>
           </section>
           <section className="panel watch-preview">
             <div className="panel-header">
-              <strong>En tu radar</strong>
-              <button onClick={openSearch} className="icon-button" aria-label="Buscar activo">
+              <strong>{uiText('En tu radar')}</strong>
+              <button
+                onClick={openSearch}
+                className="icon-button"
+                aria-label={uiText('Buscar activo')}
+              >
                 <Plus size={16} />
               </button>
             </div>
-            {data
-              .filter((i) => ['AAPL', 'JPM', 'ETHUSDT'].includes(i.instrument.symbol))
-              .map((i) => (
-                <Link
-                  href={assetHref(i.instrument, demo)}
-                  className="radar-row"
-                  key={i.instrument.id}
-                >
-                  <AssetIcon instrument={i.instrument} small />
-                  <div>
-                    <strong>{i.instrument.symbol}</strong>
-                    <small>{i.instrument.exchange}</small>
-                  </div>
-                  <div className="radar-price">
-                    <strong>{number(i.quote?.price)}</strong>
-                    <small
-                      className={Number(i.quote?.changePercent ?? 0) >= 0 ? 'positive' : 'negative'}
-                    >
-                      {Number(i.quote?.changePercent ?? 0) >= 0 ? '+' : ''}
-                      {number(i.quote?.changePercent)}%
-                    </small>
-                  </div>
-                </Link>
-              ))}
+            {uiText(
+              data
+                .filter((i) => ['AAPL', 'JPM', 'ETHUSDT'].includes(i.instrument.symbol))
+                .map((i) => (
+                  <Link
+                    href={assetHref(i.instrument, demo)}
+                    className="radar-row"
+                    key={i.instrument.id}
+                  >
+                    <AssetIcon instrument={i.instrument} small />
+                    <div>
+                      <strong>{uiText(i.instrument.symbol)}</strong>
+                      <small>{uiText(i.instrument.exchange)}</small>
+                    </div>
+                    <div className="radar-price">
+                      <strong>{uiText(number(i.quote?.price))}</strong>
+                      <small
+                        className={
+                          Number(i.quote?.changePercent ?? 0) >= 0 ? 'positive' : 'negative'
+                        }
+                      >
+                        {uiText(Number(i.quote?.changePercent ?? 0) >= 0 ? '+' : '')}
+                        {uiText(number(i.quote?.changePercent))}%
+                      </small>
+                    </div>
+                  </Link>
+                )),
+            )}
             <Link className="text-link" href={href('watchlists')}>
-              Crear mi watchlist <ArrowRight size={13} />
+              {uiText('Crear mi watchlist ')}
+              <ArrowRight size={13} />
             </Link>
           </section>
         </aside>
@@ -184,25 +217,30 @@ export function Dashboard() {
         <section className="panel movers-panel">
           <div className="panel-header">
             <div>
-              <strong>Market movers</strong>
-              <span className="panel-subtitle">Una selección para empezar a explorar</span>
+              <strong>{uiText('Market movers')}</strong>
+              <span className="panel-subtitle">
+                {uiText('Una selecci\u00F3n para empezar a explorar')}
+              </span>
             </div>
             <Link className="text-link" href={href('markets')}>
-              Ver mercados <ArrowUpRight size={14} />
+              {uiText('Ver mercados ')}
+              <ArrowUpRight size={14} />
             </Link>
           </div>
           <div className="tabs compact-tabs">
-            {['Destacados', 'Cripto', 'ETFs'].map((t) => (
-              <button key={t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>
-                {t}
-              </button>
-            ))}
+            {uiText(
+              ['Destacados', 'Cripto', 'ETFs'].map((t) => (
+                <button key={t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>
+                  {uiText(t)}
+                </button>
+              )),
+            )}
           </div>
           <MarketTable rows={filtered} compactView />
         </section>
         <section className="panel portfolio-teaser">
           <div className="panel-header">
-            <strong>Tu portfolio</strong>
+            <strong>{uiText('Tu portfolio')}</strong>
             <Wallet size={16} className="muted" />
           </div>
           <div className="portfolio-orbit">
@@ -211,35 +249,41 @@ export function Dashboard() {
             <div className="orbit-center">
               <MoveUpRight size={28} />
             </div>
-            <span className="orbit-label orbit-label-1">USD</span>
-            <span className="orbit-label orbit-label-2">ARS</span>
+            <span className="orbit-label orbit-label-1">{uiText('USD')}</span>
+            <span className="orbit-label orbit-label-2">{uiText('ARS')}</span>
             <span className="orbit-label orbit-label-3">₿</span>
           </div>
           <h3>
-            Cada inversión.
+            {uiText('Cada inversi\u00F3n.')}
             <br />
-            Una visión completa.
+            {uiText('Una visi\u00F3n completa.')}
           </h3>
           <p>
-            Acciones, cripto y CEDEARs.
+            {uiText('Acciones, cripto y CEDEARs.')}
             <br />
-            Tu patrimonio, con su contexto.
+            {uiText('Tu patrimonio, con su contexto.')}
           </p>
           <Link href={href('portfolio')} className="button button-secondary">
-            {user ? 'Ver mi cartera' : 'Explorar portfolio'} <ArrowRight size={15} />
+            {uiText(user ? 'Ver mi cartera' : 'Explorar portfolio')} <ArrowRight size={15} />
           </Link>
-          <small>Con contabilidad FIFO y soporte multimoneda</small>
+          <small>{uiText('Con contabilidad FIFO y soporte multimoneda')}</small>
         </section>
       </div>
       <div className="world-strip">
         <span>
-          <Globe2 size={16} /> Una perspectiva global. Una mirada local.
+          <Globe2 size={16} />
+          {uiText(' Una perspectiva global. Una mirada local.')}
         </span>
         <p>
-          Estados Unidos <i /> Criptomonedas <i /> Argentina & CEDEARs
+          {uiText('Estados Unidos ')}
+          <i />
+          {uiText(' Criptomonedas ')}
+          <i />
+          {uiText(' Argentina & CEDEARs')}
         </p>
         <Link href="/data-policy">
-          Conocé las fuentes <ExternalLink size={12} />
+          {uiText('Conoc\u00E9 las fuentes ')}
+          <ExternalLink size={12} />
         </Link>
       </div>
     </div>

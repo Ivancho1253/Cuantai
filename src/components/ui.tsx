@@ -1,4 +1,5 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import Link from 'next/link';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Tooltip from '@radix-ui/react-tooltip';
@@ -7,17 +8,21 @@ import { cn } from '@/lib/utils';
 import type { Provenance } from '@/lib/market/types';
 export { AssetIcon } from './asset-icon';
 export function Brand({ compact = false }: { compact?: boolean }) {
+  const uiText = useUiText();
   return (
-    <Link href="/" className="brand" aria-label="Cuantai, inicio">
+    <Link href="/" className="brand" aria-label={uiText('Cuantai, inicio')}>
       <span className="brand-mark">
         <i />
         <i />
         <i />
       </span>
-      {!compact && (
-        <span className="brand-wordmark">
-          cuantai<span className="brand-dot">.</span>
-        </span>
+      {uiText(
+        !compact && (
+          <span className="brand-wordmark">
+            {uiText('cuantai')}
+            <span className="brand-dot">.</span>
+          </span>
+        ),
       )}
     </Link>
   );
@@ -30,9 +35,10 @@ export function Button({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'secondary' | 'ghost';
 }) {
+  const uiText = useUiText();
   return (
     <button className={cn('button', `button-${variant}`, className)} {...props}>
-      {children}
+      {uiText(children)}
     </button>
   );
 }
@@ -51,6 +57,7 @@ export function Modal({
   children: React.ReactNode;
   className?: string;
 }) {
+  const uiText = useUiText();
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -58,28 +65,29 @@ export function Modal({
         <Dialog.Content className={cn('modal-content', className)}>
           <div className="modal-header">
             <div>
-              <Dialog.Title>{title}</Dialog.Title>
+              <Dialog.Title>{uiText(title)}</Dialog.Title>
               <Dialog.Description>
-                {description ?? 'Tu espacio de trabajo en Cuantai.'}
+                {uiText(description ?? 'Tu espacio de trabajo en Cuantai.')}
               </Dialog.Description>
             </div>
-            <Dialog.Close className="icon-button" aria-label="Cerrar">
+            <Dialog.Close className="icon-button" aria-label={uiText('Cerrar')}>
               <X size={19} />
             </Dialog.Close>
           </div>
-          {children}
+          {uiText(children)}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );
 }
 export function Tip({ text, children }: { text: string; children: React.ReactNode }) {
+  const uiText = useUiText();
   return (
     <Tooltip.Root>
-      <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
+      <Tooltip.Trigger asChild>{uiText(children)}</Tooltip.Trigger>
       <Tooltip.Portal>
         <Tooltip.Content className="tooltip" sideOffset={6}>
-          {text}
+          {uiText(text)}
           <Tooltip.Arrow />
         </Tooltip.Content>
       </Tooltip.Portal>
@@ -87,6 +95,7 @@ export function Tip({ text, children }: { text: string; children: React.ReactNod
   );
 }
 export function DataBadge({ status = 'demo' }: { status?: Provenance['status'] }) {
+  const uiText = useUiText();
   const labels = {
     demo: 'DEMO',
     realtime: 'EN VIVO',
@@ -98,7 +107,7 @@ export function DataBadge({ status = 'demo' }: { status?: Provenance['status'] }
   return (
     <span className={cn('data-badge', status === 'realtime' && 'live')}>
       <span />
-      {labels[status]}
+      {uiText(labels[status])}
     </span>
   );
 }
@@ -111,32 +120,38 @@ export function EmptyState({
   children: React.ReactNode;
   action?: React.ReactNode;
 }) {
+  const uiText = useUiText();
   return (
     <div className="empty-state">
       <div className="empty-symbol">
         <Activity size={25} />
       </div>
-      <h3>{title}</h3>
-      <p>{children}</p>
-      {action}
+      <h3>{uiText(title)}</h3>
+      <p>{uiText(children)}</p>
+      {uiText(action)}
     </div>
   );
 }
 export function ErrorState({ message, retry }: { message: string; retry?: () => void }) {
+  const uiText = useUiText();
   return (
     <div role="alert" className="error-state">
       <AlertCircle size={18} />
-      <span>{message}</span>
-      {retry && (
-        <button onClick={retry}>
-          Reintentar <ArrowUpRight size={14} />
-        </button>
+      <span>{uiText(message)}</span>
+      {uiText(
+        retry && (
+          <button onClick={retry}>
+            {uiText('Reintentar ')}
+            <ArrowUpRight size={14} />
+          </button>
+        ),
       )}
     </div>
   );
 }
 export function Skeleton({ className }: { className?: string }) {
-  return <div aria-label="Cargando" className={cn('skeleton', className)} />;
+  const uiText = useUiText();
+  return <div aria-label={uiText('Cargando')} className={cn('skeleton', className)} />;
 }
 export function SectionTitle({
   eyebrow,
@@ -149,14 +164,15 @@ export function SectionTitle({
   description?: string;
   action?: React.ReactNode;
 }) {
+  const uiText = useUiText();
   return (
     <div className="section-title">
       <div>
-        {eyebrow && <div className="eyebrow">{eyebrow}</div>}
-        <h1>{title}</h1>
-        {description && <p>{description}</p>}
+        {uiText(eyebrow && <div className="eyebrow">{uiText(eyebrow)}</div>)}
+        <h1>{uiText(title)}</h1>
+        {uiText(description && <p>{uiText(description)}</p>)}
       </div>
-      {action}
+      {uiText(action)}
     </div>
   );
 }

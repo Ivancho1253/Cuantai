@@ -1,5 +1,7 @@
 import OpenAI from 'openai';
 import { zodTextFormat } from 'openai/helpers/zod';
+import { buildAssetOverview } from '../finance/asset-overview';
+import { rulesAnswer } from './asset-chat';
 import {
   assetFundamentals,
   assetFinancialStatements,
@@ -20,9 +22,6 @@ export async function createAnalysis(
 ): Promise<AnalysisReport> {
   const snapshot = await marketSnapshot(id, '1D', demo);
   const report = deterministicReport(snapshot);
-  if (!process.env.OPENAI_API_KEY || !process.env.AI_MODEL) {
-    return { ...report, question };
-  }
   const [fundamentals, financials, news] = await Promise.all([
     assetFundamentals(snapshot.instrument, demo),
     assetFinancialStatements(snapshot.instrument, demo),
@@ -77,6 +76,20 @@ export async function createAnalysis(
     news: news.items.slice(0, 5),
     sources,
   };
+  if (!process.env.OPENAI_API_KEY || !process.env.AI_MODEL) {
+    const overview = buildAssetOverview(snapshot, fundamentals, financials);
+    return {
+      ...report,
+      question,
+      sources,
+      answer: question ? rulesAnswer(overview, question, [], news) : undefined,
+      narrative: {
+        ...report.narrative,
+        fundamentalAnalysis: overview.fundamental.conclusion,
+        risks: [...report.narrative.risks.slice(0, 1), ...overview.risk.factors],
+      },
+    };
+  }
   const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
     baseURL: process.env.AI_BASE_URL || undefined,

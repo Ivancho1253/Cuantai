@@ -97,6 +97,7 @@ describe('complete discovery catalog', () => {
   it('keeps unavailable live stocks visible and never substitutes demo prices', async () => {
     vi.stubEnv('MARKET_DATA_MODE', 'live');
     vi.stubEnv('TWELVE_DATA_API_KEY', '');
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}')));
     const result = await marketListings({ query: 'AMD', category: 'S&P 500' });
     expect(result.rows[0].instrument.symbol).toBe('AMD');
     expect(result.rows[0].quote).toBeNull();

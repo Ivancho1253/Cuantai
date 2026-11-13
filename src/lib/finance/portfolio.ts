@@ -4,7 +4,16 @@ Decimal.set({ precision: 40, rounding: Decimal.ROUND_HALF_EVEN });
 export type Transaction = {
   id: string;
   instrumentId: string;
-  type: 'BUY' | 'SELL' | 'DIVIDEND' | 'DEPOSIT' | 'WITHDRAWAL' | 'SPLIT';
+  type:
+    | 'BUY'
+    | 'SELL'
+    | 'DIVIDEND'
+    | 'DEPOSIT'
+    | 'WITHDRAWAL'
+    | 'SPLIT'
+    | 'TRANSFER_IN'
+    | 'TRANSFER_OUT';
+  costBasisUnknown?: boolean;
   quantity: string;
   price: string;
   fees: string;
@@ -86,9 +95,13 @@ export function calculatePortfolio(
       const fxRate = t.currency === base ? '1' : t.fxRate;
       if (!fxRate && t.type !== 'SPLIT')
         issues.push(`Missing historical ${t.currency}/${base} FX on ${t.date}`);
-      if (t.type === 'BUY' || t.type === 'DEPOSIT') {
-        lots.push({ quantity: qty, cost: convert(gross.plus(fees), t.currency, base, fxRate) });
-      } else if (t.type === 'SELL' || t.type === 'WITHDRAWAL') {
+      if (t.type === 'BUY' || t.type === 'DEPOSIT' || t.type === 'TRANSFER_IN') {
+        if (t.costBasisUnknown) issues.push('Costo de adquisición no informado en la importación');
+        lots.push({
+          quantity: qty,
+          cost: t.costBasisUnknown ? null : convert(gross.plus(fees), t.currency, base, fxRate),
+        });
+      } else if (t.type === 'SELL' || t.type === 'WITHDRAWAL' || t.type === 'TRANSFER_OUT') {
         const held = lots.reduce((s, l) => s.plus(l.quantity), new Decimal(0));
         if (qty.gt(held)) throw new Error('Sale exceeds available position');
         let remaining = qty,
@@ -103,9 +116,11 @@ export function calculatePortfolio(
           lot.cost = lot.cost && cost ? lot.cost.minus(cost) : null;
           remaining = remaining.minus(used);
         }
-        const proceeds = convert(gross.minus(fees), t.currency, base, fxRate);
-        realized =
-          realized && proceeds && removedCost ? realized.plus(proceeds.minus(removedCost)) : null;
+        if (t.type !== 'TRANSFER_OUT') {
+          const proceeds = convert(gross.minus(fees), t.currency, base, fxRate);
+          realized =
+            realized && proceeds && removedCost ? realized.plus(proceeds.minus(removedCost)) : null;
+        }
       } else if (t.type === 'DIVIDEND') {
         const income = convert(gross.minus(fees), t.currency, base, fxRate);
         dividends = dividends && income ? dividends.plus(income) : null;

@@ -28,6 +28,11 @@ export type Instrument = {
   underlyingId?: string;
   providerSymbol?: string;
   marketCapRank?: number;
+  isin?: string;
+  liquidityRank?: number;
+  liquidityAdtvARS?: string;
+  liquidityAsOf?: string;
+  indexMembership?: string;
   cedearKind?: 'stock' | 'etf';
   cedearRatio?: string;
   source: string;
@@ -59,6 +64,7 @@ export type Provenance = {
   stale?: boolean;
 };
 export type Quote = Provenance & {
+  volumeUnit?: 'USD' | 'units';
   instrumentId: string;
   currency: Currency;
   price: string;
@@ -81,6 +87,7 @@ export type NewsItem = {
   publishedAt: string;
   category: string;
   summary?: string;
+  imageUrl?: string;
 };
 export type Fundamental = { label: string; value: string | null; unit?: string; period?: string };
 export interface InstrumentSearchProvider {

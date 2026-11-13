@@ -150,10 +150,25 @@ export const transactions = pgTable(
     fxSource: text('fx_source'),
     broker: text('broker'),
     notes: text('notes'),
+    costBasisUnknown: boolean('cost_basis_unknown').notNull().default(false),
+    importKey: text('import_key'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (t) => [index('transaction_portfolio_idx').on(t.portfolioId, t.date)],
 );
+export const portfolioImports = pgTable('portfolio_imports', {
+  id: text('id').primaryKey(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  portfolioId: text('portfolio_id')
+    .notNull()
+    .references(() => portfolios.id, { onDelete: 'cascade' }),
+  draft: jsonb('draft').$type<Record<string, unknown>>().notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  appliedAt: timestamp('applied_at'),
+  result: jsonb('result').$type<Record<string, unknown>>(),
+});
 export const manualQuotes = pgTable(
   'manual_quotes',
   {

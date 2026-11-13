@@ -37,7 +37,7 @@ export const settingsSchema = z.object({
   country: z.enum(['AR', 'US', 'other']),
   currency: z.enum(currencies),
   experience: z.enum(['beginner', 'intermediate', 'advanced']),
-  language: z.enum(['es', 'en']),
+  language: z.enum(['es', 'en', 'pt']),
   theme: z.enum(['dark', 'light', 'system']),
   timezone: z
     .string()

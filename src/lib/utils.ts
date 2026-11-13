@@ -25,14 +25,17 @@ export const formatPrice = (value: string | number | null | undefined) =>
   value != null && Number(value) !== 0 && Math.abs(Number(value)) < 0.01
     ? new Intl.NumberFormat('en-US', { maximumSignificantDigits: 6 }).format(Number(value))
     : number(value);
-export const dateLabel = (value: string) =>
+export const dateLabel = (value: string, locale: 'es' | 'en' | 'pt' = 'es') =>
   value
-    ? new Date(value).toLocaleDateString('es-AR', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        timeZone: 'UTC',
-      })
+    ? new Date(value).toLocaleDateString(
+        locale === 'pt' ? 'pt-BR' : locale === 'en' ? 'en-US' : 'es-AR',
+        {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+          timeZone: 'UTC',
+        },
+      )
     : 'Fecha no informada';
 export async function api<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`/api/data/${path}`, {

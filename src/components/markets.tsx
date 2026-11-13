@@ -1,4 +1,5 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Search, Globe2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -7,22 +8,41 @@ import { api } from '@/lib/utils';
 import type { MarketSnapshot } from '@/lib/market/types';
 import { SectionTitle, ErrorState, Skeleton } from './ui';
 import { MarketTable } from './market-table';
-
+import { marketCategories } from '@/lib/market/categories';
+import { WatchlistPicker } from './watchlists';
+import type { MarketSort, MarketSortKey } from '@/lib/market/sorting';
 type CatalogPage = {
   rows: MarketSnapshot[];
   total: number;
   page: number;
   pageSize: number;
-  counts: { sp500: number; crypto: number; cedears: number; cedearListings: number; total: number };
-  dates: { sp500: string; crypto: string; cedears: string };
+  counts: {
+    sp500: number;
+    crypto: number;
+    etfs: number;
+    cedears: number;
+    cedearListings: number;
+    argentina: number;
+    argentinaRanked: number;
+    argentinaMerval: number;
+    total: number;
+  };
+  dates: {
+    sp500: string;
+    crypto: string;
+    cedears: string;
+    argentina: string;
+  };
 };
 export function Markets() {
+  const uiText = useUiText();
   const { demo } = useApp();
-  const [market, setMarket] = useState('Todos');
+  const [market, setMarket] = useState<(typeof marketCategories)[number]>('Acciones USA');
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('default');
+  const [favorite, setFavorite] = useState<string | null>(null);
   useEffect(() => {
     const timer = setTimeout(() => {
       setQuery(search);
@@ -39,136 +59,218 @@ export function Markets() {
   });
   const data = catalog.data;
   const rows = [...(data?.rows ?? [])];
-  if (sort !== 'default')
-    rows.sort((a, b) => {
-      if (!a.quote) return b.quote ? 1 : 0;
-      if (!b.quote) return -1;
-      return sort === 'volume'
-        ? Number(b.quote.volume ?? 0) - Number(a.quote.volume ?? 0)
-        : sort === 'gainers'
-          ? Number(b.quote.changePercent) - Number(a.quote.changePercent)
-          : Number(a.quote.changePercent) - Number(b.quote.changePercent);
-    });
+  const [key, direction] = sort.split(':');
+  const ordering: MarketSort | null =
+    sort === 'default'
+      ? null
+      : { key: key as MarketSortKey, direction: direction as 'asc' | 'desc' };
   const pages = data ? Math.max(1, Math.ceil(data.total / data.pageSize)) : 1;
   return (
     <>
       <SectionTitle
-        eyebrow="MARKET EXPLORER"
-        title="Un mundo de oportunidades."
-        description="S&P 500, Coin100 y todos los CEDEARs del listado de BYMA. Buscá por ticker o nombre."
+        eyebrow={uiText('MARKET EXPLORER')}
+        title={uiText('Un mundo de oportunidades.')}
+        description={uiText(
+          'Acciones de Estados Unidos y Argentina, CEDEARs, ETFs y criptomonedas. Eleg\u00ED una categor\u00EDa y busc\u00E1 por ticker o nombre.',
+        )}
         action={
           <span className="outlined-chip">
-            <Globe2 size={14} /> Cobertura multimercado
+            <Globe2 size={14} />
+            {uiText(' Cobertura multimercado')}
           </span>
         }
       />
-      {data && (
-        <div className="catalog-coverage">
-          <span>
-            <strong>{data.counts.sp500}</strong> acciones del S&P 500
-          </span>
-          <span>
-            <strong>{data.counts.crypto}</strong> criptomonedas · Coin100
-          </span>
-          <span>
-            <strong>{data.counts.cedears}</strong> programas CEDEAR
-          </span>
-        </div>
+      {uiText(
+        data && (
+          <div className="catalog-coverage">
+            <span>
+              <strong>{uiText(data.counts.sp500)}</strong>
+              {uiText(' acciones del S&P 500')}
+            </span>
+            <span>
+              <strong>{uiText(data.counts.crypto)}</strong>
+              {uiText(' criptomonedas \u00B7 Coin100')}
+            </span>
+            <span>
+              <strong>{uiText(data.counts.etfs)}</strong> ETFs
+            </span>
+            <span>
+              <strong>{uiText(data.counts.cedears)}</strong>
+              {uiText(' programas CEDEAR')}
+            </span>
+            <span>
+              <strong>{uiText(data.counts.argentina)}</strong>
+              {uiText(' acciones argentinas')}
+            </span>
+          </div>
+        ),
       )}
       <div className="panel markets-panel">
         <div className="market-filters">
-          <div className="tabs" role="group" aria-label="Filtrar mercado">
-            {['Todos', 'S&P 500', 'Coin100', 'CEDEARs', 'Estados Unidos', 'Argentina', 'ETFs'].map(
-              (t) => (
+          <div className="tabs" role="group" aria-label={uiText('Filtrar mercado')}>
+            {uiText(
+              marketCategories.map((t) => (
                 <button
                   key={t}
                   aria-pressed={market === t}
                   onClick={() => {
                     setMarket(t);
                     setPage(1);
+                    setSort('default');
                   }}
                   className={market === t ? 'active' : ''}
                 >
-                  {t}
+                  {uiText(t)}
                 </button>
-              ),
+              )),
             )}
           </div>
           <div className="market-search">
             <Search size={16} />
             <input
               value={search}
-              aria-label="Filtrar instrumentos"
+              aria-label={uiText('Filtrar instrumentos')}
               onChange={(event) => {
                 setSearch(event.target.value);
                 setPage(1);
               }}
-              placeholder="Ticker o nombre..."
+              placeholder={uiText(
+                market === 'Acciones ARG' ? 'Ticker, nombre o índice...' : 'Ticker o nombre...',
+              )}
             />
           </div>
           <select
-            aria-label="Ordenar página de instrumentos"
+            aria-label={uiText('Ordenar p\u00E1gina de instrumentos')}
             value={sort}
             onChange={(event) => setSort(event.target.value)}
           >
             <option value="default">
-              {market === 'Coin100' ? 'Ranking por capitalización' : 'Destacados'}
+              {uiText(
+                market === 'Crypto'
+                  ? 'Ranking por capitalización'
+                  : market === 'Acciones ARG'
+                    ? 'Liquidez · ADTV 40 ruedas'
+                    : 'Destacados',
+              )}
             </option>
-            <option value="gainers">Subas de esta página</option>
-            <option value="losers">Bajas de esta página</option>
-            <option value="volume">Volumen de esta página</option>
+            <option value="change:desc">{uiText('Subas de esta p\u00E1gina')}</option>
+            <option value="change:asc">{uiText('Bajas de esta p\u00E1gina')}</option>
+            <option value="volume:desc">{uiText('Volumen de esta p\u00E1gina')}</option>
+            <option value="volume:asc">{uiText('Volumen ↑')}</option>
+            <option value="price:desc">{uiText('Precio ↓')}</option>
+            <option value="price:asc">{uiText('Precio ↑')}</option>
+            <option value="asset:asc">{uiText('Activo A–Z')}</option>
+            <option value="asset:desc">{uiText('Activo Z–A')}</option>
+            <option value="rank:asc">{uiText('Ranking ↑')}</option>
+            <option value="rank:desc">{uiText('Ranking ↓')}</option>
           </select>
         </div>
-        {catalog.isPending ? (
-          <Skeleton className="table-skeleton" />
-        ) : catalog.isError ? (
-          <ErrorState message={catalog.error.message} retry={() => catalog.refetch()} />
-        ) : rows.length ? (
-          <MarketTable rows={rows} />
-        ) : (
-          <div className="catalog-empty" role="status">
-            No se encontraron activos. Probá otro ticker o nombre.
-          </div>
-        )}
-        {data && (
-          <nav className="catalog-pagination" aria-label="Páginas de activos">
-            <span>
-              {data.total
-                ? `${(data.page - 1) * data.pageSize + 1}–${Math.min(data.page * data.pageSize, data.total)} de ${data.total.toLocaleString('es-AR')} activos`
-                : '0 activos'}
-            </span>
-            <div>
-              <button
-                className="button button-secondary"
-                disabled={data.page <= 1}
-                onClick={() => setPage(data.page - 1)}
-                aria-label="Página anterior"
+        {uiText(
+          market === 'Acciones ARG' && data && (
+            <div className="table-note" role="note">
+              {uiText(data.counts.argentina)}
+              {uiText(' acciones locales \u00B7 ')}
+              {uiText(data.counts.argentinaMerval)}
+              {uiText(
+                ' del MSCI Merval. Orden por volumen efectivo promedio de 40 ruedas (ADTV), al',
+              )}
+              {uiText(' ')}
+              {uiText(data.dates.argentina)}: {uiText(data.counts.argentinaRanked)}
+              {uiText(
+                ' con medici\u00F3n; el resto figura al final, por ticker. Es una medida de liquidez, no de rendimiento esperado.',
+              )}
+              {uiText(' ')}
+              <a
+                className="text-link"
+                href="https://www.iamc.com.ar/informesanuales/"
+                target="_blank"
+                rel="noreferrer"
               >
-                <ChevronLeft size={14} />
-              </button>
-              <span>
-                Página {data.page} de {pages}
-              </span>
-              <button
-                className="button button-secondary"
-                disabled={data.page >= pages}
-                onClick={() => setPage(data.page + 1)}
-                aria-label="Página siguiente"
-              >
-                <ChevronRight size={14} />
-              </button>
+                {uiText('Fuente BYMA')}
+              </a>
             </div>
-          </nav>
+          ),
+        )}
+        {uiText(
+          catalog.isPending || search !== query ? (
+            <Skeleton className="table-skeleton" />
+          ) : catalog.isError ? (
+            <ErrorState message={catalog.error.message} retry={() => catalog.refetch()} />
+          ) : rows.length ? (
+            <MarketTable
+              rows={rows}
+              onFavorite={setFavorite}
+              sort={ordering}
+              onSort={(value) => setSort(`${value.key}:${value.direction}`)}
+            />
+          ) : (
+            <div className="catalog-empty" role="status">
+              {uiText('No se encontraron activos. Prob\u00E1 otro ticker o nombre.')}
+            </div>
+          ),
+        )}
+        {uiText(
+          data && (
+            <nav className="catalog-pagination" aria-label={uiText('P\u00E1ginas de activos')}>
+              <span>
+                {uiText(
+                  data.total
+                    ? `${(data.page - 1) * data.pageSize + 1}–${Math.min(data.page * data.pageSize, data.total)} de ${data.total.toLocaleString('es-AR')} activos`
+                    : '0 activos',
+                )}
+              </span>
+              <div>
+                <button
+                  className="button button-secondary"
+                  disabled={data.page <= 1}
+                  onClick={() => setPage(data.page - 1)}
+                  aria-label={uiText('P\u00E1gina anterior')}
+                >
+                  <ChevronLeft size={14} />
+                </button>
+                <span>
+                  {uiText('P\u00E1gina ')}
+                  {uiText(data.page)}
+                  {uiText(' de ')}
+                  {uiText(pages)}
+                </span>
+                <button
+                  className="button button-secondary"
+                  disabled={data.page >= pages}
+                  onClick={() => setPage(data.page + 1)}
+                  aria-label={uiText('P\u00E1gina siguiente')}
+                >
+                  <ChevronRight size={14} />
+                </button>
+              </div>
+            </nav>
+          ),
         )}
         <div className="table-note">
-          S&P 500: cartera de acciones publicada por State Street SPY
-          {data ? ` · ${data.dates.sp500}` : ''}. Coin100: top 100 por capitalización de CoinGecko,
-          incluidas stablecoins y monedas envueltas
-          {data ? ` · ${data.dates.crypto.slice(0, 10)}` : ''}. CEDEARs: listado BYMA y datos de
-          Caja de Valores{data ? ` · ${data.dates.cedears}` : ''}. Las cotizaciones dependen de la
-          cobertura y cuota de cada fuente; los datos de demostración se identifican como DEMO.
+          {uiText('S&P 500: cartera de acciones publicada por State Street SPY')}
+          {uiText(data ? ` · ${data.dates.sp500}` : '')}
+          {uiText(
+            '. Coin100: top 100 por capitalizaci\u00F3n de CoinGecko, incluidas stablecoins y monedas envueltas',
+          )}
+          {uiText(data ? ` · ${data.dates.crypto.slice(0, 10)}` : '')}
+          {uiText('. CEDEARs: listado BYMA y datos de Caja de Valores')}
+          {uiText(data ? ` · ${data.dates.cedears}` : '')}
+          {uiText(
+            '. Las cotizaciones dependen de la cobertura y cuota de cada fuente; los datos de demostraci\u00F3n se identifican como DEMO.',
+          )}
         </div>
       </div>
+      {uiText(
+        favorite && (
+          <WatchlistPicker
+            instrumentId={favorite}
+            open
+            onOpenChange={(open) => {
+              if (!open) setFavorite(null);
+            }}
+          />
+        ),
+      )}
     </>
   );
 }

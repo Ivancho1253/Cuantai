@@ -96,3 +96,13 @@ SEC annual statements now use the official ticker/exchange directory and Company
 - [OpenAI structured output](https://developers.openai.com/api/docs/guides/structured-outputs) and [function calling](https://developers.openai.com/api/docs/guides/function-calling)
 
 UX references reviewed: CandL (focused multi-pane charting), TradingView (asset discovery), Finviz (compact screening), Koyfin (contextual financial workspace), Portfolio Performance (transaction-based accounting). Cuantai uses original layout, styling, copy and code; none of their proprietary resources were copied.
+
+## Cotizaciones indicativas sin credenciales
+
+El modo normal usa `MARKET_DATA_MODE=live` por defecto. Sin Twelve Data, las cotizaciones públicas de acciones USA y ETFs se leen desde Yahoo Finance; las especies BYMA en ARS usan el símbolo local `.BA` si no hay export autorizado configurado. Se valida símbolo, bolsa y moneda antes de aceptar el precio. La especie en USD de un CEDEAR no se reemplaza por su subyacente ni por la especie en pesos. La respuesta mantiene fecha, fuente y condición indicativa con demora no especificada. Un feed contratado configurado conserva prioridad.
+
+Este respaldo no aporta un historial OHLCV a los cálculos de investigación; los gráficos siguen usando TradingView y el histórico interno requiere el proveedor configurado. Caché de cotizaciones de dos minutos y concurrencia máxima de cuatro consultas públicas. Un error de cobertura o cuota produce dato no disponible; nunca 100 ni precios demo. La ruta `/demo` conserva solamente los ejemplos explícitos del catálogo inicial y deja sin precio las nuevas incorporaciones.
+
+CoinGecko consulta precios, cambio y volumen de 24 horas por ID exacto. El volumen agregado de cripto se expresa en USD y se identifica como tal, para distinguirlo del volumen en unidades de las acciones.
+
+Verificación de conexión: consultas públicas de AAPL y AMD en USD, GGAL e YPFD en ARS y Bitcoin en USD respondieron con valores y timestamps propios de cada instrumento. La disponibilidad de estos servicios públicos puede cambiar.

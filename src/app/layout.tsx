@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from 'next';
+import { cookies } from 'next/headers';
 import localFont from 'next/font/local';
 import { Providers } from '@/components/providers';
 import './globals.css';
 import './workspace.css';
+import './research.css';
+import './features.css';
 
 const manrope = localFont({
   src: './fonts/Manrope-Variable.ttf',
@@ -44,16 +47,18 @@ export const metadata: Metadata = {
   },
 };
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#0b0e11' };
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const preference = (await cookies()).get('cuantai_lang')?.value;
+  const locale = preference === 'en' || preference === 'pt' ? preference : 'es';
   return (
     <html
-      lang="es"
+      lang={locale}
       className={`${manrope.variable} ${plexSans.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body>
-        <Providers>{children}</Providers>
+        <Providers locale={locale}>{children}</Providers>
       </body>
     </html>
   );

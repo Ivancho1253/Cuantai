@@ -1,6 +1,8 @@
 import sp500 from './data/sp500.json';
 import crypto from './data/crypto.json';
 import cedearData from './data/cedears.json';
+import argentinaData from './data/argentina.json';
+import etfData from './data/etfs.json';
 import { instruments } from './catalog';
 import type { Instrument } from './types';
 
@@ -31,7 +33,40 @@ const coins: Instrument[] = crypto.entries.map(([id, symbol, name]) => ({
   color: '#b69aee',
   source: 'Coin100 · CoinGecko market-cap ranking',
 }));
-const knownIssuers = [...stocks, ...instruments].filter(
+const listedEtfs: Instrument[] = etfData.entries.map((entry) => ({
+  id: `${entry.exchange}:${entry.symbol}:USD`,
+  exchange: entry.exchange,
+  symbol: entry.symbol,
+  name: entry.name,
+  currency: 'USD',
+  type: 'etf',
+  country: 'US',
+  sector: 'ETF',
+  color: '#91bca7',
+  source: 'Nasdaq Trader · US ETF symbol directories',
+}));
+const argentinaStocks: Instrument[] = argentinaData.entries.map((entry) => ({
+  id: `BYMA:${entry.symbol}:ARS`,
+  exchange: 'BYMA',
+  symbol: entry.symbol,
+  name: entry.name,
+  currency: 'ARS',
+  type: 'stock',
+  country: 'AR',
+  sector: entry.sector,
+  color: '#8fc0e8',
+  isin: entry.isin,
+  source: `BYMA · empresas listadas · ${argentinaData.asOf}`,
+  ...('index' in entry ? { indexMembership: entry.index } : {}),
+  ...('liquidityRank' in entry
+    ? {
+        liquidityRank: entry.liquidityRank,
+        liquidityAdtvARS: entry.adtv40ARS,
+        liquidityAsOf: argentinaData.asOf,
+      }
+    : {}),
+}));
+const knownIssuers = [...stocks, ...instruments, ...listedEtfs].filter(
   (i) => i.type === 'stock' || i.type === 'etf',
 );
 const issuerName = (name: string) =>
@@ -65,32 +100,95 @@ const certificates: Instrument[] = cedearData.entries.map((entry) => {
 });
 const catalog = [
   ...new Map(
-    [...stocks, ...coins, ...certificates, ...instruments].map((instrument) => [
-      instrument.id,
-      instrument,
-    ]),
+    [...stocks, ...coins, ...certificates, ...instruments, ...argentinaStocks, ...listedEtfs].map(
+      (instrument) => [instrument.id, instrument],
+    ),
   ).values(),
 ];
 const byId = new Map(catalog.map((instrument) => [instrument.id, instrument]));
 const coin100Ids = new Set(coins.map((instrument) => instrument.id));
-const visibleCatalog = catalog.filter((i) => i.type !== 'crypto' || coin100Ids.has(i.id));
+const listedEtfIds = new Set(listedEtfs.map((i) => i.id));
+const primaryEtfBySymbol = new Map(listedEtfs.map((i) => [i.symbol, i]));
+export const findPrimaryEtf = (symbol: string) => primaryEtfBySymbol.get(symbol);
+const visibleCatalog = catalog.filter(
+  (i) =>
+    (i.type !== 'crypto' || coin100Ids.has(i.id)) && (i.type !== 'etf' || listedEtfIds.has(i.id)),
+);
 const sp500Ids = new Set(stocks.map((instrument) => instrument.id));
 const featured = new Set(instruments.map((instrument) => instrument.id));
+const featuredEtfs = new Map(
+  [
+    'SPY',
+    'QQQ',
+    'DIA',
+    'VOO',
+    'IVV',
+    'VTI',
+    'VEA',
+    'VWO',
+    'BND',
+    'AGG',
+    'TLT',
+    'GLD',
+    'SLV',
+    'SGOV',
+    'SCHD',
+    'IWM',
+    'HYG',
+    'LQD',
+    'XLK',
+    'XLF',
+    'ARKK',
+    'IBIT',
+  ].map((symbol, index) => [symbol, index]),
+);
 export const catalogCounts = {
+  argentina: argentinaStocks.length,
+  argentinaRanked: argentinaData.rankedCount,
+  argentinaMerval: argentinaStocks.filter((i) => i.indexMembership === 'MSCI Merval').length,
   sp500: stocks.length,
   crypto: coins.length,
+  etfs: listedEtfs.length,
   cedears: certificates.length,
   cedearListings: visibleCatalog.filter((i) => i.type === 'cedear').length,
   total: visibleCatalog.filter((i) => i.type !== 'cash').length,
 };
 export const catalogDates = {
+  argentina: argentinaData.asOf,
   sp500: sp500.asOf,
   crypto: crypto.retrievedAt,
+  etfs: etfData.retrievedAt,
   cedears: cedearData.asOf,
 };
 export const findDiscoveryInstrument = (id: string) => byId.get(id);
 export const findDiscoveryListing = (exchange: string, symbol: string) =>
   catalog.find((i) => i.exchange === exchange && (i.providerSymbol ?? i.symbol) === symbol);
+
+function matchesCategory(instrument: Instrument, category: string) {
+  switch (category) {
+    case 'Acciones USA':
+      return instrument.type === 'stock' && instrument.country === 'US';
+    case 'Acciones ARG':
+      return instrument.type === 'stock' && instrument.country === 'AR';
+    case 'Cedears ARG':
+    case 'CEDEARs':
+      return instrument.type === 'cedear';
+    case 'ETFs':
+      return instrument.type === 'etf';
+    case 'Crypto':
+    case 'Cripto':
+    case 'Coin100':
+      return coin100Ids.has(instrument.id);
+    case 'S&P 500':
+      return sp500Ids.has(instrument.id);
+    case 'Estados Unidos':
+      return instrument.country === 'US';
+    case 'Argentina':
+      return instrument.country === 'AR';
+    default:
+      return true;
+  }
+}
 
 export function discoverInstruments({
   query = '',
@@ -102,25 +200,27 @@ export function discoverInstruments({
   const rows = visibleCatalog.filter(
     (i) =>
       i.type !== 'cash' &&
-      (category === 'S&P 500'
-        ? sp500Ids.has(i.id)
-        : category === 'Estados Unidos'
-          ? i.country === 'US'
-          : category === 'Cripto' || category === 'Coin100'
-            ? coin100Ids.has(i.id)
-            : category === 'CEDEARs'
-              ? i.type === 'cedear'
-              : category === 'Argentina'
-                ? i.country === 'AR'
-                : category === 'ETFs'
-                  ? i.type === 'etf'
-                  : true) &&
-      `${i.symbol} ${i.name} ${i.exchange} ${i.currency} ${i.sector} ${i.providerSymbol ?? ''}`
+      matchesCategory(i, category) &&
+      `${i.symbol} ${i.name} ${i.exchange} ${i.currency} ${i.sector} ${i.providerSymbol ?? ''} ${i.indexMembership ?? ''}`
         .toLowerCase()
         .includes(needle),
   );
   rows.sort((a, b) => {
-    if (['Cripto', 'Coin100'].includes(category)) return a.marketCapRank! - b.marketCapRank!;
+    if (category === 'Acciones ARG') {
+      const exact = (i: Instrument) => (needle && i.symbol.toLowerCase() === needle ? 0 : 1);
+      return (
+        exact(a) - exact(b) ||
+        (a.liquidityRank ?? 100000) - (b.liquidityRank ?? 100000) ||
+        a.symbol.localeCompare(b.symbol)
+      );
+    }
+    if (['Crypto', 'Cripto', 'Coin100'].includes(category))
+      return a.marketCapRank! - b.marketCapRank!;
+    if (category === 'ETFs') {
+      const rank = (i: Instrument) =>
+        needle && i.symbol.toLowerCase() === needle ? -1 : (featuredEtfs.get(i.symbol) ?? 10000);
+      return rank(a) - rank(b) || a.symbol.localeCompare(b.symbol);
+    }
     const rank = (i: Instrument) =>
       needle && i.symbol.toLowerCase() === needle ? 0 : featured.has(i.id) ? 1 : 2;
     return rank(a) - rank(b) || a.symbol.localeCompare(b.symbol) || a.id.localeCompare(b.id);

@@ -26,6 +26,7 @@ import {
   fxInputSchema,
 } from '@/lib/validation';
 import { createAnalysis } from '@/lib/ai/analysis';
+import { marketCategories } from '@/lib/market/categories';
 import { assetOverview } from '@/lib/market/asset-overview';
 import { chatInputSchema, type ChatTurn } from '@/lib/ai/asset-chat';
 import { answerAssetQuestion } from '@/lib/ai/asset-chat-server';
@@ -33,6 +34,14 @@ import { calculatePortfolio, type Transaction } from '@/lib/finance/portfolio';
 import { ownedPortfolio, portfolioDetail } from '@/lib/portfolio-service';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+async function researchRateLimit(userId: string) {
+  const ai = Boolean(process.env.OPENAI_API_KEY && process.env.AI_MODEL);
+  await rateLimit(
+    ai ? `ai:${userId}:${new Date().toISOString().slice(0, 10)}` : `research:${userId}`,
+    ai ? Number(process.env.AI_DAILY_LIMIT ?? 10) : 60,
+    ai ? 86400 : 60,
+  );
+}
 async function handler(req: Request, { params }: { params: Promise<{ path: string[] }> }) {
   try {
     const { path } = await params;
@@ -99,6 +108,7 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
         .parse(url.searchParams.get('page') ?? '1');
       const category = z
         .enum([
+          ...marketCategories,
           'Todos',
           'S&P 500',
           'Estados Unidos',
@@ -106,9 +116,8 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
           'Coin100',
           'CEDEARs',
           'Argentina',
-          'ETFs',
         ])
-        .parse(url.searchParams.get('category') ?? 'Todos');
+        .parse(url.searchParams.get('category') ?? 'Acciones USA');
       return json(
         await marketListings(
           { page, category, query: (url.searchParams.get('q') ?? '').slice(0, 100), pageSize: 50 },
@@ -147,6 +156,22 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
     const db = await getDb();
     if (method !== 'GET') await rateLimit(`write:${userId}`, 120, 60);
     if (route === 'settings') {
+      if (method === 'PATCH') {
+        const update = z
+          .object({ language: z.enum(['es', 'en', 'pt']) })
+          .strict()
+          .parse(await readJson(req));
+        await db
+          .insert(s.settings)
+          .values({ userId, preferences: update })
+          .onConflictDoUpdate({
+            target: s.settings.userId,
+            set: {
+              preferences: sql`${s.settings.preferences} || ${JSON.stringify(update)}::jsonb`,
+            },
+          });
+        return json({ ok: true });
+      }
       if (method === 'GET') {
         const [row] = await db.select().from(s.settings).where(eq(s.settings.userId, userId));
         return json({ user: session.user, preferences: row?.preferences ?? {} });
@@ -379,11 +404,7 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
         const latestId = rows[0]?.id ?? null;
         if (input.baseTurnId !== latestId)
           throw new HttpError(409, 'La conversación cambió. Recargá el historial antes de enviar.');
-        await rateLimit(
-          `ai:${userId}:${new Date().toISOString().slice(0, 10)}`,
-          Number(process.env.AI_DAILY_LIMIT ?? 10),
-          86400,
-        );
+        await researchRateLimit(userId);
         const overview = await assetOverview(instrumentId, mode === 'demo');
         const news = await marketNews(overview.instrument, mode === 'demo');
         let answer;
@@ -446,11 +467,7 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
         const body = z
           .object({ instrumentId: z.string(), question: z.string().max(1000).optional() })
           .parse(await readJson(req));
-        await rateLimit(
-          `ai:${userId}:${new Date().toISOString().slice(0, 10)}`,
-          Number(process.env.AI_DAILY_LIMIT ?? 10),
-          86400,
-        );
+        await researchRateLimit(userId);
         let report;
         try {
           report = await createAnalysis(body.instrumentId, body.question);

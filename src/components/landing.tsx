@@ -1,7 +1,8 @@
 'use client';
-
+import { useText as useUiText } from './locale-provider';
 import { useRef, useState, type ReactNode, type KeyboardEvent } from 'react';
 import Link from 'next/link';
+import { LanguageSwitcher } from './locale-provider';
 import Image from 'next/image';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
@@ -30,7 +31,6 @@ import { Brand, Modal } from './ui';
 import { TradingViewChart } from './tradingview-chart';
 import styles from './landing.module.css';
 import captureSizes from '../../public/product/capture-sizes.json';
-
 const features = [
   {
     id: 'dashboard',
@@ -151,7 +151,6 @@ const markets = [
   ['SOL', 'Solana', 'sol.svg'],
   ['JPM', 'JPMorgan', 'jpm.png'],
 ];
-
 function SectionBackdrop() {
   return (
     <div className={styles.sectionBackdrop} aria-hidden="true">
@@ -182,7 +181,6 @@ function SectionBackdrop() {
     </div>
   );
 }
-
 function Reveal({
   children,
   className,
@@ -192,6 +190,7 @@ function Reveal({
   className?: string;
   delay?: number;
 }) {
+  const uiText = useUiText();
   const reduced = useReducedMotion();
   return (
     <motion.div
@@ -201,7 +200,7 @@ function Reveal({
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
     >
-      {children}
+      {uiText(children)}
     </motion.div>
   );
 }
@@ -214,14 +213,23 @@ function ProductImage({
   alt: string;
   preload?: boolean;
 }) {
-  const dimensions = (captureSizes as Record<string, { width: number; height: number }>)[name] ?? {
+  const uiText = useUiText();
+  const dimensions = (
+    captureSizes as Record<
+      string,
+      {
+        width: number;
+        height: number;
+      }
+    >
+  )[name] ?? {
     width: 1440,
     height: 960,
   };
   return (
     <Image
       src={`/product/${name}.webp`}
-      alt={alt}
+      alt={uiText(alt)}
       width={dimensions.width}
       height={dimensions.height}
       unoptimized
@@ -231,12 +239,15 @@ function ProductImage({
     />
   );
 }
-
 export function Landing() {
+  const uiText = useUiText();
   const reduced = useReducedMotion();
   const [active, setActive] = useState(0);
   const [ambientPaused, setAmbientPaused] = useState(false);
-  const [expandedImage, setExpandedImage] = useState<{ name: string; label: string } | null>(null);
+  const [expandedImage, setExpandedImage] = useState<{
+    name: string;
+    label: string;
+  } | null>(null);
   const tabs = useRef<Array<HTMLButtonElement | null>>([]);
   const feature = features[active];
   const FeatureIcon = feature.icon;
@@ -254,7 +265,7 @@ export function Landing() {
   return (
     <div className={`${styles.landing} ${ambientPaused ? styles.paused : ''}`}>
       <a className="skip-link" href="#landing-content">
-        Ir al contenido
+        {uiText('Ir al contenido')}
       </a>
       <div className={styles.ambient} aria-hidden="true">
         <div className={styles.ambientGrid} />
@@ -264,17 +275,19 @@ export function Landing() {
       </div>
       <header className={styles.header}>
         <Brand />
-        <nav aria-label="Producto">
-          <a href="#funciones">Funciones</a>
-          <a href="#plataforma">La plataforma</a>
-          <a href="#como-funciona">Cómo funciona</a>
+        <nav aria-label={uiText('Producto')}>
+          <a href="#funciones">{uiText('Funciones')}</a>
+          <a href="#plataforma">{uiText('La plataforma')}</a>
+          <a href="#como-funciona">{uiText('C\u00F3mo funciona')}</a>
         </nav>
         <div className={styles.headerActions}>
+          <LanguageSwitcher />
           <Link href="/login" className={styles.login}>
-            Iniciar sesión
+            {uiText('Iniciar sesi\u00F3n')}
           </Link>
           <Link href="/register" className={styles.smallCta}>
-            Crear cuenta <ArrowUpRight size={14} />
+            {uiText('Crear cuenta ')}
+            <ArrowUpRight size={14} />
           </Link>
         </div>
       </header>
@@ -288,58 +301,71 @@ export function Landing() {
           <div className={styles.heroTop}>
             <Reveal className={styles.heroCopy}>
               <a href="#plataforma" className={styles.announcement}>
-                <span className={styles.pulse} /> TUS ACTIVOS Y TUS AGENTES DE IA{' '}
+                <span className={styles.pulse} />
+                {uiText(' TUS ACTIVOS Y TUS AGENTES DE IA')}
+                {uiText(' ')}
                 <ChevronRight size={13} />
               </a>
               <h1>
-                Tus activos.
+                {uiText('Tus activos.')}
                 <br />
-                <span>Un solo lugar.</span>
+                <span>{uiText('Un solo lugar.')}</span>
               </h1>
               <p>
-                Para inversores que quieren seguir{' '}
-                <strong>todos sus activos, centralizados en un mismo lugar.</strong> Acciones, ETFs,
-                cripto y CEDEARs. Un espacio donde <strong>consultar a agentes de IA</strong> para
-                orientarte, explorar datos y profundizar en análisis fundamental y técnico.
+                {uiText('Para inversores que quieren seguir')}
+                {uiText(' ')}
+                <strong>{uiText('todos sus activos, centralizados en un mismo lugar.')}</strong>
+                {uiText(' Acciones, ETFs, cripto y CEDEARs. Un espacio donde ')}
+                <strong>{uiText('consultar a agentes de IA')}</strong>
+                {uiText(
+                  ' para orientarte, explorar datos y profundizar en an\u00E1lisis fundamental y t\u00E9cnico.',
+                )}
               </p>
               <div className={styles.actions}>
                 <Link href="/register" className={styles.primaryCta}>
-                  Centralizar mis activos <ArrowUpRight size={20} />
+                  {uiText('Centralizar mis activos ')}
+                  <ArrowUpRight size={20} />
                 </Link>
                 <Link href="/demo" className={styles.secondaryCta}>
-                  <Play size={14} /> Explorar la demo
+                  <Play size={14} />
+                  {uiText(' Explorar la demo')}
                 </Link>
               </div>
               <div className={styles.heroNotes}>
                 <span>
-                  <Check size={16} /> Probá la demo sin registrarte
+                  <Check size={16} />
+                  {uiText(' Prob\u00E1 la demo sin registrarte')}
                 </span>
                 <span>
-                  <Check size={16} /> Tu forma de invertir, conectada
+                  <Check size={16} />
+                  {uiText(' Tu forma de invertir, conectada')}
                 </span>
               </div>
             </Reveal>
             <div className={styles.heroArt}>
               <Image
                 src="/product/connected-assets-muted.webp"
-                alt="Logo de Cuantai conectando acciones, criptomonedas y otros activos en un centro común"
+                alt={uiText(
+                  'Logo de Cuantai conectando acciones, criptomonedas y otros activos en un centro com\u00FAn',
+                )}
                 width={1536}
                 height={1024}
                 sizes="(max-width: 760px) 100vw, 55vw"
                 preload
               />
               <div className={styles.assetPills}>
-                <span>Acciones</span>
-                <span>ETFs</span>
-                <span>Cripto</span>
-                <span>CEDEARs</span>
+                <span>{uiText('Acciones')}</span>
+                <span>{uiText('ETFs')}</span>
+                <span>{uiText('Cripto')}</span>
+                <span>{uiText('CEDEARs')}</span>
               </div>
             </div>
           </div>
           <div className={styles.productIntro}>
-            <span className={styles.eyebrow}>ASÍ SE VE TENER TODO A MANO</span>
+            <span className={styles.eyebrow}>{uiText('AS\u00CD SE VE TENER TODO A MANO')}</span>
             <p>
-              Una sola vista. <strong>Todo tu mundo financiero.</strong>
+              {uiText('Una sola vista. ')}
+              <strong>{uiText('Todo tu mundo financiero.')}</strong>
             </p>
           </div>
           <div className={styles.heroStage}>
@@ -356,20 +382,23 @@ export function Landing() {
                   <i />
                 </span>
                 <span>
-                  <LockKeyhole size={10} /> cuantai / tu espacio de trabajo
+                  <LockKeyhole size={10} />
+                  {uiText(' cuantai / tu espacio de trabajo')}
                 </span>
-                <span className={styles.demoBadge}>VISTA DEMO</span>
+                <span className={styles.demoBadge}>{uiText('VISTA DEMO')}</span>
               </div>
               <div className={styles.livePreview}>
                 <div className={styles.livePreviewHeading}>
                   <div>
-                    <span className={styles.eyebrow}>EXPLORÁ EL MERCADO</span>
-                    <h3>Tu próximo análisis empieza acá.</h3>
+                    <span className={styles.eyebrow}>{uiText('EXPLOR\u00C1 EL MERCADO')}</span>
+                    <h3>{uiText('Tu pr\u00F3ximo an\u00E1lisis empieza ac\u00E1.')}</h3>
                     <p>
-                      Probá el gráfico: cambiá el intervalo, acercá el precio o agregá indicadores.
+                      {uiText(
+                        'Prob\u00E1 el gr\u00E1fico: cambi\u00E1 el intervalo, acerc\u00E1 el precio o agreg\u00E1 indicadores.',
+                      )}
                     </p>
                   </div>
-                  <span className={styles.liveBadge}>GRÁFICO INTERACTIVO</span>
+                  <span className={styles.liveBadge}>{uiText('GR\u00C1FICO INTERACTIVO')}</span>
                 </div>
                 <TradingViewChart symbol="NASDAQ:NVDA" height={640} theme="dark" />
               </div>
@@ -379,8 +408,10 @@ export function Landing() {
                 <Flame size={18} />
               </span>
               <div>
-                El mercado, en movimiento.
-                <small>Explorá el gráfico con tus propias herramientas.</small>
+                {uiText('El mercado, en movimiento.')}
+                <small>
+                  {uiText('Explor\u00E1 el gr\u00E1fico con tus propias herramientas.')}
+                </small>
               </div>
               <Activity size={25} />
             </div>
@@ -389,44 +420,59 @@ export function Landing() {
                 <Sparkles size={18} />
               </span>
               <div>
-                Consultá a tus agentes de IA.
-                <small>Datos, orientación y análisis en un mismo espacio.</small>
+                {uiText('Consult\u00E1 a tus agentes de IA.')}
+                <small>
+                  {uiText('Datos, orientaci\u00F3n y an\u00E1lisis en un mismo espacio.')}
+                </small>
               </div>
             </div>
           </div>
           <div className={styles.heroCaption}>
-            <span>GRÁFICO INTERACTIVO · DATOS Y HERRAMIENTAS DE TRADINGVIEW</span>
+            <span>
+              {uiText('GR\u00C1FICO INTERACTIVO \u00B7 DATOS Y HERRAMIENTAS DE TRADINGVIEW')}
+            </span>
             <a href="#funciones">
-              Hay más por descubrir <ArrowDown size={13} />
+              {uiText('Hay m\u00E1s por descubrir ')}
+              <ArrowDown size={13} />
             </a>
           </div>
         </section>
 
-        <section className={styles.marketBand} aria-label="Mercados disponibles">
+        <section className={styles.marketBand} aria-label={uiText('Mercados disponibles')}>
           <div className={styles.marketBandLabel}>
-            <Globe2 size={15} /> GLOBAL POR NATURALEZA.
+            <Globe2 size={15} />
+            {uiText(' GLOBAL POR NATURALEZA.')}
             <br />
-            <span>LOCAL POR CONVICCIÓN.</span>
+            <span>{uiText('LOCAL POR CONVICCI\u00D3N.')}</span>
           </div>
           <div className={styles.marketMarquee}>
             <div className={styles.marketTrack}>
-              {[false, true].map((copy) => (
-                <div
-                  className={styles.marketGroup}
-                  key={String(copy)}
-                  aria-hidden={copy || undefined}
-                >
-                  {markets.map(([symbol, name, logo]) => (
-                    <div className={styles.marketChip} key={symbol}>
-                      <Image src={`/asset-logos/${logo}`} alt="" width={30} height={30} />
-                      <span>
-                        {symbol}
-                        <small>{name}</small>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ))}
+              {uiText(
+                [false, true].map((copy) => (
+                  <div
+                    className={styles.marketGroup}
+                    key={String(copy)}
+                    aria-hidden={copy || undefined}
+                  >
+                    {uiText(
+                      markets.map(([symbol, name, logo]) => (
+                        <div className={styles.marketChip} key={symbol}>
+                          <Image
+                            src={`/asset-logos/${logo}`}
+                            alt={uiText('')}
+                            width={30}
+                            height={30}
+                          />
+                          <span>
+                            {uiText(symbol)}
+                            <small>{uiText(name)}</small>
+                          </span>
+                        </div>
+                      )),
+                    )}
+                  </div>
+                )),
+              )}
             </div>
           </div>
         </section>
@@ -435,47 +481,57 @@ export function Landing() {
           <SectionBackdrop />
           <Reveal className={styles.sectionHeading}>
             <span className={styles.eyebrow}>
-              <span /> CONOCÉ TU PRÓXIMO WORKSPACE
+              <span />
+              {uiText(' CONOC\u00C9 TU PR\u00D3XIMO WORKSPACE')}
             </span>
             <h2 id="platform-title">
-              Menos ir de una app a otra.
+              {uiText('Menos ir de una app a otra.')}
               <br />
-              <span>Más control de tus activos.</span>
+              <span>{uiText('M\u00E1s control de tus activos.')}</span>
             </h2>
             <p>
-              Mirá la plataforma por dentro. Elegí una función y descubrí cómo te ayuda a seguir tus
-              inversiones.
+              {uiText(
+                'Mir\u00E1 la plataforma por dentro. Eleg\u00ED una funci\u00F3n y descubr\u00ED c\u00F3mo te ayuda a seguir tus inversiones.',
+              )}
             </p>
           </Reveal>
-          <div className={styles.tabList} role="tablist" aria-label="Funciones de Cuantai">
-            {features.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  id={`feature-tab-${item.id}`}
-                  role="tab"
-                  aria-selected={active === index}
-                  aria-controls="feature-panel"
-                  tabIndex={active === index ? 0 : -1}
-                  onClick={() => setActive(index)}
-                  onKeyDown={(event) => navigateTabs(event, index)}
-                  ref={(element) => {
-                    tabs.current[index] = element;
-                  }}
-                >
-                  <Icon size={15} />
-                  {item.label}
-                  {active === index && (
-                    <motion.span
-                      layoutId="active-feature"
-                      className={styles.activeTab}
-                      transition={{ type: 'spring', stiffness: 350, damping: 32 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
+          <div
+            className={styles.tabList}
+            role="tablist"
+            aria-label={uiText('Funciones de Cuantai')}
+          >
+            {uiText(
+              features.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    id={`feature-tab-${item.id}`}
+                    role="tab"
+                    aria-selected={active === index}
+                    aria-controls="feature-panel"
+                    tabIndex={active === index ? 0 : -1}
+                    onClick={() => setActive(index)}
+                    onKeyDown={(event) => navigateTabs(event, index)}
+                    ref={(element) => {
+                      tabs.current[index] = element;
+                    }}
+                  >
+                    <Icon size={15} />
+                    {uiText(item.label)}
+                    {uiText(
+                      active === index && (
+                        <motion.span
+                          layoutId="active-feature"
+                          className={styles.activeTab}
+                          transition={{ type: 'spring', stiffness: 350, damping: 32 }}
+                        />
+                      ),
+                    )}
+                  </button>
+                );
+              }),
+            )}
           </div>
           <div
             id="feature-panel"
@@ -486,24 +542,28 @@ export function Landing() {
           >
             <div className={styles.featureCopy}>
               <span className={styles.featureNumber}>
-                {String(active + 1).padStart(2, '0')} / {String(features.length).padStart(2, '0')}
+                {uiText(String(active + 1).padStart(2, '0'))} /{' '}
+                {uiText(String(features.length).padStart(2, '0'))}
               </span>
               <span className={styles.featureIcon}>
                 <FeatureIcon size={24} />
               </span>
-              <span className={styles.eyebrow}>{feature.tag}</span>
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
+              <span className={styles.eyebrow}>{uiText(feature.tag)}</span>
+              <h3>{uiText(feature.title)}</h3>
+              <p>{uiText(feature.description)}</p>
               <ul>
-                {feature.bullets.map((bullet) => (
-                  <li key={bullet}>
-                    <Check size={13} />
-                    {bullet}
-                  </li>
-                ))}
+                {uiText(
+                  feature.bullets.map((bullet) => (
+                    <li key={bullet}>
+                      <Check size={13} />
+                      {uiText(bullet)}
+                    </li>
+                  )),
+                )}
               </ul>
               <Link href={feature.href}>
-                Explorar {feature.label.toLowerCase()} <ArrowUpRight size={15} />
+                {uiText('Explorar ')}
+                {uiText(feature.label.toLowerCase())} <ArrowUpRight size={15} />
               </Link>
             </div>
             <div className={styles.featureVisual}>
@@ -517,19 +577,24 @@ export function Landing() {
                 >
                   <ProductImage
                     name={feature.id}
-                    alt={`Captura real de ${feature.label} en Cuantai, con una cuenta de demostración`}
+                    alt={uiText(
+                      'Captura real de {0} en Cuantai, con una cuenta de demostraci\u00F3n',
+                      [feature.label],
+                    )}
                   />
                 </motion.div>
               </AnimatePresence>
               <span className={styles.imageLabel}>
-                <span /> CAPTURA REAL · DEMOSTRACIÓN
+                <span />
+                {uiText(' CAPTURA REAL \u00B7 DEMOSTRACI\u00D3N')}
               </span>
               <button
                 type="button"
                 className={styles.expandCapture}
                 onClick={() => setExpandedImage({ name: feature.id, label: feature.label })}
               >
-                Ampliar captura <ArrowUpRight size={15} />
+                {uiText('Ampliar captura ')}
+                <ArrowUpRight size={15} />
               </button>
             </div>
           </div>
@@ -540,34 +605,39 @@ export function Landing() {
           <Reveal className={styles.splitHeading}>
             <div>
               <span className={styles.eyebrow}>
-                <span /> TODO TIENE SU LUGAR
+                <span />
+                {uiText(' TODO TIENE SU LUGAR')}
               </span>
               <h2 id="functions-title">
-                Tu seguimiento, completo.
+                {uiText('Tu seguimiento, completo.')}
                 <br />
-                <span>Tu información, conectada.</span>
+                <span>{uiText('Tu informaci\u00F3n, conectada.')}</span>
               </h2>
             </div>
             <p>
-              Desde lo que ya tenés hasta tu próxima idea. Un lugar para mirar, investigar y seguir
-              cada inversión.
+              {uiText(
+                'Desde lo que ya ten\u00E9s hasta tu pr\u00F3xima idea. Un lugar para mirar, investigar y seguir cada inversi\u00F3n.',
+              )}
             </p>
           </Reveal>
           <div className={styles.bento}>
             <Reveal className={`${styles.bentoCard} ${styles.chartCard}`}>
               <div className={styles.cardTop}>
                 <CandlestickChart size={22} />
-                <span>01 / EXPLORÁ</span>
+                <span>{uiText('01 / EXPLOR\u00C1')}</span>
               </div>
-              <h3>El gráfico es el comienzo.</h3>
+              <h3>{uiText('El gr\u00E1fico es el comienzo.')}</h3>
               <p>
-                Herramientas de TradingView, indicadores, distintos intervalos y layouts para seguir
-                más de un activo.
+                {uiText(
+                  'Herramientas de TradingView, indicadores, distintos intervalos y layouts para seguir m\u00E1s de un activo.',
+                )}
               </p>
               <div className={styles.cardScreenshot}>
                 <ProductImage
                   name="charts-detail"
-                  alt="Terminal de Cuantai con herramientas de gráficos de TradingView"
+                  alt={uiText(
+                    'Terminal de Cuantai con herramientas de gr\u00E1ficos de TradingView',
+                  )}
                 />
               </div>
               <button
@@ -575,26 +645,31 @@ export function Landing() {
                 className={styles.expandCapture}
                 onClick={() => setExpandedImage({ name: 'charts-detail', label: 'Gráficos' })}
               >
-                Ampliar captura <ArrowUpRight size={15} />
+                {uiText('Ampliar captura ')}
+                <ArrowUpRight size={15} />
               </button>
               <Link href="/demo?view=charts" className={styles.cardLink}>
-                Abrir la terminal <ArrowUpRight size={16} />
+                {uiText('Abrir la terminal ')}
+                <ArrowUpRight size={16} />
               </Link>
             </Reveal>
             <Reveal className={`${styles.bentoCard} ${styles.researchCard}`} delay={0.08}>
               <div className={styles.cardTop}>
                 <Sparkles size={22} />
-                <span>02 / ENTENDÉ</span>
+                <span>{uiText('02 / ENTEND\u00C9')}</span>
               </div>
-              <h3>Tu investigación, acompañada por IA.</h3>
+              <h3>{uiText('Tu investigaci\u00F3n, acompa\u00F1ada por IA.')}</h3>
               <p>
-                Consultá, explorá datos y contrastá ideas con agentes de IA. Reuní análisis
-                fundamental, técnico, riesgo y fuentes en la misma investigación.
+                {uiText(
+                  'Consult\u00E1, explor\u00E1 datos y contrast\u00E1 ideas con agentes de IA. Reun\u00ED an\u00E1lisis fundamental, t\u00E9cnico, riesgo y fuentes en la misma investigaci\u00F3n.',
+                )}
               </p>
               <div className={styles.cardScreenshot}>
                 <ProductImage
                   name="research-detail"
-                  alt="Ficha de investigación de NVIDIA en Cuantai con rendimiento, riesgo y conversación por activo"
+                  alt={uiText(
+                    'Ficha de investigaci\u00F3n de NVIDIA en Cuantai con rendimiento, riesgo y conversaci\u00F3n por activo',
+                  )}
                 />
               </div>
               <button
@@ -604,87 +679,96 @@ export function Landing() {
                   setExpandedImage({ name: 'research-detail', label: 'Investigación' })
                 }
               >
-                Ampliar captura <ArrowUpRight size={15} />
+                {uiText('Ampliar captura ')}
+                <ArrowUpRight size={15} />
               </button>
               <Link href="/asset/NASDAQ/NVDA?demo=true" className={styles.cardLink}>
-                Conocer la investigación <ArrowUpRight size={16} />
+                {uiText('Conocer la investigaci\u00F3n ')}
+                <ArrowUpRight size={16} />
               </Link>
             </Reveal>
             <Reveal className={`${styles.bentoCard} ${styles.portfolioCard}`}>
               <div className={styles.portfolioCopy}>
                 <div className={styles.cardTop}>
                   <Wallet size={22} />
-                  <span>03 / CONECTÁ</span>
+                  <span>{uiText('03 / CONECT\u00C1')}</span>
                 </div>
                 <h3>
-                  Tu portfolio.
+                  {uiText('Tu portfolio.')}
                   <br />
-                  <span>La historia completa.</span>
+                  <span>{uiText('La historia completa.')}</span>
                 </h3>
                 <p>
-                  De cada movimiento a la visión del conjunto. Posiciones, composición, costos y
-                  resultados, con cada moneda en su lugar.
+                  {uiText(
+                    'De cada movimiento a la visi\u00F3n del conjunto. Posiciones, composici\u00F3n, costos y resultados, con cada moneda en su lugar.',
+                  )}
                 </p>
                 <div className={styles.portfolioTags}>
-                  <span>Posiciones</span>
-                  <span>Movimientos</span>
-                  <span>Composición</span>
+                  <span>{uiText('Posiciones')}</span>
+                  <span>{uiText('Movimientos')}</span>
+                  <span>{uiText('Composici\u00F3n')}</span>
                 </div>
                 <Link href="/demo?view=portfolio" className={styles.cardLink}>
-                  Explorar el portfolio <ArrowUpRight size={16} />
+                  {uiText('Explorar el portfolio ')}
+                  <ArrowUpRight size={16} />
                 </Link>
               </div>
               <div className={styles.portfolioScreenshot}>
                 <ProductImage
                   name="portfolio-detail"
-                  alt="Portfolio real de demostración con posiciones, costos, resultados y composición por activo"
+                  alt={uiText(
+                    'Portfolio real de demostraci\u00F3n con posiciones, costos, resultados y composici\u00F3n por activo',
+                  )}
                 />
                 <button
                   type="button"
                   className={styles.expandCapture}
                   onClick={() => setExpandedImage({ name: 'portfolio-detail', label: 'Portfolio' })}
                 >
-                  Ampliar captura <ArrowUpRight size={15} />
+                  {uiText('Ampliar captura ')}
+                  <ArrowUpRight size={15} />
                 </button>
               </div>
             </Reveal>
           </div>
           <div className={styles.detailGrid}>
-            {[
-              {
-                icon: Flame,
-                title: 'Hots o tus favoritos',
-                text: 'Una cinta que acompaña el mercado y puede mostrar los activos que vos seguís.',
-                href: '/demo',
-              },
-              {
-                icon: BookOpen,
-                title: 'Estados financieros',
-                text: 'Compará estados anuales y consultá las fuentes y períodos disponibles por empresa.',
-                href: '/asset/NASDAQ/AAPL?demo=true',
-              },
-              {
-                icon: Layers3,
-                title: 'CEDEARs y monedas',
-                text: 'Encontrá las especies locales sin confundir su cotización con la del subyacente.',
-                href: '/demo?view=markets',
-              },
-              {
-                icon: Newspaper,
-                title: 'Noticias con origen',
-                text: 'Titulares por mercado y por activo, con fecha y enlace a la publicación original.',
-                href: '/demo?view=news',
-              },
-            ].map(({ icon: Icon, title, text, href }, index) => (
-              <Reveal key={title} delay={index * 0.06} className={styles.detailCard}>
-                <Icon size={21} />
-                <h3>{title}</h3>
-                <p>{text}</p>
-                <Link href={href} aria-label={`Explorar ${title.toLowerCase()}`}>
-                  <ArrowUpRight size={18} />
-                </Link>
-              </Reveal>
-            ))}
+            {uiText(
+              [
+                {
+                  icon: Flame,
+                  title: 'Hots o tus favoritos',
+                  text: 'Una cinta que acompaña el mercado y puede mostrar los activos que vos seguís.',
+                  href: '/demo',
+                },
+                {
+                  icon: BookOpen,
+                  title: 'Estados financieros',
+                  text: 'Compará estados anuales y consultá las fuentes y períodos disponibles por empresa.',
+                  href: '/asset/NASDAQ/AAPL?demo=true',
+                },
+                {
+                  icon: Layers3,
+                  title: 'CEDEARs y monedas',
+                  text: 'Encontrá las especies locales sin confundir su cotización con la del subyacente.',
+                  href: '/demo?view=markets',
+                },
+                {
+                  icon: Newspaper,
+                  title: 'Noticias con origen',
+                  text: 'Titulares por mercado y por activo, con fecha y enlace a la publicación original.',
+                  href: '/demo?view=news',
+                },
+              ].map(({ icon: Icon, title, text, href }, index) => (
+                <Reveal key={title} delay={index * 0.06} className={styles.detailCard}>
+                  <Icon size={21} />
+                  <h3>{uiText(title)}</h3>
+                  <p>{uiText(text)}</p>
+                  <Link href={href} aria-label={uiText('Explorar {0}', [title.toLowerCase()])}>
+                    <ArrowUpRight size={18} />
+                  </Link>
+                </Reveal>
+              )),
+            )}
           </div>
         </section>
 
@@ -692,38 +776,41 @@ export function Landing() {
           <SectionBackdrop />
           <Reveal className={styles.sectionHeading}>
             <span className={styles.eyebrow}>
-              <span /> DE LA CURIOSIDAD A TU WORKSPACE
+              <span />
+              {uiText(' DE LA CURIOSIDAD A TU WORKSPACE')}
             </span>
             <h2 id="workflow-title">
-              Entrá con una pregunta.
+              {uiText('Entr\u00E1 con una pregunta.')}
               <br />
-              <span>Salí con más perspectiva.</span>
+              <span>{uiText('Sal\u00ED con m\u00E1s perspectiva.')}</span>
             </h2>
           </Reveal>
           <div className={styles.steps}>
-            {[
+            {uiText(
               [
-                '01',
-                'Explorá sin compromiso.',
-                'Abrí la demo y recorré las herramientas. No necesitás una cuenta para conocer la plataforma.',
-              ],
-              [
-                '02',
-                'Hacé lugar a tus ideas.',
-                'Creá tu cuenta, armá tus listas y configurá tu espacio según tus intereses.',
-              ],
-              [
-                '03',
-                'Conectá tu universo.',
-                'Investigá activos, registrá tu portfolio y volvé a tus workspaces cuando lo necesites.',
-              ],
-            ].map(([number, title, text], index) => (
-              <Reveal className={styles.step} key={number} delay={index * 0.12}>
-                <span>{number}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </Reveal>
-            ))}
+                [
+                  '01',
+                  'Explorá sin compromiso.',
+                  'Abrí la demo y recorré las herramientas. No necesitás una cuenta para conocer la plataforma.',
+                ],
+                [
+                  '02',
+                  'Hacé lugar a tus ideas.',
+                  'Creá tu cuenta, armá tus listas y configurá tu espacio según tus intereses.',
+                ],
+                [
+                  '03',
+                  'Conectá tu universo.',
+                  'Investigá activos, registrá tu portfolio y volvé a tus workspaces cuando lo necesites.',
+                ],
+              ].map(([number, title, text], index) => (
+                <Reveal className={styles.step} key={number} delay={index * 0.12}>
+                  <span>{uiText(number)}</span>
+                  <h3>{uiText(title)}</h3>
+                  <p>{uiText(text)}</p>
+                </Reveal>
+              )),
+            )}
           </div>
         </section>
 
@@ -734,22 +821,27 @@ export function Landing() {
             <i />
             <i />
           </div>
-          <span className={styles.eyebrow}>TU PRÓXIMA PERSPECTIVA EMPIEZA ACÁ</span>
+          <span className={styles.eyebrow}>
+            {uiText('TU PR\u00D3XIMA PERSPECTIVA EMPIEZA AC\u00C1')}
+          </span>
           <h2>
-            Tus activos, juntos.
+            {uiText('Tus activos, juntos.')}
             <br />
-            <span>La IA, a tu lado.</span>
+            <span>{uiText('La IA, a tu lado.')}</span>
           </h2>
           <p>
-            Un lugar para seguir tus inversiones y consultar a agentes de IA sobre datos, ideas y
-            análisis.
+            {uiText(
+              'Un lugar para seguir tus inversiones y consultar a agentes de IA sobre datos, ideas y an\u00E1lisis.',
+            )}
           </p>
           <div className={styles.actions}>
             <Link href="/register" className={styles.primaryCta}>
-              Crear mi espacio <ArrowUpRight size={18} />
+              {uiText('Crear mi espacio ')}
+              <ArrowUpRight size={18} />
             </Link>
             <Link href="/demo" className={styles.secondaryCta}>
-              Primero, la demo <ArrowRight size={16} />
+              {uiText('Primero, la demo ')}
+              <ArrowRight size={16} />
             </Link>
           </div>
         </Reveal>
@@ -759,50 +851,69 @@ export function Landing() {
         onOpenChange={(open) => {
           if (!open) setExpandedImage(null);
         }}
-        title={expandedImage ? `${expandedImage.label} · captura ampliada` : 'Captura ampliada'}
-        description="Panel real de una cuenta de demostración. Podés recorrer la imagen en su tamaño original."
+        title={uiText(
+          expandedImage ? `${expandedImage.label} · captura ampliada` : 'Captura ampliada',
+        )}
+        description={uiText(
+          'Panel real de una cuenta de demostraci\u00F3n. Pod\u00E9s recorrer la imagen en su tama\u00F1o original.',
+        )}
         className={styles.captureModal}
       >
-        {expandedImage && (
-          <div className={styles.expandedCapture}>
-            <ProductImage
-              name={expandedImage.name}
-              alt={`Vista ampliada de ${expandedImage.label}`}
-            />
-          </div>
+        {uiText(
+          expandedImage && (
+            <div className={styles.expandedCapture}>
+              <ProductImage
+                name={expandedImage.name}
+                alt={uiText('Vista ampliada de {0}', [expandedImage.label])}
+              />
+            </div>
+          ),
         )}
       </Modal>
       <footer className={styles.footer}>
         <div className={styles.footerMain}>
           <div>
             <Brand />
-            <p>Una nueva perspectiva de tus inversiones.</p>
+            <p>{uiText('Una nueva perspectiva de tus inversiones.')}</p>
           </div>
           <div>
-            <a href="#plataforma">La plataforma</a>
+            <a href="#plataforma">{uiText('La plataforma')}</a>
             <Link href="/data-policy">
-              Datos y transparencia <ArrowUpRight size={12} />
+              {uiText('Datos y transparencia ')}
+              <ArrowUpRight size={12} />
             </Link>
-            <Link href="/login">Tu cuenta</Link>
+            <Link href="/login">{uiText('Tu cuenta')}</Link>
           </div>
           <button
             className={styles.motionToggle}
             onClick={() => setAmbientPaused((value) => !value)}
-            aria-label={
-              ambientPaused ? 'Activar animaciones de fondo' : 'Pausar animaciones de fondo'
-            }
+            aria-label={uiText(
+              ambientPaused ? 'Activar animaciones de fondo' : 'Pausar animaciones de fondo',
+            )}
           >
-            {ambientPaused ? <Play size={13} /> : <Pause size={13} />} Animaciones{' '}
-            {ambientPaused ? 'pausadas' : 'activadas'}
+            {uiText(ambientPaused ? <Play size={13} /> : <Pause size={13} />)}
+            {uiText(' Animaciones')}
+            {uiText(' ')}
+            {uiText(ambientPaused ? 'pausadas' : 'activadas')}
           </button>
         </div>
         <div className={styles.footerBottom}>
-          <span>© {new Date().getFullYear()} Cuantai</span>
+          <span>
+            © {uiText(new Date().getFullYear())}
+            {uiText(' Cuantai')}
+            <a
+              className={styles.developerCredit}
+              href="https://www.linkedin.com/in/ivangcabrera/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Dev by Ivan Cabrera
+            </a>
+          </span>
           <p>
-            Capturas de una cuenta de demostración. Los precios de Cuantai en las capturas son
-            sintéticos; los gráficos de TradingView usan su propia fuente. La cobertura de
-            cotizaciones, noticias, estados financieros e IA depende de los proveedores
-            configurados. Herramientas de investigación y seguimiento, sin ejecución de operaciones.
+            {uiText(
+              'Capturas de una cuenta de demostraci\u00F3n. Los precios de Cuantai en las capturas son sint\u00E9ticos; los gr\u00E1ficos de TradingView usan su propia fuente. La cobertura de cotizaciones, noticias, estados financieros e IA depende de los proveedores configurados. Herramientas de investigaci\u00F3n y seguimiento, sin ejecuci\u00F3n de operaciones.',
+            )}
           </p>
         </div>
       </footer>

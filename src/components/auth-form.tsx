@@ -1,4 +1,5 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
@@ -14,13 +15,20 @@ export function AuthForm({
   mode: 'login' | 'register' | 'forgot' | 'reset';
   token?: string;
 }) {
+  const uiText = useUiText();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const status = useQuery({
     queryKey: ['auth-status'],
-    queryFn: () => api<{ auth: { google: boolean; passwordReset: boolean } }>('status'),
+    queryFn: () =>
+      api<{
+        auth: {
+          google: boolean;
+          passwordReset: boolean;
+        };
+      }>('status'),
   });
   const register = mode === 'register';
   const title = register
@@ -83,168 +91,208 @@ export function AuthForm({
         <Brand />
         <div className="auth-art">
           <span className="outlined-chip">
-            <Sparkles size={13} /> FINANCIAL INTELLIGENCE
+            <Sparkles size={13} />
+            {uiText(' FINANCIAL INTELLIGENCE')}
           </span>
           <h1>
-            Conectá los puntos.
+            {uiText('Conect\u00E1 los puntos.')}
             <br />
             <em>
-              Encontrá tu
+              {uiText('Encontr\u00E1 tu')}
               <br />
-              perspectiva.
+              {uiText('perspectiva.')}
             </em>
           </h1>
           <p>
-            El mercado es complejo.
+            {uiText('El mercado es complejo.')}
             <br />
-            Tu espacio para entenderlo, no tiene por qué serlo.
+            {uiText('Tu espacio para entenderlo, no tiene por qu\u00E9 serlo.')}
           </p>
           <div className="auth-lines">
-            {Array.from({ length: 25 }, (_, i) => (
-              <i
-                key={i}
-                style={{ height: 30 + Math.sin(i / 3) * 35 + i * 5, opacity: 0.2 + i * 0.025 }}
-              />
-            ))}
+            {uiText(
+              Array.from({ length: 25 }, (_, i) => (
+                <i
+                  key={i}
+                  style={{ height: 30 + Math.sin(i / 3) * 35 + i * 5, opacity: 0.2 + i * 0.025 }}
+                />
+              )),
+            )}
           </div>
-          <span className="auth-art-caption">MERCADOS · INTELIGENCIA · PATRIMONIO</span>
+          <span className="auth-art-caption">
+            {uiText('MERCADOS \u00B7 INTELIGENCIA \u00B7 PATRIMONIO')}
+          </span>
         </div>
-        <footer>© {new Date().getFullYear()} Cuantai. Todos tus mercados. Una perspectiva.</footer>
+        <footer>
+          © {uiText(new Date().getFullYear())}
+          {uiText(' Cuantai. Todos tus mercados. Una perspectiva.')}
+        </footer>
       </div>
       <div className="auth-right">
         <Link href="/" className="auth-back">
-          <ArrowLeft size={14} /> Volver al inicio
+          <ArrowLeft size={14} />
+          {uiText(' Volver al inicio')}
         </Link>
         <div className="auth-form-wrap">
-          <div className="eyebrow">TU ESPACIO PRIVADO</div>
-          <h2>{title}</h2>
+          <div className="eyebrow">{uiText('TU ESPACIO PRIVADO')}</div>
+          <h2>{uiText(title)}</h2>
           <p>
-            {register
-              ? 'Creá tu cuenta y empezá a explorar con más claridad.'
-              : mode === 'login'
-                ? 'Ingresá para retomar tus ideas e inversiones.'
-                : 'Recuperá el acceso de forma segura.'}
+            {uiText(
+              register
+                ? 'Creá tu cuenta y empezá a explorar con más claridad.'
+                : mode === 'login'
+                  ? 'Ingresá para retomar tus ideas e inversiones.'
+                  : 'Recuperá el acceso de forma segura.',
+            )}
           </p>
-          {(mode === 'login' || register) && (
-            <>
-              <Button
-                variant="secondary"
-                className="google-button"
-                disabled={!status.data?.auth.google || busy}
-                onClick={async () => {
-                  setError('');
-                  const r = await authClient.signIn.social({
-                    provider: 'google',
-                    callbackURL: '/dashboard',
-                  });
-                  if (r.error) setError(r.error.message ?? 'Google no disponible');
-                }}
-              >
-                <span className="google-letter">G</span> Continuar con Google{' '}
-                {!status.data?.auth.google && <small>Sin configurar</small>}
-              </Button>
-              <div className="auth-divider">
-                <span>o continuá con email</span>
-              </div>
-            </>
+          {uiText(
+            (mode === 'login' || register) && (
+              <>
+                <Button
+                  variant="secondary"
+                  className="google-button"
+                  disabled={!status.data?.auth.google || busy}
+                  onClick={async () => {
+                    setError('');
+                    const r = await authClient.signIn.social({
+                      provider: 'google',
+                      callbackURL: '/dashboard',
+                    });
+                    if (r.error) setError(r.error.message ?? 'Google no disponible');
+                  }}
+                >
+                  <span className="google-letter">{uiText('G')}</span>
+                  {uiText(' Continuar con Google')}
+                  {uiText(' ')}
+                  {uiText(!status.data?.auth.google && <small>{uiText('Sin configurar')}</small>)}
+                </Button>
+                <div className="auth-divider">
+                  <span>{uiText('o continu\u00E1 con email')}</span>
+                </div>
+              </>
+            ),
           )}
           <form onSubmit={submit} className="form-stack">
-            {register && (
-              <label>
-                Nombre
-                <input
-                  name="name"
-                  placeholder="Tu nombre"
-                  autoComplete="name"
-                  required
-                  minLength={2}
-                  maxLength={80}
-                />
-              </label>
+            {uiText(
+              register && (
+                <label>
+                  {uiText('Nombre')}
+                  <input
+                    name="name"
+                    placeholder={uiText('Tu nombre')}
+                    autoComplete="name"
+                    required
+                    minLength={2}
+                    maxLength={80}
+                  />
+                </label>
+              ),
             )}
-            {mode !== 'reset' && (
-              <label>
-                Email
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="vos@ejemplo.com"
-                  autoComplete="email"
-                  required
-                />
-              </label>
+            {uiText(
+              mode !== 'reset' && (
+                <label>
+                  {uiText('Email')}
+                  <input
+                    name="email"
+                    type="email"
+                    placeholder={uiText('vos@ejemplo.com')}
+                    autoComplete="email"
+                    required
+                  />
+                </label>
+              ),
             )}
-            {mode !== 'forgot' && (
-              <label>
-                Contraseña
-                <input
-                  name="password"
-                  type="password"
-                  placeholder={register ? 'Al menos 10 caracteres' : 'Tu contraseña'}
-                  autoComplete={register || mode === 'reset' ? 'new-password' : 'current-password'}
-                  required
-                  minLength={register || mode === 'reset' ? 10 : 1}
-                  maxLength={128}
-                />
-              </label>
+            {uiText(
+              mode !== 'forgot' && (
+                <label>
+                  {uiText('Contrase\u00F1a')}
+                  <input
+                    name="password"
+                    type="password"
+                    placeholder={uiText(register ? 'Al menos 10 caracteres' : 'Tu contraseña')}
+                    autoComplete={
+                      register || mode === 'reset' ? 'new-password' : 'current-password'
+                    }
+                    required
+                    minLength={register || mode === 'reset' ? 10 : 1}
+                    maxLength={128}
+                  />
+                </label>
+              ),
             )}
-            {mode === 'login' && (
-              <Link className="forgot-link" href="/forgot-password">
-                ¿Olvidaste tu contraseña?
-              </Link>
+            {uiText(
+              mode === 'login' && (
+                <Link className="forgot-link" href="/forgot-password">
+                  {uiText('\u00BFOlvidaste tu contrase\u00F1a?')}
+                </Link>
+              ),
             )}
-            {error && (
-              <p className="form-error" role="alert">
-                {error}
-              </p>
+            {uiText(
+              error && (
+                <p className="form-error" role="alert">
+                  {uiText(error)}
+                </p>
+              ),
             )}
-            {success && (
-              <p className="form-success" role="status">
-                {success} <Link href="/login">Iniciar sesión</Link>
-              </p>
+            {uiText(
+              success && (
+                <p className="form-success" role="status">
+                  {uiText(success)} <Link href="/login">{uiText('Iniciar sesi\u00F3n')}</Link>
+                </p>
+              ),
             )}
-            {mode === 'forgot' && !status.data?.auth.passwordReset && (
-              <p className="form-hint">
-                El envío de emails requiere configurar el proveedor en el servidor. No se enviará
-                ningún mensaje hasta habilitarlo.
-              </p>
+            {uiText(
+              mode === 'forgot' && !status.data?.auth.passwordReset && (
+                <p className="form-hint">
+                  {uiText(
+                    'El env\u00EDo de emails requiere configurar el proveedor en el servidor. No se enviar\u00E1 ning\u00FAn mensaje hasta habilitarlo.',
+                  )}
+                </p>
+              ),
             )}
             <Button
               disabled={busy || (mode === 'forgot' && !status.data?.auth.passwordReset)}
               type="submit"
             >
-              {busy
-                ? 'Un momento...'
-                : register
-                  ? 'Crear mi cuenta'
-                  : mode === 'forgot'
-                    ? 'Enviar enlace'
-                    : mode === 'reset'
-                      ? 'Actualizar contraseña'
-                      : 'Entrar a mi workspace'}{' '}
+              {uiText(
+                busy
+                  ? 'Un momento...'
+                  : register
+                    ? 'Crear mi cuenta'
+                    : mode === 'forgot'
+                      ? 'Enviar enlace'
+                      : mode === 'reset'
+                        ? 'Actualizar contraseña'
+                        : 'Entrar a mi workspace',
+              )}
+              {uiText(' ')}
               <ArrowRight size={16} />
             </Button>
           </form>
-          {(mode === 'login' || register) && (
-            <>
-              <p className="auth-switch">
-                {register ? '¿Ya tenés una cuenta?' : '¿Todavía no tenés una cuenta?'}{' '}
-                <Link href={register ? '/login' : '/register'}>
-                  {register ? 'Iniciar sesión' : 'Crear cuenta'}
+          {uiText(
+            (mode === 'login' || register) && (
+              <>
+                <p className="auth-switch">
+                  {uiText(register ? '¿Ya tenés una cuenta?' : '¿Todavía no tenés una cuenta?')}
+                  {uiText(' ')}
+                  <Link href={register ? '/login' : '/register'}>
+                    {uiText(register ? 'Iniciar sesión' : 'Crear cuenta')}
+                  </Link>
+                </p>
+                <Link href="/demo" className="explore-auth">
+                  {uiText('Explorar la plataforma primero ')}
+                  <ArrowUpRight size={14} />
                 </Link>
-              </p>
-              <Link href="/demo" className="explore-auth">
-                Explorar la plataforma primero <ArrowUpRight size={14} />
-              </Link>
-            </>
+              </>
+            ),
           )}
           <p className="auth-security">
-            <LockKeyhole size={13} /> Sesiones seguras. Tu workspace es privado.
+            <LockKeyhole size={13} />
+            {uiText(' Sesiones seguras. Tu workspace es privado.')}
           </p>
         </div>
         <div className="auth-legal">
-          <Link href="/data-policy">Datos, privacidad y metodología</Link>
-          <span>Cuantai v0.1</span>
+          <Link href="/data-policy">{uiText('Datos, privacidad y metodolog\u00EDa')}</Link>
+          <span>{uiText('Cuantai v0.1')}</span>
         </div>
       </div>
     </div>

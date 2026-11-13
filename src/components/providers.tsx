@@ -1,10 +1,19 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
 import * as Tooltip from '@radix-ui/react-tooltip';
-export function Providers({ children }: { children: React.ReactNode }) {
+import { LocaleProvider, type Locale } from './locale-provider';
+export function Providers({
+  children,
+  locale = 'es',
+}: {
+  children: React.ReactNode;
+  locale?: Locale;
+}) {
+  const uiText = useUiText();
   const [client] = useState(
     () =>
       new QueryClient({
@@ -12,13 +21,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
       }),
   );
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem>
-      <QueryClientProvider client={client}>
-        <Tooltip.Provider delayDuration={250}>
-          {children}
-          <Toaster theme="system" richColors position="bottom-right" />
-        </Tooltip.Provider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <LocaleProvider initialLocale={locale}>
+      <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem>
+        <QueryClientProvider client={client}>
+          <Tooltip.Provider delayDuration={250}>
+            {uiText(children)}
+            <Toaster theme="system" richColors position="bottom-right" />
+          </Tooltip.Provider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </LocaleProvider>
   );
 }

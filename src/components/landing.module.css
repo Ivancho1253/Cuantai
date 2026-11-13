@@ -622,6 +622,21 @@
   scroll-margin-top: 30px;
   color-scheme: dark;
 }
+.explorer {
+  padding-block: 52px;
+}
+.explorer .sectionHeading {
+  margin-bottom: 26px;
+}
+.explorer .sectionHeading h2 {
+  font-size: clamp(32px, 3.4vw, 46px);
+  line-height: 1.15;
+  margin-block: 14px;
+}
+.explorer .sectionHeading > p {
+  font-size: 17px;
+  line-height: 1.6;
+}
 .sectionHeading {
   max-width: 900px;
   margin: 0 auto 48px;
@@ -659,15 +674,15 @@
   padding: 8px;
   background: #202d31;
   border: 1px solid #3a4c45;
-  border-radius: 16px;
-  margin-bottom: 28px;
+  border-radius: 12px;
+  margin-bottom: 18px;
 }
 .tabList button {
   position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 13px 16px;
+  padding: 11px 13px;
   border-radius: 10px;
   font-size: 15px;
   font-weight: 600;
@@ -691,23 +706,19 @@
 }
 .featurePanel {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(250px, 0.85fr) minmax(0, 1.65fr);
   align-items: center;
-  gap: 40px;
-  padding: 40px;
-  min-height: 580px;
+  gap: 28px;
+  padding: 28px;
+  min-height: 0;
   border: 1px solid #374b43;
-  border-radius: 22px;
-  background: #1a282e;
-  box-shadow: 0 15px 50px #1a30110a;
+  border-radius: 16px;
+  background: #111c21;
   overflow: hidden;
 }
 .featureCopy {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  column-gap: 50px;
-  align-items: start;
+  display: block;
 }
 .featureCopy > .featureIcon {
   grid-column: 1;
@@ -756,24 +767,30 @@
   font-size: 11px;
   letter-spacing: 1px;
 }
+.featureCopy .featureIcon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+}
 .featureCopy h3 {
-  font-size: clamp(30px, 3vw, 40px);
+  font-size: clamp(25px, 2.3vw, 32px);
   line-height: 1.14;
   letter-spacing: -1.4px;
   font-weight: 700;
-  margin: 14px 0 22px;
+  margin: 12px 0 16px;
 }
 .featureCopy > p {
-  font-size: 17px;
-  line-height: 1.8;
+  font-size: 16px;
+  line-height: 1.65;
 }
 .featureCopy ul {
   list-style: none;
   display: grid;
-  gap: 11px;
+  gap: 8px;
   padding: 0;
-  margin: 25px 0;
-  font-size: 15px;
+  margin: 18px 0;
+  font-size: 14px;
   color: #b4c4aa;
 }
 .featureCopy li {
@@ -797,14 +814,24 @@
 .featureVisual {
   position: relative;
   min-width: 0;
-  padding: 15px 0 65px;
+  padding: 0 0 44px;
 }
 .featureVisual > div {
   width: 100%;
+  height: clamp(260px, 32vw, 400px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b0e11;
   border: 1px solid #1c302b;
-  border-radius: 13px;
+  border-radius: 9px;
   overflow: hidden;
-  box-shadow: 0 15px 40px #0b191c24;
+}
+.featureVisual .productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 .imageLabel {
   position: absolute;
@@ -1230,6 +1257,15 @@
 .footerBottom > span {
   flex-shrink: 0;
 }
+.developerCredit {
+  display: block;
+  margin-top: 6px;
+  color: #b5c6ab;
+  text-underline-offset: 3px;
+}
+.developerCredit:hover {
+  text-decoration: underline;
+}
 .footerBottom p {
   max-width: 800px;
   font-size: 12px;
@@ -1309,9 +1345,9 @@
     flex-wrap: wrap;
   }
   .featurePanel {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    padding-left: 30px;
+    grid-template-columns: minmax(230px, 0.85fr) minmax(0, 1.65fr);
+    gap: 22px;
+    padding: 24px;
   }
   .tabList button {
     font-size: 14px;
@@ -1559,6 +1595,8 @@
   }
   .featureVisual > div {
     width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 11;
     border-radius: 8px;
   }
   .imageLabel {

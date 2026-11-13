@@ -15,3 +15,9 @@ Company/fund images were retrieved on **2026-10-18 UTC** from `https://images.fi
 BTC, ETH, SOL, USDT, USD and EUR SVGs are from [spothq/cryptocurrency-icons](https://github.com/spothq/cryptocurrency-icons/tree/1a63530be6e374711a8554f31b17e4cb92c25fa5), pinned to commit `1a63530be6e374711a8554f31b17e4cb92c25fa5`. The project's CC0 text is preserved at [public/licenses/cryptocurrency-icons.txt](../public/licenses/cryptocurrency-icons.txt). The ARS visual is an original Cuantai currency symbol inspired by the national colors; it is not presented as a company's logo. Brand and trademark ownership remains with the respective issuers/projects.
 
 To update a known brand, replace its local image and, if needed, adjust its exact identity entry and background. Do not infer an underlying from a local ticker or swap an ETF's mark for a single holding. Check both themes and mobile rendering. Unit checks cover catalog files and identity/security boundaries; browser checks exercise all 25 images, both themes, failure fallback and switching an existing chart to a different issuer.
+
+## Catálogo ampliado
+
+Se agregaron 626 imágenes descargadas y verificadas por firma PNG/JPEG/WebP bajo `public/asset-logos/catalog`, incluyendo las 100 monedas de Coin100. `src/lib/market/data/asset-logos.json` asocia cada identidad exacta con su archivo local y URL de procedencia. Los CEDEARs comparten el logo de su subyacente verificado. El resto usa un monograma con ticker cuando no hay marca publicada o falla una imagen; el monograma no se presenta como logo oficial.
+
+Actualizar con `node --import tsx scripts/sync-asset-logos.ts`. La sincronización solo acepta imágenes de hosts fijos de FMP y CoinGecko y conserva las existentes si una descarga falla. La imagen se obtiene por el ID de CoinGecko, sin confundir símbolos iguales.

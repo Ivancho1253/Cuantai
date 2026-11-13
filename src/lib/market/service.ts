@@ -2,13 +2,16 @@ import { eq } from 'drizzle-orm';
 import { getDb } from '../db';
 import { instrumentTable } from '../db/schema';
 import { instruments, findInstrument, searchCatalog } from './catalog';
-import { discoverInstruments, findDiscoveryInstrument } from './discovery';
+import { discoverInstruments, findDiscoveryInstrument, findPrimaryEtf } from './discovery';
 import { CoinGeckoProvider } from './coingecko';
+import { YahooProvider } from './yahoo';
 import { demoHistory } from './demo';
 import { BinanceProvider } from './binance';
 import { TwelveDataProvider } from './twelve-data';
 import { BymaProvider } from './byma';
 import { FinnhubProvider } from './finnhub';
+import { publicMarketNews } from './rss-news';
+import { addNewsImages } from './news-images';
 import { SecProvider } from './sec';
 import type { FinancialStatementsResult } from '../finance/statements';
 import { cached } from './transport';
@@ -19,13 +22,21 @@ import {
   type Quote,
   type Timeframe,
 } from './types';
-export const dataMode = () => (process.env.MARKET_DATA_MODE === 'live' ? 'live' : 'demo');
+export const dataMode = () => (process.env.MARKET_DATA_MODE === 'demo' ? 'demo' : 'live');
+function listingProvider(instrument: Instrument) {
+  if (instrument.exchange === 'COINGECKO') return new CoinGeckoProvider();
+  if (instrument.exchange === 'BINANCE') return new BinanceProvider();
+  if (instrument.exchange === 'BYMA')
+    return process.env.BYMA_AUTHORIZED_DATA_FILE ? new BymaProvider() : new YahooProvider();
+  return process.env.TWELVE_DATA_API_KEY ? new TwelveDataProvider() : new YahooProvider();
+}
 export function providerStatus() {
   return {
     mode: dataMode(),
     binance: { configured: true, label: 'Binance public market data' },
     twelveData: { configured: Boolean(process.env.TWELVE_DATA_API_KEY), label: 'US stocks & ETFs' },
     finnhub: { configured: Boolean(process.env.FINNHUB_API_KEY), label: 'Fundamentals & news' },
+    news: { configured: true, label: 'Noticias · feeds públicos de medios financieros' },
     sec: {
       configured: Boolean(process.env.SEC_USER_AGENT || process.env.SEC_COMPANYFACTS_FILE),
       label: 'SEC EDGAR · estados anuales',
@@ -42,7 +53,10 @@ export function providerStatus() {
 }
 export async function resolveInstrument(id: string): Promise<Instrument> {
   const seed = findInstrument(id);
-  if (seed) return seed;
+  if (seed) {
+    const primary = seed.type === 'etf' ? findPrimaryEtf(seed.symbol) : undefined;
+    return primary ? { ...primary, id: seed.id } : seed;
+  }
   const db = await getDb();
   const discovery = findDiscoveryInstrument(id);
   if (discovery) {
@@ -55,7 +69,9 @@ export async function resolveInstrument(id: string): Promise<Instrument> {
 }
 export async function searchInstruments(query: string, live = false) {
   const found = [
-    ...searchCatalog(query),
+    ...searchCatalog(query).filter(
+      (i) => i.type !== 'etf' || !findPrimaryEtf(i.symbol) || findPrimaryEtf(i.symbol)!.id === i.id,
+    ),
     ...discoverInstruments({ query, pageSize: 100 }).instruments,
   ];
   let error: string | undefined;
@@ -109,16 +125,27 @@ export async function marketSnapshot(
       },
       error: 'El efectivo es un saldo, no una serie de precios de mercado.',
     };
+  if (instrument.exchange === 'WALLET')
+    return {
+      instrument,
+      quote: null,
+      candles: [],
+      timeframe,
+      provenance: {
+        source: instrument.source,
+        url: '/data-policy',
+        asOf: '',
+        retrievedAt: new Date().toISOString(),
+        status: 'unavailable',
+        delayMinutes: null,
+        adjusted: 'unknown',
+      },
+      error:
+        'El token importado no tiene una cotización verificada. Podés cargar un precio manual.',
+    };
   if (forceDemo || dataMode() === 'demo') return demoHistory(instrument, timeframe);
   return cached(`market:${id}:${timeframe}`, 30000, async () => {
-    const provider =
-      instrument.exchange === 'COINGECKO'
-        ? new CoinGeckoProvider()
-        : instrument.exchange === 'BINANCE'
-          ? new BinanceProvider()
-          : instrument.exchange === 'BYMA'
-            ? new BymaProvider()
-            : new TwelveDataProvider();
+    const provider = listingProvider(instrument);
     const result = await Promise.allSettled([
       provider.quote(instrument),
       provider.history(instrument, timeframe),
@@ -190,12 +217,7 @@ export async function marketListings(
           instrument.exchange === 'COINGECKO'
             ? (cryptoQuotes.get(instrument.id) ?? null)
             : await cached<Quote>(`listing-quote:${instrument.id}`, 60000, () =>
-                (instrument.exchange === 'BINANCE'
-                  ? new BinanceProvider()
-                  : instrument.exchange === 'BYMA'
-                    ? new BymaProvider()
-                    : new TwelveDataProvider()
-                ).quote(instrument),
+                listingProvider(instrument).quote(instrument),
               );
       } catch (cause) {
         error = cause instanceof Error ? cause.message : 'Cotización no disponible';
@@ -270,21 +292,25 @@ export async function assetFinancialStatements(
   }
 }
 export async function marketNews(instrument?: Instrument, demo = false) {
-  if (demo || dataMode() === 'demo')
-    return {
-      items: [],
-      error:
-        'El modo demo no muestra titulares ficticios. Conectá Finnhub para consultar noticias.',
-    };
+  // News is always sourced from publishers, independently of simulated market prices.
+  void demo;
   try {
     const issuer =
       instrument?.type === 'cedear' && instrument.underlyingId
         ? await resolveInstrument(instrument.underlyingId)
         : instrument;
     return {
-      items: await cached(`news:${instrument?.id ?? 'all'}`, 300000, () =>
-        new FinnhubProvider().news(issuer),
-      ),
+      items: await cached(`news:images-v3:${instrument?.id ?? 'all'}`, 300000, async () => {
+        if (process.env.FINNHUB_API_KEY) {
+          try {
+            const items = await new FinnhubProvider().news(issuer);
+            if (items.length) return addNewsImages(items);
+          } catch {
+            /* Public publisher feeds remain available if this provider fails. */
+          }
+        }
+        return publicMarketNews(issuer);
+      }),
     };
   } catch (e) {
     return { items: [], error: e instanceof Error ? e.message : 'Noticias no disponibles' };

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "data:sync-catalog": "python scripts/sync-market-catalog.py",
+    "data:sync-argentina": "python scripts/sync-argentina-catalog.py",
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
@@ -17,7 +18,8 @@
     "format:check": "prettier --check .",
     "check": "npm run lint && npm run typecheck && npm test && npm run build",
     "data:import-ratios": "node --env-file-if-exists=.env.local --import tsx scripts/import-cedear-ratios.ts",
-    "data:import-sec": "node --env-file-if-exists=.env.local --import tsx scripts/import-sec.ts"
+    "data:import-sec": "node --env-file-if-exists=.env.local --import tsx scripts/import-sec.ts",
+    "data:sync-etfs": "node --import tsx scripts/sync-etf-catalog.ts"
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.7.8",
@@ -27,8 +29,11 @@
     "@tanstack/react-query": "^5.90.0",
     "better-auth": "1.7.8",
     "clsx": "^2.1.1",
+    "csv-parse": "^7.0.3",
     "decimal.js": "^10.6.0",
     "drizzle-orm": "^0.45.0",
+    "exceljs": "^4.4.0",
+    "fast-xml-parser": "^5.12.0",
     "lucide-react": "^0.468.0",
     "motion": "^12.23.0",
     "next": "16.4.1",
@@ -39,6 +44,7 @@
     "react-dom": "^19.2.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.0",
+    "tesseract.js": "^7.0.0",
     "zod": "^4.1.0"
   },
   "devDependencies": {
@@ -57,5 +63,10 @@
   },
   "engines": {
     "node": ">=22.12.0"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    }
   }
 }

@@ -1,4 +1,5 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
 import Link from 'next/link';
 import { assetHref } from '@/lib/market/asset-href';
@@ -13,9 +14,13 @@ import type { Instrument, MarketSnapshot } from '@/lib/market/types';
 export type Watchlist = {
   id: string;
   name: string;
-  items: { id: string; instrument: Instrument }[];
+  items: {
+    id: string;
+    instrument: Instrument;
+  }[];
 };
 export function Watchlists() {
+  const uiText = useUiText();
   const { user, demo } = useApp();
   const qc = useQueryClient();
   const [createOpen, setCreateOpen] = useState(false);
@@ -68,143 +73,163 @@ export function Watchlists() {
   return (
     <>
       <SectionTitle
-        eyebrow="PERSONAL WORKSPACE"
-        title="Seguí lo que te importa."
-        description="Tus ideas, organizadas. Tus listas, sincronizadas con tu cuenta."
+        eyebrow={uiText('PERSONAL WORKSPACE')}
+        title={uiText('Segu\u00ED lo que te importa.')}
+        description={uiText('Tus ideas, organizadas. Tus listas, sincronizadas con tu cuenta.')}
         action={
           <Button onClick={() => setCreateOpen(true)}>
-            <Plus size={15} /> Nueva watchlist
+            <Plus size={15} />
+            {uiText(' Nueva watchlist')}
           </Button>
         }
       />
-      {!user || demo ? (
-        <EmptyState
-          title="Tu radar empieza con una cuenta."
-          action={
-            <Link href="/register" className="button button-primary">
-              Crear mi espacio <ArrowUpRight size={15} />
-            </Link>
-          }
-        >
-          Creá listas para tus inversiones de largo plazo, tecnología, cripto o Argentina. Se
-          guardan de forma privada.
-        </EmptyState>
-      ) : lists.isError ? (
-        <ErrorState message={lists.error.message} />
-      ) : (
-        <>
-          <div className="watchlist-tabs">
-            {lists.data?.map((list) => (
-              <button
-                key={list.id}
-                className={current?.id === list.id ? 'active' : ''}
-                onClick={() => setSelected(list.id)}
-              >
-                <Star size={14} />
-                {list.name}
-                <span>{list.items.length}</span>
-              </button>
-            ))}
-          </div>
-          {!current ? (
-            <EmptyState
-              title="Las mejores ideas merecen seguimiento."
-              action={
-                <Button onClick={() => setCreateOpen(true)}>
-                  <Plus size={15} /> Crear mi primera lista
-                </Button>
-              }
-            >
-              Agregá instrumentos de distintos mercados sin confundir sus especies o monedas.
-            </EmptyState>
-          ) : (
-            <section className="panel">
-              <div className="panel-header">
-                <strong>{current.name}</strong>
-                <div className="inline-actions">
-                  <Button variant="secondary" onClick={() => setAddOpen(true)}>
-                    <Plus size={14} /> Agregar activo
-                  </Button>
+      {uiText(
+        !user || demo ? (
+          <EmptyState
+            title={uiText('Tu radar empieza con una cuenta.')}
+            action={
+              <Link href="/register" className="button button-primary">
+                {uiText('Crear mi espacio ')}
+                <ArrowUpRight size={15} />
+              </Link>
+            }
+          >
+            {uiText(
+              'Cre\u00E1 listas para tus inversiones de largo plazo, tecnolog\u00EDa, cripto o Argentina. Se guardan de forma privada.',
+            )}
+          </EmptyState>
+        ) : lists.isError ? (
+          <ErrorState message={lists.error.message} />
+        ) : (
+          <>
+            <div className="watchlist-tabs">
+              {uiText(
+                lists.data?.map((list) => (
                   <button
-                    className="icon-button"
-                    aria-label="Eliminar watchlist"
-                    onClick={() => edit('delete')}
-                    disabled={busy}
+                    key={list.id}
+                    className={current?.id === list.id ? 'active' : ''}
+                    onClick={() => setSelected(list.id)}
                   >
-                    <Trash2 size={16} />
+                    <Star size={14} />
+                    {uiText(list.name)}
+                    <span>{uiText(list.items.length)}</span>
                   </button>
-                </div>
-              </div>
-              {current.items.length ? (
-                <div>
-                  {current.items.map((item) => (
-                    <WatchlistRow
-                      key={item.id}
-                      instrument={item.instrument}
-                      onRemove={() => edit('remove', item.instrument.id)}
-                    />
-                  ))}
-                </div>
-              ) : (
+                )),
+              )}
+            </div>
+            {uiText(
+              !current ? (
                 <EmptyState
-                  title="Un espacio para tu próxima idea."
+                  title={uiText('Las mejores ideas merecen seguimiento.')}
                   action={
-                    <Button variant="secondary" onClick={() => setAddOpen(true)}>
-                      Buscar un activo
+                    <Button onClick={() => setCreateOpen(true)}>
+                      <Plus size={15} />
+                      {uiText(' Crear mi primera lista')}
                     </Button>
                   }
                 >
-                  Esta watchlist está lista para empezar.
+                  {uiText(
+                    'Agreg\u00E1 instrumentos de distintos mercados sin confundir sus especies o monedas.',
+                  )}
                 </EmptyState>
-              )}
-            </section>
-          )}
-        </>
+              ) : (
+                <section className="panel">
+                  <div className="panel-header">
+                    <strong>{uiText(current.name)}</strong>
+                    <div className="inline-actions">
+                      <Button variant="secondary" onClick={() => setAddOpen(true)}>
+                        <Plus size={14} />
+                        {uiText(' Agregar activo')}
+                      </Button>
+                      <button
+                        className="icon-button"
+                        aria-label={uiText('Eliminar watchlist')}
+                        onClick={() => edit('delete')}
+                        disabled={busy}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                  {uiText(
+                    current.items.length ? (
+                      <div>
+                        {uiText(
+                          current.items.map((item) => (
+                            <WatchlistRow
+                              key={item.id}
+                              instrument={item.instrument}
+                              onRemove={() => edit('remove', item.instrument.id)}
+                            />
+                          )),
+                        )}
+                      </div>
+                    ) : (
+                      <EmptyState
+                        title={uiText('Un espacio para tu pr\u00F3xima idea.')}
+                        action={
+                          <Button variant="secondary" onClick={() => setAddOpen(true)}>
+                            {uiText('Buscar un activo')}
+                          </Button>
+                        }
+                      >
+                        {uiText('Esta watchlist est\u00E1 lista para empezar.')}
+                      </EmptyState>
+                    ),
+                  )}
+                </section>
+              ),
+            )}
+          </>
+        ),
       )}
       <Modal
         open={createOpen}
         onOpenChange={setCreateOpen}
-        title="Nueva watchlist"
-        description="Poné un nombre a tu próxima lista de seguimiento."
+        title={uiText('Nueva watchlist')}
+        description={uiText('Pon\u00E9 un nombre a tu pr\u00F3xima lista de seguimiento.')}
       >
-        {!user || demo ? (
-          <p>
-            Para guardar listas necesitás{' '}
-            <Link className="text-link" href="/register">
-              crear una cuenta
-            </Link>
-            .
-          </p>
-        ) : (
-          <form
-            className="form-stack"
-            onSubmit={(e) => {
-              e.preventDefault();
-              create();
-            }}
-          >
-            <label>
-              Nombre
-              <input
-                aria-label="Nombre de watchlist"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Por ejemplo, Long-term ideas"
-                required
-                maxLength={60}
-              />
-            </label>
-            <Button disabled={busy} type="submit">
-              Crear watchlist
-            </Button>
-          </form>
+        {uiText(
+          !user || demo ? (
+            <p>
+              {uiText('Para guardar listas necesit\u00E1s')}
+              {uiText(' ')}
+              <Link className="text-link" href="/register">
+                {uiText('crear una cuenta')}
+              </Link>
+              .
+            </p>
+          ) : (
+            <form
+              className="form-stack"
+              onSubmit={(e) => {
+                e.preventDefault();
+                create();
+              }}
+            >
+              <label>
+                {uiText('Nombre')}
+                <input
+                  aria-label={uiText('Nombre de watchlist')}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder={uiText('Por ejemplo, Long-term ideas')}
+                  required
+                  maxLength={60}
+                />
+              </label>
+              <Button disabled={busy} type="submit">
+                {uiText('Crear watchlist')}
+              </Button>
+            </form>
+          ),
         )}
       </Modal>
       <Modal
         open={addOpen}
         onOpenChange={setAddOpen}
-        title="Agregar un activo"
-        description="Seleccioná el instrumento y su mercado exactos."
+        title={uiText('Agregar un activo')}
+        description={uiText('Seleccion\u00E1 el instrumento y su mercado exactos.')}
       >
         <form
           className="form-stack"
@@ -214,19 +239,22 @@ export function Watchlists() {
           }}
         >
           <label>
-            Instrumento
+            {uiText('Instrumento')}
             <select value={instrumentId} onChange={(e) => setInstrumentId(e.target.value)}>
-              {instruments
-                .filter((i) => i.type !== 'cash')
-                .map((i) => (
-                  <option key={i.id} value={i.id}>
-                    {i.symbol} · {i.exchange} · {i.currency} — {i.name}
-                  </option>
-                ))}
+              {uiText(
+                instruments
+                  .filter((i) => i.type !== 'cash')
+                  .map((i) => (
+                    <option key={i.id} value={i.id}>
+                      {uiText(i.symbol)} · {uiText(i.exchange)} · {uiText(i.currency)} —{' '}
+                      {uiText(i.name)}
+                    </option>
+                  )),
+              )}
             </select>
           </label>
           <Button type="submit" disabled={busy}>
-            Agregar a la lista
+            {uiText('Agregar a la lista')}
           </Button>
         </form>
       </Modal>
@@ -234,6 +262,7 @@ export function Watchlists() {
   );
 }
 function WatchlistRow({ instrument, onRemove }: { instrument: Instrument; onRemove: () => void }) {
+  const uiText = useUiText();
   const quote = useQuery({
     queryKey: ['market', instrument.id, '1D', false],
     queryFn: () => api<MarketSnapshot>(`market?id=${encodeURIComponent(instrument.id)}`),
@@ -244,25 +273,25 @@ function WatchlistRow({ instrument, onRemove }: { instrument: Instrument; onRemo
       <Link className="asset-cell" href={assetHref(instrument)}>
         <AssetIcon instrument={instrument} />
         <div>
-          <strong>{instrument.symbol}</strong>
+          <strong>{uiText(instrument.symbol)}</strong>
           <small>
-            {instrument.name} · {instrument.exchange}
+            {uiText(instrument.name)} · {uiText(instrument.exchange)}
           </small>
         </div>
       </Link>
       <span className="numeric">
-        {number(q?.price)} <small>{instrument.currency}</small>
+        {uiText(number(q?.price))} <small>{uiText(instrument.currency)}</small>
       </span>
       <span className={Number(q?.changePercent ?? 0) >= 0 ? 'positive' : 'negative'}>
-        {number(q?.changePercent)}%
+        {uiText(number(q?.changePercent))}%
       </span>
       <div>
         <DataBadge status={q?.status ?? 'unavailable'} />
-        <small>{dateLabel(q?.asOf ?? '')}</small>
+        <small>{uiText(dateLabel(q?.asOf ?? ''))}</small>
       </div>
       <button
         className="icon-button"
-        aria-label={`Eliminar ${instrument.symbol} de watchlist`}
+        aria-label={uiText('Eliminar {0} de watchlist', [instrument.symbol])}
         onClick={onRemove}
       >
         <Trash2 size={15} />
@@ -279,6 +308,7 @@ export function WatchlistPicker({
   open: boolean;
   onOpenChange: (v: boolean) => void;
 }) {
+  const uiText = useUiText();
   const { user, demo } = useApp();
   const qc = useQueryClient();
   const lists = useQuery({
@@ -307,29 +337,34 @@ export function WatchlistPicker({
     <Modal
       open={open}
       onOpenChange={onOpenChange}
-      title="Guardar en watchlist"
-      description="Elegí la lista donde querés seguir este activo."
+      title={uiText('Guardar en watchlist')}
+      description={uiText('Eleg\u00ED la lista donde quer\u00E9s seguir este activo.')}
     >
-      {!user || demo ? (
-        <Link className="button button-primary" href="/register">
-          Crear cuenta para guardar
-        </Link>
-      ) : lists.data?.length ? (
-        <div className="form-stack">
-          {lists.data.map((l) => (
-            <Button key={l.id} variant="secondary" disabled={busy} onClick={() => add(l.id)}>
-              <Star size={15} />
-              {l.name}
-            </Button>
-          ))}
-        </div>
-      ) : (
-        <div className="form-stack">
-          <p>Primero creá una lista en tu espacio.</p>
-          <Link href="/watchlists" className="button button-primary">
-            Crear watchlist <ArrowUpRight size={15} />
+      {uiText(
+        !user || demo ? (
+          <Link className="button button-primary" href="/register">
+            {uiText('Crear cuenta para guardar')}
           </Link>
-        </div>
+        ) : lists.data?.length ? (
+          <div className="form-stack">
+            {uiText(
+              lists.data.map((l) => (
+                <Button key={l.id} variant="secondary" disabled={busy} onClick={() => add(l.id)}>
+                  <Star size={15} />
+                  {uiText(l.name)}
+                </Button>
+              )),
+            )}
+          </div>
+        ) : (
+          <div className="form-stack">
+            <p>{uiText('Primero cre\u00E1 una lista en tu espacio.')}</p>
+            <Link href="/watchlists" className="button button-primary">
+              {uiText('Crear watchlist ')}
+              <ArrowUpRight size={15} />
+            </Link>
+          </div>
+        ),
       )}
     </Modal>
   );

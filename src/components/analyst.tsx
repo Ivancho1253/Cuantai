@@ -1,379 +1,528 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
-import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  Sparkles,
-  ArrowUpRight,
-  ArrowRight,
-  Clock3,
-  RefreshCw,
-  ShieldCheck,
-  ExternalLink,
-  ChevronRight,
-  Check,
-  AlertTriangle,
-} from 'lucide-react';
-import { toast } from 'sonner';
+import { ArrowRight, Clock3, ExternalLink, FileText, MessageSquare, RefreshCw } from 'lucide-react';
 import { useApp } from './app-shell';
 import { api, number, dateLabel } from '@/lib/utils';
 import { instruments } from '@/lib/market/catalog';
 import { demoHistory } from '@/lib/market/demo';
+import type { Instrument, NewsItem } from '@/lib/market/types';
+import type { AssetOverview } from '@/lib/finance/asset-overview';
 import { deterministicReport, type AnalysisReport } from '@/lib/ai/report';
-import { Button, SectionTitle, DataBadge, AssetIcon } from './ui';
+import { rulesAnswer } from '@/lib/ai/asset-chat';
+import { Button, SectionTitle, DataBadge, ErrorState } from './ui';
+import { ResearchAssetPicker } from './research-asset-picker';
+import { AssetChat } from './asset-chat';
+import { News } from './news';
 export function Analyst({
   instrumentId,
+  initialInstrument,
   embedded = false,
 }: {
   instrumentId?: string;
+  initialInstrument?: Instrument;
   embedded?: boolean;
 }) {
+  const uiText = useUiText();
   const { user, demo } = useApp();
   const qc = useQueryClient();
-  const [selected, setSelected] = useState(instrumentId ?? 'NASDAQ:NVDA:USD');
+  const [instrument, setInstrument] = useState<Instrument>(
+    () => initialInstrument ?? instruments.find((i) => i.id === instrumentId) ?? instruments[0],
+  );
+  const [tab, setTab] = useState<'report' | 'chat'>('report');
   const [question, setQuestion] = useState('');
   const [report, setReport] = useState<AnalysisReport | null>(null);
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const overview = useQuery({
+    queryKey: ['asset-overview', instrument.id, demo],
+    queryFn: () =>
+      api<AssetOverview>(
+        `asset-overview?id=${encodeURIComponent(instrument.id)}${demo ? '&demo=true' : ''}`,
+      ),
+  });
+  const status = useQuery({
+    queryKey: ['status'],
+    queryFn: () =>
+      api<{
+        ai: {
+          configured: boolean;
+        };
+      }>('status'),
+  });
   const history = useQuery({
     queryKey: ['analyses'],
-    queryFn: () => api<{ id: string; report: AnalysisReport; createdAt: string }[]>('analyses'),
+    queryFn: () =>
+      api<
+        {
+          id: string;
+          report: AnalysisReport;
+          createdAt: string;
+        }[]
+      >('analyses'),
     enabled: Boolean(user) && !demo,
   });
-  const instrument = instruments.find((i) => i.id === selected);
   async function analyze() {
     setBusy(true);
+    setError('');
     try {
+      let result: AnalysisReport;
       if (demo || !user) {
-        if (!instrument) {
-          toast.error('El ejemplo demo usa el catálogo de descubrimiento.');
-          return;
+        result = {
+          ...deterministicReport(demoHistory(instrument)),
+          question: question.trim() || undefined,
+        };
+        if (question.trim() && overview.data) {
+          const headlines = await api<{
+            items: NewsItem[];
+            error?: string;
+          }>(`news?id=${encodeURIComponent(instrument.id)}`);
+          result.answer = rulesAnswer(overview.data, question, [], headlines);
         }
-        setReport(deterministicReport(demoHistory(instrument)));
-        toast.info('Ejemplo técnico determinístico sobre datos sintéticos');
       } else {
-        const r = await api<AnalysisReport>('analyses', {
+        result = await api<AnalysisReport>('analyses', {
           method: 'POST',
-          body: JSON.stringify({ instrumentId: selected, question: question || undefined }),
+          body: JSON.stringify({
+            instrumentId: instrument.id,
+            question: question.trim() || undefined,
+          }),
         });
-        setReport(r);
         qc.invalidateQueries({ queryKey: ['analyses'] });
       }
+      setReport(result);
     } catch (e) {
-      toast.error((e as Error).message);
+      setError((e as Error).message);
     } finally {
       setBusy(false);
     }
   }
+  function selectAsset(next: Instrument) {
+    setInstrument(next);
+    setReport(null);
+    setError('');
+    setQuestion('');
+  }
+  async function restoreReport(saved: AnalysisReport) {
+    try {
+      let item = instruments.find((entry) => entry.id === saved.instrumentId);
+      if (!item) {
+        const results = await api<{
+          instruments: Instrument[];
+        }>(`instruments?q=${encodeURIComponent(saved.instrumentId.split(':')[1] ?? saved.name)}`);
+        item = results.instruments.find((entry) => entry.id === saved.instrumentId);
+      }
+      if (!item) throw new Error('El activo de este informe no está disponible en el catálogo.');
+      setInstrument(item);
+      setReport(saved);
+      setQuestion(saved.question ?? '');
+      setError('');
+      setTab('report');
+    } catch (error) {
+      setError((error as Error).message);
+    }
+  }
   return (
-    <div className="analyst-page">
-      {!embedded && (
-        <SectionTitle
-          eyebrow="CUANTAI INTELLIGENCE"
-          title="De los datos a una tesis."
-          description="Un copiloto para investigar. Evidencia, contexto y preguntas mejores."
-          action={
-            <span className="outlined-chip">
-              <ShieldCheck size={14} /> Análisis con fuentes
-            </span>
-          }
-        />
+    <div className="analyst-page research-desk">
+      {uiText(
+        !embedded && (
+          <SectionTitle
+            eyebrow={uiText('MESA DE INVESTIGACI\u00D3N')}
+            title={uiText('Investigaci\u00F3n de activos.')}
+            description={uiText(
+              'Tendencia, escenarios, evidencia y respuestas sobre el activo que est\u00E1s siguiendo.',
+            )}
+          />
+        ),
       )}
-      <div className="analyst-layout">
-        <div>
-          <section className="panel research-input">
-            <div className="research-input-heading">
-              <span className="ai-icon">
-                <Sparkles size={21} />
-              </span>
-              <div>
-                <h2>¿Qué querés entender hoy?</h2>
-                <p>Seleccioná un activo para construir una perspectiva informada.</p>
-              </div>
-            </div>
-            <div className="research-controls">
-              <div className="research-asset">
-                {instrument && <AssetIcon instrument={instrument} />}
-                <select
-                  aria-label="Activo para analizar"
-                  value={selected}
-                  onChange={(e) => setSelected(e.target.value)}
-                >
-                  {!instrument && <option value={selected}>{selected}</option>}
-                  {instruments
-                    .filter((i) => i.type !== 'cash')
-                    .map((i) => (
-                      <option key={i.id} value={i.id}>
-                        {i.name} · {i.exchange}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <Button onClick={analyze} disabled={busy}>
-                <Sparkles size={15} />
-                {busy ? 'Investigando...' : 'Analizar activo'}
-                <ArrowRight size={15} />
-              </Button>
-            </div>
-            <label className="research-question">
-              Tu pregunta <span>OPCIONAL</span>
-              <textarea
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                placeholder="Por ejemplo: ¿qué evidencia sostiene la tendencia y qué podría invalidarla?"
-                maxLength={1000}
-                rows={2}
-              />
-            </label>
-            <div className="research-steps">
-              {['Recuperar evidencia', 'Calcular métricas', 'Contrastar escenarios'].map(
-                (step, i) => (
-                  <span key={step}>
-                    <i>{busy ? <span className="loading-dot" /> : i + 1}</i>
-                    {step}
-                    {i < 2 && <ChevronRight size={12} />}
-                  </span>
-                ),
-              )}
-            </div>
-          </section>
-          {report ? (
-            <ReportView report={report} />
-          ) : (
-            <section className="research-welcome">
-              <div className="research-orbit">
-                <Sparkles size={35} />
-              </div>
-              <div className="eyebrow">PENSÁ CON MÁS CONTEXTO</div>
-              <h2>
-                Una buena decisión empieza
-                <br />
-                por una buena pregunta.
-              </h2>
-              <p>
-                El informe reúne métricas calculadas, escenarios e invalidaciones.
-                <br />
-                Cuando falta evidencia, lo dice.
-              </p>
-              <div className="research-prompt-grid">
-                {[
-                  '¿Qué dice el momentum?',
-                  '¿Dónde están los riesgos?',
-                  '¿Qué debería observar?',
-                ].map((q) => (
-                  <button key={q} onClick={() => setQuestion(q)}>
-                    {q}
-                    <ArrowUpRight size={14} />
-                  </button>
-                ))}
-              </div>
-              <small>
-                {demo || !user
-                  ? 'El ejemplo interactivo usa datos demo y un motor determinístico.'
-                  : 'La síntesis con IA se habilita al configurar proveedor y modelo. Sin credenciales se genera un reporte técnico determinístico.'}
-              </small>
-            </section>
-          )}
+      <div className="research-desk-toolbar">
+        <ResearchAssetPicker instrument={instrument} onChange={selectAsset} />
+        <div className="research-mode" role="status">
+          <span className={status.data?.ai.configured && !demo ? 'positive' : ''}>
+            {uiText(
+              status.data?.ai.configured && !demo ? 'IA conectada' : 'Motor técnico · sin IA',
+            )}
+          </span>
+          <small>
+            {uiText(
+              !overview.data
+                ? 'Preparando datos…'
+                : overview.data.demo
+                  ? 'Precios de demostración'
+                  : 'Evidencia del proveedor',
+            )}
+          </small>
         </div>
-        <aside className="research-sidebar">
-          <section className="panel">
-            <div className="panel-header">
-              <strong>
-                <Clock3 size={15} /> Historial
-              </strong>
-            </div>
-            {history.data?.length ? (
-              <div className="analysis-history">
-                {history.data.map((h) => (
-                  <button
-                    key={h.id}
-                    onClick={() => {
-                      setReport(h.report);
-                      setSelected(h.report.instrumentId);
-                    }}
-                  >
-                    <div>
-                      <strong>{h.report.name}</strong>
-                      <small>
-                        {dateLabel(h.createdAt)} · {h.report.mode === 'ai' ? 'AI' : 'Técnico'}
-                      </small>
-                    </div>
-                    <ChevronRight size={14} />
-                  </button>
-                ))}
+      </div>
+      <div
+        className="research-view-tabs"
+        role="tablist"
+        aria-label={uiText('Vista de investigaci\u00F3n')}
+      >
+        <button
+          id="report-tab"
+          role="tab"
+          aria-controls="research-report-panel"
+          aria-selected={tab === 'report'}
+          onClick={() => setTab('report')}
+        >
+          <FileText size={17} />
+          {uiText(' Informe del activo')}
+        </button>
+        <button
+          id="chat-tab"
+          role="tab"
+          aria-controls="research-chat-panel"
+          aria-selected={tab === 'chat'}
+          onClick={() => setTab('chat')}
+        >
+          <MessageSquare size={17} />
+          {uiText(' Preguntas y respuestas')}
+        </button>
+      </div>
+      <div className="research-desk-grid">
+        <div>
+          {uiText(
+            tab === 'report' ? (
+              <div id="research-report-panel" role="tabpanel" aria-labelledby="report-tab">
+                {uiText(
+                  overview.isError && (
+                    <ErrorState message={overview.error.message} retry={() => overview.refetch()} />
+                  ),
+                )}
+                <form
+                  className="research-brief-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    analyze();
+                  }}
+                >
+                  <label htmlFor="research-question">
+                    {uiText('Enfoque del informe ')}
+                    <span>{uiText('Opcional')}</span>
+                  </label>
+                  <div>
+                    <input
+                      id="research-question"
+                      value={question}
+                      onChange={(e) => setQuestion(e.target.value)}
+                      maxLength={1000}
+                      placeholder={uiText('Ej.: \u00BFel momentum acompa\u00F1a la tendencia?')}
+                    />
+                    <Button type="submit" disabled={busy || !overview.data}>
+                      {uiText(busy ? 'Preparando informe…' : 'Generar informe')}
+                      <ArrowRight size={15} />
+                    </Button>
+                  </div>
+                </form>
+                {uiText(error && <ErrorState message={error} retry={analyze} />)}
+                {uiText(
+                  report ? (
+                    <ReportView report={report} />
+                  ) : (
+                    <section className="research-start">
+                      <span className="research-document-label">
+                        {uiText(instrument.symbol)}
+                        {uiText(' / DOCUMENTO DE TRABAJO')}
+                      </span>
+                      <h2>{uiText('Un informe que puedas poner a prueba.')}</h2>
+                      <p>
+                        {uiText(
+                          'Compar\u00E1 tendencia, fuerza del movimiento y amplitud del rango. Despu\u00E9s contrast\u00E1 la lectura con escenarios y fuentes.',
+                        )}
+                      </p>
+                      <div className="research-outline">
+                        <div>
+                          <b>01</b>
+                          <strong>{uiText('Se\u00F1ales')}</strong>
+                          <span>{uiText('Medias, RSI, MACD y volatilidad.')}</span>
+                        </div>
+                        <div>
+                          <b>02</b>
+                          <strong>{uiText('Escenarios')}</strong>
+                          <span>
+                            {uiText(
+                              'Qu\u00E9 deber\u00EDa pasar y qu\u00E9 invalidar\u00EDa la lectura.',
+                            )}
+                          </span>
+                        </div>
+                        <div>
+                          <b>03</b>
+                          <strong>{uiText('Evidencia')}</strong>
+                          <span>{uiText('Datos fechados y publicaciones originales.')}</span>
+                        </div>
+                      </div>
+                      <p className="research-availability">
+                        {uiText(
+                          'Sin clave de IA, el informe y las respuestas t\u00E9cnicas se calculan con reglas. Las consultas abiertas con IA se habilitar\u00E1n cuando conectes el proveedor.',
+                        )}
+                      </p>
+                    </section>
+                  ),
+                )}
               </div>
             ) : (
-              <div className="history-empty">
-                <Clock3 size={26} />
-                <p>
-                  Tus investigaciones,
-                  <br />
-                  en un solo lugar.
-                </p>
-                <small>
-                  {user
-                    ? 'Los informes se guardan al generarlos.'
-                    : 'Iniciá sesión para guardar tus análisis.'}
-                </small>
+              <div id="research-chat-panel" role="tabpanel" aria-labelledby="chat-tab">
+                {uiText(
+                  overview.isPending ? (
+                    <p role="status">{uiText('Preparando evidencia del activo\u2026')}</p>
+                  ) : overview.isError ? (
+                    <ErrorState message={overview.error.message} retry={() => overview.refetch()} />
+                  ) : (
+                    overview.data && <AssetChat key={instrument.id} overview={overview.data} />
+                  ),
+                )}
               </div>
+            ),
+          )}
+        </div>
+        <aside className="research-desk-context">
+          <section className="research-history">
+            <h2>
+              <Clock3 size={16} />
+              {uiText(' Tus informes')}
+            </h2>
+            {uiText(
+              history.isError ? (
+                <ErrorState message={history.error.message} retry={() => history.refetch()} />
+              ) : history.data?.length ? (
+                history.data.map((h) => (
+                  <button key={h.id} onClick={() => restoreReport(h.report)}>
+                    <strong>{uiText(h.report.name)}</strong>
+                    <small>
+                      {uiText(dateLabel(h.createdAt))} ·{' '}
+                      {uiText(h.report.mode === 'ai' ? 'IA' : 'Técnico')}
+                    </small>
+                  </button>
+                ))
+              ) : (
+                <p>
+                  {uiText(
+                    user
+                      ? 'Los informes que generes quedarán guardados acá.'
+                      : 'Iniciá sesión para guardar tus investigaciones.',
+                  )}
+                </p>
+              ),
             )}
           </section>
-          <section className="research-principles">
-            <span className="eyebrow">EL MÉTODO CUANTAI</span>
-            <h3>
-              La confianza está
-              <br />
-              en la evidencia.
-            </h3>
-            {[
-              'Cálculos determinísticos',
-              'Fuentes con fecha',
-              'Escenarios explícitos',
-              'Límites transparentes',
-            ].map((t) => (
-              <p key={t}>
-                <Check size={14} />
-                {t}
-              </p>
-            ))}
-            <Link href="/data-policy">
-              Cómo trabajamos <ArrowUpRight size={13} />
-            </Link>
-          </section>
+          <News instrumentId={instrument.id} embedded compact />
         </aside>
       </div>
     </div>
   );
 }
 export function ReportView({ report }: { report: AnalysisReport }) {
+  const uiText = useUiText();
   const n = report.narrative;
   const m = report.metrics;
+  const trend =
+    m?.trend === 'uptrend' ? 'Alcista' : m?.trend === 'downtrend' ? 'Bajista' : 'Neutral';
+  const signals = [
+    [
+      'Tendencia',
+      trend,
+      m?.ema20 != null && m?.ema50 != null
+        ? `EMA 20: ${number(m.ema20)} / EMA 50: ${number(m.ema50)}. La comparación describe la dirección de los cierres.`
+        : 'No hay suficientes cierres para comparar medias.',
+    ],
+    [
+      'Momentum',
+      m?.rsi != null ? `RSI ${number(m.rsi)}` : 'Sin datos',
+      m?.rsi == null
+        ? 'No se pudo calcular.'
+        : m.rsi >= 70
+          ? 'Zona de momentum elevado. Una tendencia fuerte puede sostenerlo; no es una orden de venta.'
+          : m.rsi <= 30
+            ? 'Momentum débil. Una caída extendida no confirma por sí sola un rebote.'
+            : 'Fuera de los extremos convencionales. Contrastá con tendencia y volumen.',
+    ],
+    [
+      'Impulso',
+      m?.macd != null ? number(m.macd) : 'Sin datos',
+      m?.macd == null
+        ? 'Histograma no disponible.'
+        : m.macd > 0
+          ? 'Histograma MACD positivo: el impulso rápido supera su señal.'
+          : m.macd < 0
+            ? 'Histograma MACD negativo: el impulso rápido está por debajo de su señal.'
+            : 'Sin separación entre el impulso y su señal.',
+    ],
+    [
+      'Amplitud',
+      m?.atr != null && m.close > 0 ? `${number((m.atr / m.close) * 100)}%` : 'Sin datos',
+      'ATR respecto del último cierre. Mide amplitud histórica del movimiento; no la probabilidad de una pérdida.',
+    ],
+  ];
   return (
-    <article className="analysis-report">
-      <div className="report-heading">
+    <article className="analysis-report research-document">
+      <header className="research-document-header">
         <div>
-          <span className="eyebrow">RESEARCH BRIEF</span>
-          <h2>{report.name}</h2>
-          <small>
-            {dateLabel(report.createdAt)} ·{' '}
-            {report.mode === 'ai' ? 'Síntesis con IA' : 'Informe técnico determinístico'}
-          </small>
+          <span className="research-document-label">
+            {uiText('INFORME / ')}
+            {uiText(report.mode === 'ai' ? 'SÍNTESIS CON IA' : 'LECTURA TÉCNICA')}
+          </span>
+          <h2>{uiText(report.name)}</h2>
+          <p>
+            {uiText('Datos al ')}
+            {uiText(dateLabel(report.dataAsOf))}
+            {uiText(' \u00B7 Generado ')}
+            {uiText(dateLabel(report.createdAt))}
+          </p>
         </div>
         <DataBadge status={report.dataStatus} />
-      </div>
-      <section className="report-summary">
-        <Sparkles size={18} />
-        <div>
-          <span className="eyebrow">RESUMEN EJECUTIVO</span>
-          <p>{n.summary}</p>
-        </div>
+      </header>
+      {uiText(
+        report.dataStatus === 'demo' && (
+          <p className="research-data-note">
+            {uiText(
+              'Datos sint\u00E9ticos de demostraci\u00F3n. Estas se\u00F1ales sirven para explorar las herramientas; no describen el mercado actual.',
+            )}
+          </p>
+        ),
+      )}
+      {uiText(
+        report.answer && (
+          <section className="research-question-answer">
+            <span className="research-document-label">
+              {uiText('TU PREGUNTA / ')}
+              {uiText(report.answer.mode === 'ai' ? 'IA' : 'RESPUESTA TÉCNICA')}
+            </span>
+            <h3>{uiText(report.question)}</h3>
+            <p>{uiText(report.answer.text)}</p>
+            <dl className="chat-facts">
+              {uiText(
+                report.answer.facts.map((f) => (
+                  <div key={f.id}>
+                    <dt>{uiText(f.label)}</dt>
+                    <dd>
+                      {uiText(f.value)} {uiText(f.unit)}
+                    </dd>
+                    <small>{uiText(dateLabel(f.asOf))}</small>
+                  </div>
+                )),
+              )}
+            </dl>
+            <small>{uiText(report.answer.notice)}</small>
+            {uiText(
+              report.answer.sources.map((source) => (
+                <a key={source.id} href={source.url} target="_blank" rel="noreferrer">
+                  {uiText(source.title)} <ExternalLink size={12} />
+                </a>
+              )),
+            )}
+          </section>
+        ),
+      )}
+      <section className="research-conclusion">
+        <span className="research-document-label">{uiText('LA LECTURA CENTRAL')}</span>
+        <p>{uiText(n.summary)}</p>
       </section>
-      <div className="report-metrics">
-        {[
-          ['RSI · 14', m?.rsi],
-          ['EMA · 20', m?.ema20],
-          ['ATR · 14', m?.atr],
-          ['MACD · hist.', m?.macd],
-        ].map(([label, value]) => (
-          <div key={String(label)}>
-            <small>{label}</small>
-            <strong>{number(value)}</strong>
-          </div>
-        ))}
-      </div>
-      <div className="report-block">
-        <h3>
-          Lectura técnica{' '}
-          <span className="outlined-chip">
-            {m?.trend === 'uptrend'
-              ? 'Tendencia alcista'
-              : m?.trend === 'downtrend'
-                ? 'Tendencia bajista'
-                : m?.trend === 'neutral'
-                  ? 'Tendencia neutral'
-                  : 'Sin determinar'}
-          </span>
-        </h3>
-        <p>{n.technicalAnalysis}</p>
-        <div className="technical-levels">
-          <span>
-            Mínimo móvil · 20 velas<strong>{number(m?.support)}</strong>
-          </span>
-          <div />
-          <span>
-            Máximo móvil · 20 velas<strong>{number(m?.resistance)}</strong>
-          </span>
-        </div>
-        <small>Extremos históricos móviles; no niveles predictivos confirmados.</small>
-      </div>
-      <div className="report-block">
-        <h3>Fundamentales y contexto</h3>
-        <p>{n.fundamentalAnalysis}</p>
-        <p>{n.macroContext}</p>
-      </div>
-      <div className="scenario-grid">
-        {[
-          ['Alcista', n.bullScenario],
-          ['Base', n.baseScenario],
-          ['Bajista', n.bearScenario],
-        ].map(([title, text]) => (
-          <div className="scenario" key={title}>
-            <span>{title}</span>
-            <p>{text}</p>
-          </div>
-        ))}
-      </div>
-      <div className="report-block">
-        <h3>
-          <AlertTriangle size={16} /> Riesgos a considerar
-        </h3>
-        <ul>
-          {n.risks.map((r) => (
-            <li key={r}>{r}</li>
-          ))}
-        </ul>
-      </div>
-      <div className="report-block">
-        <h3>Qué observar</h3>
-        <ul>
-          {n.whatToWatch.map((r) => (
-            <li key={r}>{r}</li>
-          ))}
-        </ul>
-        <h3>Próximos catalizadores</h3>
-        {n.catalysts.length ? (
-          n.catalysts.map((c) => <p key={c}>{c}</p>)
-        ) : (
-          <p>No se verificaron próximos eventos en las fuentes disponibles.</p>
+      <div className="research-price-levels">
+        {uiText(
+          [
+            ['Último cierre', m?.close],
+            ['Mínimo · 20 velas', m?.support],
+            ['Máximo · 20 velas', m?.resistance],
+          ].map(([label, value]) => (
+            <div key={String(label)}>
+              <small>
+                {uiText(label)} · {uiText(report.currency ?? report.instrumentId.split(':').at(-1))}
+              </small>
+              <strong>{uiText(number(value))}</strong>
+            </div>
+          )),
         )}
       </div>
-      <section className="report-sources">
-        <h3>Fuentes y trazabilidad</h3>
-        {report.sources.map((s) => (
-          <a
-            key={s.id}
-            href={s.url || '/data-policy'}
-            target={s.url.startsWith('http') ? '_blank' : undefined}
-            rel="noreferrer"
-          >
-            <span>
-              <strong>{s.title}</strong>
-              <small>
-                Dato: {dateLabel(s.asOf)} · Consulta: {dateLabel(s.retrievedAt)}
-              </small>
-            </span>
-            <ExternalLink size={14} />
-          </a>
-        ))}
+      <section className="research-evidence">
+        <h3>{uiText('Se\u00F1al por se\u00F1al')}</h3>
+        <div className="research-signal-table">
+          {uiText(
+            signals.map(([label, value, interpretation]) => (
+              <div key={label}>
+                <span>{uiText(label)}</span>
+                <strong>{uiText(value)}</strong>
+                <p>{uiText(interpretation)}</p>
+              </div>
+            )),
+          )}
+        </div>
+        <p>{uiText(n.technicalAnalysis)}</p>
       </section>
-      <div className="report-limitations">
-        <h4>Límites de este análisis</h4>
-        {n.limitations.map((l) => (
-          <p key={l}>{l}</p>
-        ))}
-        <p>Investigación educativa. Los escenarios no son garantías ni órdenes de inversión.</p>
+      <section className="research-scenarios">
+        <h3>{uiText('Tres caminos. Condiciones distintas.')}</h3>
+        {uiText(
+          [
+            [
+              'Continuidad alcista',
+              n.bullScenario,
+              'Perder el mínimo del rango debilitaría esta hipótesis.',
+            ],
+            ['Consolidación', n.baseScenario, 'Un cierre fuera del rango cambiaría esta lectura.'],
+            [
+              'Deterioro',
+              n.bearScenario,
+              'Recuperar el rango y el impulso contradiría el escenario.',
+            ],
+          ].map(([label, scenario, invalidation], index) => (
+            <div key={label}>
+              <span>0{uiText(index + 1)}</span>
+              <div>
+                <h4>{uiText(label)}</h4>
+                <p>{uiText(scenario)}</p>
+                <small>{uiText(invalidation)}</small>
+              </div>
+            </div>
+          )),
+        )}
+      </section>
+      <div className="research-notes-grid">
+        <section>
+          <h3>{uiText('Fundamentos')}</h3>
+          <p>{uiText(n.fundamentalAnalysis)}</p>
+        </section>
+        <section>
+          <h3>{uiText('Riesgos que faltan contrastar')}</h3>
+          <ul>{uiText(n.risks.map((r) => <li key={r}>{uiText(r)}</li>))}</ul>
+        </section>
       </div>
+      <section className="research-watch">
+        <h3>{uiText('Pr\u00F3xima revisi\u00F3n')}</h3>
+        <ul>{uiText(n.whatToWatch.map((w) => <li key={w}>{uiText(w)}</li>))}</ul>
+        {uiText(n.catalysts.map((c) => <p key={c}>{uiText(c)}</p>))}
+      </section>
+      <details className="research-source-details">
+        <summary>
+          {uiText('Fuentes y alcance \u00B7 ')}
+          {uiText(report.sources.length)}
+          {uiText(' referencias')}
+        </summary>
+        {uiText(
+          report.sources.map((source) => (
+            <a
+              key={source.id}
+              href={source.url || '/data-policy'}
+              target={source.url.startsWith('http') ? '_blank' : undefined}
+              rel="noreferrer"
+            >
+              <span>
+                {uiText(source.title)}
+                <small>
+                  {uiText('Dato: ')}
+                  {uiText(dateLabel(source.asOf))}
+                  {uiText(' \u00B7 Consulta: ')}
+                  {uiText(dateLabel(source.retrievedAt))}
+                </small>
+              </span>
+              <ExternalLink size={14} />
+            </a>
+          )),
+        )}
+        {uiText(n.limitations.map((l) => <p key={l}>{uiText(l)}</p>))}
+      </details>
       <button className="text-link" onClick={() => window.print()}>
-        Exportar / imprimir informe <RefreshCw size={13} />
+        <RefreshCw size={13} />
+        {uiText(' Imprimir informe')}
       </button>
     </article>
   );

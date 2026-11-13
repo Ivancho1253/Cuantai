@@ -18,6 +18,7 @@ const quoteValue = z.object({
   usd: z.number().positive(),
   usd_24h_change: z.number(),
   last_updated_at: z.number().positive(),
+  usd_24h_vol: z.number().nonnegative().nullable().optional(),
 });
 export class CoinGeckoProvider {
   async quotes(instruments: Instrument[]): Promise<Map<string, Quote>> {
@@ -44,7 +45,8 @@ export class CoinGeckoProvider {
           currency: 'USD',
           price: new Decimal(value.usd).toFixed(),
           changePercent: new Decimal(value.usd_24h_change).toFixed(),
-          volume: null,
+          volume: value.usd_24h_vol == null ? null : new Decimal(value.usd_24h_vol).toFixed(),
+          volumeUnit: 'USD',
           source: 'CoinGecko aggregate · rolling 24h',
           url: `https://www.coingecko.com/en/coins/${encodeURIComponent(instrument.providerSymbol!)}`,
           asOf: new Date(value.last_updated_at * 1000).toISOString(),

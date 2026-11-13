@@ -1,4 +1,6 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
+import { useLocale } from './locale-provider';
 import { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { ExternalLink, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
@@ -23,6 +25,8 @@ export function TradingViewChart({
   height?: number;
   theme?: 'dark' | 'light';
 }) {
+  const uiText = useUiText();
+  const { locale } = useLocale();
   const root = useRef<HTMLDivElement>(null),
     host = useRef<HTMLDivElement>(null),
     fullButton = useRef<HTMLButtonElement>(null);
@@ -31,7 +35,7 @@ export function TradingViewChart({
   const theme = themeOverride ?? (resolvedTheme === 'light' ? 'light' : 'dark');
   const [expanded, setExpanded] = useState(false),
     [attempt, setAttempt] = useState(0);
-  const configuration = `${symbol}|${timeframe}|${chartType}|${theme}|${attempt}`;
+  const configuration = `${symbol}|${timeframe}|${chartType}|${theme}|${locale}|${attempt}`;
   const [loadState, setLoadState] = useState<{
     key: string;
     phase: 'loading' | 'embedded' | 'error';
@@ -59,7 +63,9 @@ export function TradingViewChart({
     script.src = TRADINGVIEW_SCRIPT;
     script.async = true;
     script.type = 'text/javascript';
-    script.textContent = JSON.stringify(tradingViewOptions(symbol, timeframe, chartType, theme));
+    script.textContent = JSON.stringify(
+      tradingViewOptions(symbol, timeframe, chartType, theme, locale),
+    );
     const fail = () => {
       if (!disposed) setLoadState({ key: configuration, phase: 'error' });
     };
@@ -91,7 +97,7 @@ export function TradingViewChart({
       script.removeEventListener('error', fail);
       mount.remove();
     };
-  }, [symbol, timeframe, chartType, theme, attempt, configuration]);
+  }, [symbol, timeframe, chartType, theme, locale, attempt, configuration]);
   useEffect(() => {
     const changed = () => {
       if (document.fullscreenElement === root.current) nativeActive.current = true;
@@ -145,26 +151,28 @@ export function TradingViewChart({
     >
       <div className="tv-chart-heading">
         <div>
-          <strong>TradingView</strong>
-          <span>{symbol ?? 'Sin símbolo compatible'}</span>
+          <strong>{uiText('TradingView')}</strong>
+          <span>{uiText(symbol ?? 'Sin símbolo compatible')}</span>
         </div>
         <div className="tv-chart-actions">
-          {symbol && (
-            <a
-              className="icon-button"
-              href={tradingViewChartUrl(symbol)}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Abrir ${symbol} en TradingView`}
-              title="Abrir en TradingView"
-            >
-              <ExternalLink size={14} />
-            </a>
+          {uiText(
+            symbol && (
+              <a
+                className="icon-button"
+                href={tradingViewChartUrl(symbol)}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={uiText('Abrir {0} en TradingView', [symbol])}
+                title={uiText('Abrir en TradingView')}
+              >
+                <ExternalLink size={14} />
+              </a>
+            ),
           )}
           <button
             className="icon-button"
-            aria-label="Recargar TradingView"
-            title="Recargar widget"
+            aria-label={uiText('Recargar TradingView')}
+            title={uiText('Recargar widget')}
             onClick={() => {
               setAttempt((n) => n + 1);
             }}
@@ -175,50 +183,63 @@ export function TradingViewChart({
             ref={fullButton}
             className="tv-fullscreen-button"
             onClick={toggleFullScreen}
-            aria-label={expanded ? 'Salir de pantalla completa' : 'Pantalla completa'}
-            title={expanded ? 'Salir · Esc' : 'Ampliar gráfico'}
+            aria-label={uiText(expanded ? 'Salir de pantalla completa' : 'Pantalla completa')}
+            title={uiText(expanded ? 'Salir · Esc' : 'Ampliar gráfico')}
           >
-            {expanded ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
-            <span>{expanded ? 'Salir' : 'Pantalla completa'}</span>
+            {uiText(expanded ? <Minimize2 size={15} /> : <Maximize2 size={15} />)}
+            <span>{uiText(expanded ? 'Salir' : 'Pantalla completa')}</span>
           </button>
         </div>
       </div>
       <div className="tv-chart-body">
         <div ref={host} className="tv-chart-host" />
-        {!symbol ? (
-          <div className="tv-chart-state">
-            <strong>Sin correspondencia verificada para TradingView.</strong>
-            <p>
-              Buscá la especie y el mercado exactos en TradingView. No se reemplaza por otro activo.
-            </p>
-          </div>
-        ) : (
-          phase !== 'embedded' && (
-            <div className="tv-chart-state" role="status">
-              {phase === 'loading' ? (
-                <>
-                  <span className="loading-dot" />
-                  <p>Cargando el gráfico oficial de TradingView…</p>
-                </>
-              ) : (
-                <>
-                  <strong>No se pudo cargar TradingView.</strong>
-                  <p>Revisá la conexión o el bloqueo de contenido externo.</p>
-                  <button
-                    className="button button-secondary"
-                    onClick={() => {
-                      setAttempt((n) => n + 1);
-                    }}
-                  >
-                    Reintentar
-                  </button>
-                  <a href={tradingViewChartUrl(symbol)} target="_blank" rel="noopener noreferrer">
-                    Abrir directamente en TradingView <ExternalLink size={12} />
-                  </a>
-                </>
-              )}
+        {uiText(
+          !symbol ? (
+            <div className="tv-chart-state">
+              <strong>{uiText('Sin correspondencia verificada para TradingView.')}</strong>
+              <p>
+                {uiText(
+                  'Busc\u00E1 la especie y el mercado exactos en TradingView. No se reemplaza por otro activo.',
+                )}
+              </p>
             </div>
-          )
+          ) : (
+            phase !== 'embedded' && (
+              <div className="tv-chart-state" role="status">
+                {uiText(
+                  phase === 'loading' ? (
+                    <>
+                      <span className="loading-dot" />
+                      <p>{uiText('Cargando el gr\u00E1fico oficial de TradingView\u2026')}</p>
+                    </>
+                  ) : (
+                    <>
+                      <strong>{uiText('No se pudo cargar TradingView.')}</strong>
+                      <p>
+                        {uiText('Revis\u00E1 la conexi\u00F3n o el bloqueo de contenido externo.')}
+                      </p>
+                      <button
+                        className="button button-secondary"
+                        onClick={() => {
+                          setAttempt((n) => n + 1);
+                        }}
+                      >
+                        {uiText('Reintentar')}
+                      </button>
+                      <a
+                        href={tradingViewChartUrl(symbol)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {uiText('Abrir directamente en TradingView ')}
+                        <ExternalLink size={12} />
+                      </a>
+                    </>
+                  ),
+                )}
+              </div>
+            )
+          ),
         )}
       </div>
     </div>

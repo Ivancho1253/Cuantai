@@ -32,6 +32,9 @@ export function tradingViewSymbol(instrument: Instrument): string | null {
   if (instrument.id === 'NYSE:SPY:USD') return 'AMEX:SPY';
   if (instrument.id === 'NYSE:DIA:USD') return 'AMEX:DIA';
   if (instrument.exchange === 'BYMA') return `BCBA:${instrument.symbol}`;
+  if (instrument.exchange === 'ARCA') return `AMEX:${instrument.symbol}`;
+  if (instrument.exchange === 'CBOE' && instrument.type === 'etf')
+    return `BATS:${instrument.symbol}`;
   if (['NASDAQ', 'NYSE', 'AMEX', 'CBOE', 'BINANCE'].includes(instrument.exchange))
     return `${instrument.exchange}:${instrument.symbol}`;
   return null;
@@ -43,6 +46,7 @@ export function tradingViewOptions(
   timeframe: Timeframe,
   chartType: TradingViewChartType,
   theme: 'dark' | 'light',
+  locale: 'es' | 'en' | 'pt' = 'es',
 ) {
   return {
     autosize: true,
@@ -50,7 +54,7 @@ export function tradingViewOptions(
     interval: tradingViewIntervals[timeframe],
     theme,
     style: styles[chartType],
-    locale: 'es',
+    locale,
     timezone: 'America/Argentina/Buenos_Aires',
     allow_symbol_change: false,
     hide_side_toolbar: false,

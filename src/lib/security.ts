@@ -27,7 +27,7 @@ export async function rateLimit(key: string, limit: number, seconds: number) {
   if (rows[0].count > limit)
     throw new HttpError(429, 'Límite de solicitudes alcanzado. Intentá nuevamente más tarde.');
 }
-export async function readJson(req: Request) {
+export async function readJson(req: Request, maxBytes = 64000) {
   const reader = req.body?.getReader();
   if (!reader) throw new HttpError(400, 'Invalid JSON');
   const chunks: Uint8Array[] = [];
@@ -36,7 +36,7 @@ export async function readJson(req: Request) {
     const { done, value } = await reader.read();
     if (done) break;
     bytes += value.byteLength;
-    if (bytes > 64000) {
+    if (bytes > maxBytes) {
       await reader.cancel();
       throw new HttpError(413, 'Request too large');
     }

@@ -5,6 +5,14 @@ import { instruments } from '@/lib/market/catalog';
 import { assetLogo, CRYPTO_LOGO_REVISION } from '@/lib/market/logos';
 const listing = (id: string) => instruments.find((instrument) => instrument.id === id)!;
 describe('Issuer logos and asset identity', () => {
+  it('uses a dark plate for transparent white marks instead of hiding them on white', () => {
+    expect(
+      assetLogo({ ...listing('NASDAQ:NVDA:USD'), id: 'NASDAQ:ADI:USD', symbol: 'ADI' })?.background,
+    ).toBe('#1d2b34');
+    expect(
+      assetLogo({ ...listing('NASDAQ:NVDA:USD'), id: 'NYSE:AMP:USD', symbol: 'AMP' })?.background,
+    ).toBe('#1d2b34');
+  });
   it('covers the whole shipped catalog with existing local images', async () => {
     const files = new Set<string>();
     for (const instrument of instruments) {
@@ -38,10 +46,10 @@ describe('Issuer logos and asset identity', () => {
   it('bounds external discovery to supported venues and a safe, pinned asset identifier', () => {
     expect(
       assetLogo({ ...listing('NASDAQ:NVDA:USD'), id: 'NASDAQ:AMD:USD', symbol: 'AMD' })?.src,
-    ).toBe('https://images.financialmodelingprep.com/symbol/AMD.png');
+    ).toBe('/asset-logos/catalog/NASDAQ_AMD_USD.png');
     expect(
       assetLogo({ ...listing('BYMA:GGAL:ARS'), id: 'BYMA:YPFD:ARS', symbol: 'YPFD' })?.src,
-    ).toBe('https://images.financialmodelingprep.com/symbol/YPFD.BA.png');
+    ).toBe('/asset-logos/catalog/BYMA_YPFD_ARS.png');
     expect(
       assetLogo({
         ...listing('BINANCE:BTCUSDT:USDT'),

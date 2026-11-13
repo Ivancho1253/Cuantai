@@ -1,0 +1,722 @@
+{
+  "retrievedAt": "2026-11-12T21:59:22.462859+00:00",
+  "asOf": "2026-11-12",
+  "source": "https://www.byma.com.ar/financiarse/para-emisoras/empresas-listadas",
+  "referenceSource": "https://www.iamc.com.ar/informesanuales/",
+  "liquiditySource": "https://www.iamc.com.ar/d/acc.json",
+  "requestedCount": 100,
+  "rankedCount": 71,
+  "methodology": "Local ARS share listings from BYMA, excluding explicitly interrupted listings. Descending average daily traded value over 40 trading sessions (ADTV), as published in the dated BYMA daily equity report. Listings without ADTV follow alphabetically. This is a liquidity order, not a forecast or a ranking of investment quality. No ADRs, CEDEARs or duplicate ISIN identities are added to reach 100.",
+  "aliases": [
+    {
+      "directorySymbol": "CEPU2",
+      "symbol": "CEPU",
+      "isin": "ARP2354W1188"
+    }
+  ],
+  "excluded": [
+    {
+      "symbol": "COMO",
+      "reason": "Trading interrupted according to the BYMA directory"
+    },
+    {
+      "symbol": "OVOP",
+      "reason": "Trading interrupted according to the BYMA directory"
+    }
+  ],
+  "entries": [
+    {
+      "symbol": "GGAL",
+      "name": "Grupo Financiero Galicia S.A.",
+      "sector": "Finanzas",
+      "isin": "ARP495251018",
+      "index": "MSCI Merval",
+      "liquidityRank": 1,
+      "adtv40ARS": "17422734620.0"
+    },
+    {
+      "symbol": "YPFD",
+      "name": "YPF S.A.",
+      "sector": "Energía",
+      "isin": "ARP9897X1319",
+      "index": "MSCI Merval",
+      "liquidityRank": 2,
+      "adtv40ARS": "15670893254.0"
+    },
+    {
+      "symbol": "PAMP",
+      "name": "Pampa Energía S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARP432631215",
+      "index": "MSCI Merval",
+      "liquidityRank": 3,
+      "adtv40ARS": "4833336649.0"
+    },
+    {
+      "symbol": "BMA",
+      "name": "Banco Macro S.A.",
+      "sector": "Finanzas",
+      "isin": "ARBANS010010",
+      "index": "MSCI Merval",
+      "liquidityRank": 4,
+      "adtv40ARS": "3632854216.0"
+    },
+    {
+      "symbol": "CEPU",
+      "name": "Central Puerto S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARP2354W1188",
+      "index": "MSCI Merval",
+      "liquidityRank": 5,
+      "adtv40ARS": "1916028488.0"
+    },
+    {
+      "symbol": "TGSU2",
+      "name": "Transportadora de Gas del Sur S.A.",
+      "sector": "Energía",
+      "isin": "ARP9308R1039",
+      "index": "MSCI Merval",
+      "liquidityRank": 6,
+      "adtv40ARS": "1807922037.0"
+    },
+    {
+      "symbol": "BBAR",
+      "name": "Banco BBVA Argentina S.A.",
+      "sector": "Finanzas",
+      "isin": "ARP125991090",
+      "index": "MSCI Merval",
+      "liquidityRank": 7,
+      "adtv40ARS": "1581935353.0"
+    },
+    {
+      "symbol": "TRAN",
+      "name": "Transener Cia. de Transporte de Energía Eléctrica en Alta Tensión",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARTRAN010011",
+      "index": "MSCI Merval",
+      "liquidityRank": 8,
+      "adtv40ARS": "1515566737.0"
+    },
+    {
+      "symbol": "BYMA",
+      "name": "Bolsas y Mercados Argentinos S.A.",
+      "sector": "Finanzas",
+      "isin": "ARBYMA300018",
+      "index": "MSCI Merval",
+      "liquidityRank": 9,
+      "adtv40ARS": "1187542389.0"
+    },
+    {
+      "symbol": "SUPV",
+      "name": "Grupo Supervielle S.A.",
+      "sector": "Finanzas",
+      "isin": "ARGRSU300079",
+      "index": "MSCI Merval",
+      "liquidityRank": 10,
+      "adtv40ARS": "1076567329.0"
+    },
+    {
+      "symbol": "TXAR",
+      "name": "Ternium Argentina S.A.",
+      "sector": "Materiales",
+      "isin": "ARSIDE010029",
+      "index": "MSCI Merval",
+      "liquidityRank": 11,
+      "adtv40ARS": "1039058812.0"
+    },
+    {
+      "symbol": "EDN",
+      "name": "Empresa Distrib. y Comercializadora Norte S.A. (EDENOR S.A.)",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARENOR010020",
+      "index": "MSCI Merval",
+      "liquidityRank": 12,
+      "adtv40ARS": "937365842.0"
+    },
+    {
+      "symbol": "TGNO4",
+      "name": "Transportadora de Gas del Norte S.A.",
+      "sector": "Energía",
+      "isin": "ARTGNO010117",
+      "index": "MSCI Merval",
+      "liquidityRank": 13,
+      "adtv40ARS": "923100717.0"
+    },
+    {
+      "symbol": "LOMA",
+      "name": "Loma Negra C.I.A.S.A.",
+      "sector": "Materiales",
+      "isin": "ARLOMA300018",
+      "index": "MSCI Merval",
+      "liquidityRank": 14,
+      "adtv40ARS": "773176873.0"
+    },
+    {
+      "symbol": "TECO2",
+      "name": "Telecom Argentina S.A.",
+      "sector": "Servicios de Comunicacion",
+      "isin": "ARP9028N1016",
+      "index": "MSCI Byma General",
+      "liquidityRank": 15,
+      "adtv40ARS": "752811427.0"
+    },
+    {
+      "symbol": "VALO",
+      "name": "Banco de Valores S.A.",
+      "sector": "Finanzas",
+      "isin": "ARBVAL3024G2",
+      "index": "MSCI Merval",
+      "liquidityRank": 16,
+      "adtv40ARS": "751439029.0"
+    },
+    {
+      "symbol": "METR",
+      "name": "Metrogas S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARP6558L1178",
+      "index": "MSCI Merval",
+      "liquidityRank": 17,
+      "adtv40ARS": "610947370.0"
+    },
+    {
+      "symbol": "ECOG",
+      "name": "Ecogas Inversiones S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "AR0831273179",
+      "index": "MSCI Merval",
+      "liquidityRank": 18,
+      "adtv40ARS": "566678546.0"
+    },
+    {
+      "symbol": "CRES",
+      "name": "Cresud S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARP331091024",
+      "index": "MSCI Merval",
+      "liquidityRank": 19,
+      "adtv40ARS": "527275759.0"
+    },
+    {
+      "symbol": "ALUA",
+      "name": "Aluar Aluminio Argentino S.A.",
+      "sector": "Materiales",
+      "isin": "ARALUA010258",
+      "index": "MSCI Merval",
+      "liquidityRank": 20,
+      "adtv40ARS": "333862719.0"
+    },
+    {
+      "symbol": "COME",
+      "name": "Sociedad Comercial Del Plata S.A.",
+      "sector": "Energía",
+      "isin": "ARP290071462",
+      "index": "MSCI Byma General",
+      "liquidityRank": 21,
+      "adtv40ARS": "290633764.0"
+    },
+    {
+      "symbol": "CVH",
+      "name": "Cablevisión Holding S.A.",
+      "sector": "Servicios de Comunicacion",
+      "isin": "ARCABH300011",
+      "index": "MSCI Byma General",
+      "liquidityRank": 22,
+      "adtv40ARS": "196701071.0"
+    },
+    {
+      "symbol": "IRSA",
+      "name": "IRSA Inversiones y Representaciones S.A.",
+      "sector": "Bienes Inmobiliarios",
+      "isin": "ARP588091073",
+      "index": "MSCI Byma General",
+      "liquidityRank": 23,
+      "adtv40ARS": "190605104.0"
+    },
+    {
+      "symbol": "A3",
+      "name": "A3 Mercados S.A.",
+      "sector": "Finanzas",
+      "isin": "ARMTBA010010",
+      "index": "MSCI Byma General",
+      "liquidityRank": 24,
+      "adtv40ARS": "156774105.0"
+    },
+    {
+      "symbol": "BHIP",
+      "name": "Banco Hipotecario S.A.",
+      "sector": "Finanzas",
+      "isin": "ARBHIP010161",
+      "index": "MSCI Byma General",
+      "liquidityRank": 25,
+      "adtv40ARS": "80207835.0"
+    },
+    {
+      "symbol": "MIRG",
+      "name": "Mirgor S.A.",
+      "sector": "Consumo Discrecional",
+      "isin": "ARP6823S1295",
+      "index": "MSCI Byma General",
+      "liquidityRank": 26,
+      "adtv40ARS": "64542255.0"
+    },
+    {
+      "symbol": "IEB",
+      "name": "IEB CONSTRUCCIONES S.A.",
+      "sector": "Industrial",
+      "isin": "ARP3594C1107",
+      "index": "MSCI Byma General",
+      "liquidityRank": 27,
+      "adtv40ARS": "56500116.0"
+    },
+    {
+      "symbol": "MORI",
+      "name": "Morixe Hermanos S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARP698141040",
+      "index": "MSCI Byma General",
+      "liquidityRank": 28,
+      "adtv40ARS": "46669677.0"
+    },
+    {
+      "symbol": "AUSO",
+      "name": "Autopistas del Sol S.A.",
+      "sector": "Industrial",
+      "isin": "ARASOL010033",
+      "index": "MSCI Byma General",
+      "liquidityRank": 29,
+      "adtv40ARS": "45457683.0"
+    },
+    {
+      "symbol": "AGRO",
+      "name": "Agrometal S.A.",
+      "sector": "Industrial",
+      "isin": "ARAGRO010015",
+      "index": "MSCI Byma General",
+      "liquidityRank": 30,
+      "adtv40ARS": "38665267.0"
+    },
+    {
+      "symbol": "HARG",
+      "name": "Holcim (Argentina) S.A.",
+      "sector": "Materiales",
+      "isin": "ARP6806N1051",
+      "index": "MSCI Byma General",
+      "liquidityRank": 31,
+      "adtv40ARS": "27870505.0"
+    },
+    {
+      "symbol": "BOLT",
+      "name": "Boldt S.A.",
+      "sector": "Consumo Discrecional",
+      "isin": "ARBOLD010054",
+      "index": "MSCI Byma General",
+      "liquidityRank": 32,
+      "adtv40ARS": "22802303.0"
+    },
+    {
+      "symbol": "CELU",
+      "name": "Celulosa Argentina S.A.",
+      "sector": "Materiales",
+      "isin": "ARP219751426",
+      "index": "MSCI Byma General",
+      "liquidityRank": 33,
+      "adtv40ARS": "21625783.0"
+    },
+    {
+      "symbol": "CTIO",
+      "name": "Consultatio S.A.",
+      "sector": "Bienes Inmobiliarios",
+      "isin": "ARCTIO010019",
+      "index": "General",
+      "liquidityRank": 34,
+      "adtv40ARS": "21619315.0"
+    },
+    {
+      "symbol": "CECO2",
+      "name": "Central Costanera S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARP2341J1058",
+      "index": "MSCI Byma General",
+      "liquidityRank": 35,
+      "adtv40ARS": "20171461.0"
+    },
+    {
+      "symbol": "SAMI",
+      "name": "S.A. San Miguel A.G.I.C.I. y F.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARSMIG010018",
+      "index": "MSCI Byma General",
+      "liquidityRank": 36,
+      "adtv40ARS": "19032686.0"
+    },
+    {
+      "symbol": "MOLA",
+      "name": "Molinos Agro S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARMOAG300023",
+      "index": "MSCI Byma General",
+      "liquidityRank": 37,
+      "adtv40ARS": "18712038.0"
+    },
+    {
+      "symbol": "BPAT",
+      "name": "Banco Patagonia S.A.",
+      "sector": "Finanzas",
+      "isin": "ARMERI013163",
+      "index": "MSCI Byma General",
+      "liquidityRank": 38,
+      "adtv40ARS": "17394184.0"
+    },
+    {
+      "symbol": "DGCU2",
+      "name": "Distribuidora de Gas Cuyana S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARP3568E1180",
+      "index": "General",
+      "liquidityRank": 39,
+      "adtv40ARS": "15663321.0"
+    },
+    {
+      "symbol": "SEMI",
+      "name": "Molinos Juan Semino S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARP689031069",
+      "index": "MSCI Byma General",
+      "liquidityRank": 40,
+      "adtv40ARS": "14119421.0"
+    },
+    {
+      "symbol": "INVJ",
+      "name": "Inversora Juramento S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARINJU010010",
+      "index": "General",
+      "liquidityRank": 41,
+      "adtv40ARS": "13968418.0"
+    },
+    {
+      "symbol": "MOLI",
+      "name": "Molinos Río de La Plata S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARP689251337",
+      "index": "MSCI Byma General",
+      "liquidityRank": 42,
+      "adtv40ARS": "13564233.0"
+    },
+    {
+      "symbol": "CARC",
+      "name": "Carboclor S.A.",
+      "sector": "Industrial",
+      "isin": "ARP8723U1058",
+      "index": "MSCI Byma General",
+      "liquidityRank": 43,
+      "adtv40ARS": "10978003.0"
+    },
+    {
+      "symbol": "HAVA",
+      "name": "Havanna Holding S.A.",
+      "sector": "Consumo Discrecional",
+      "isin": "ARHAVH300038",
+      "index": "MSCI Byma General",
+      "liquidityRank": 44,
+      "adtv40ARS": "10436805.0"
+    },
+    {
+      "symbol": "CAPX",
+      "name": "Capex S.A.",
+      "sector": "Energía",
+      "isin": "ARP2006N1025",
+      "index": "MSCI Byma General",
+      "liquidityRank": 45,
+      "adtv40ARS": "10344175.0"
+    },
+    {
+      "symbol": "LEDE",
+      "name": "Ledesma S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARP624571096",
+      "index": "MSCI Byma General",
+      "liquidityRank": 46,
+      "adtv40ARS": "10261143.0"
+    },
+    {
+      "symbol": "CGPA2",
+      "name": "Camuzzi Gas Pampeana S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARCGSU010048",
+      "index": "MSCI Byma General",
+      "liquidityRank": 47,
+      "adtv40ARS": "10129647.0"
+    },
+    {
+      "symbol": "GARO",
+      "name": "Garovaglio y Zorraquín S. A.",
+      "sector": "Industrial",
+      "isin": "ARP460221020",
+      "index": "MSCI Byma General",
+      "liquidityRank": 48,
+      "adtv40ARS": "7686331.0"
+    },
+    {
+      "symbol": "PATA",
+      "name": "Importadora y Exportadora de la Patagonia S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARP530571735",
+      "index": "MSCI Byma General",
+      "liquidityRank": 49,
+      "adtv40ARS": "6038620.0"
+    },
+    {
+      "symbol": "GBAN",
+      "name": "Naturgy Ban S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARGASB010027",
+      "index": "MSCI Byma General",
+      "liquidityRank": 50,
+      "adtv40ARS": "5950753.0"
+    },
+    {
+      "symbol": "OEST",
+      "name": "Grupo Concesionario del Oeste S.A.",
+      "sector": "Industrial",
+      "isin": "ARGCAO010012",
+      "index": "MSCI Byma General",
+      "liquidityRank": 51,
+      "adtv40ARS": "5632436.0"
+    },
+    {
+      "symbol": "GCLA",
+      "name": "Grupo Clarín S.A.",
+      "sector": "Servicios de Comunicacion",
+      "isin": "ARGCLA010015",
+      "index": "MSCI Byma General",
+      "liquidityRank": 52,
+      "adtv40ARS": "5599507.0"
+    },
+    {
+      "symbol": "CADO",
+      "name": "Carlos Casado S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARCADO010023",
+      "index": "MSCI Byma General",
+      "liquidityRank": 53,
+      "adtv40ARS": "5331145.0"
+    },
+    {
+      "symbol": "RICH",
+      "name": "Laboratorios Richmond S.A.C.I.F.",
+      "sector": "Salud",
+      "isin": "ARLRIC300027",
+      "index": "MSCI Byma General",
+      "liquidityRank": 54,
+      "adtv40ARS": "4967434.0"
+    },
+    {
+      "symbol": "GAMI",
+      "name": "B Gaming S.A.",
+      "sector": "Tecnologías de la Información",
+      "isin": "ARBOLG010010",
+      "index": "MSCI Byma General",
+      "liquidityRank": 55,
+      "adtv40ARS": "4930888.0"
+    },
+    {
+      "symbol": "FIPL",
+      "name": "Fiplasto S.A.",
+      "sector": "Materiales",
+      "isin": "ARP416191426",
+      "index": "MSCI Byma General",
+      "liquidityRank": 56,
+      "adtv40ARS": "4850088.0"
+    },
+    {
+      "symbol": "FERR",
+      "name": "Ferrum S.A.",
+      "sector": "Industrial",
+      "isin": "ARP395611576",
+      "index": "MSCI Byma General",
+      "liquidityRank": 57,
+      "adtv40ARS": "4819593.0"
+    },
+    {
+      "symbol": "LONG",
+      "name": "Longvie S.A.",
+      "sector": "Consumo Discrecional",
+      "isin": "ARP6356B1059",
+      "index": "MSCI Byma General",
+      "liquidityRank": 58,
+      "adtv40ARS": "4537274.0"
+    },
+    {
+      "symbol": "GRIM",
+      "name": "Grimoldi S.A.",
+      "sector": "Consumo Discrecional",
+      "isin": "ARP493071046",
+      "index": "MSCI Byma General",
+      "liquidityRank": 59,
+      "adtv40ARS": "2791683.0"
+    },
+    {
+      "symbol": "GCDI",
+      "name": "GCDI S.A.",
+      "sector": "Consumo Discrecional",
+      "isin": "ARTGLT010015",
+      "index": "MSCI Byma General",
+      "liquidityRank": 60,
+      "adtv40ARS": "2126787.0"
+    },
+    {
+      "symbol": "REGE",
+      "name": "García Reguera S.A.",
+      "sector": "Consumo Discrecional",
+      "isin": "ARREGE010013",
+      "index": "General",
+      "liquidityRank": 61,
+      "adtv40ARS": "1947246.0"
+    },
+    {
+      "symbol": "ROSE",
+      "name": "Instituto Rosenbusch S.A.",
+      "sector": "Salud",
+      "isin": "ARROSE010025",
+      "index": "MSCI Byma General",
+      "liquidityRank": 62,
+      "adtv40ARS": "1743982.0"
+    },
+    {
+      "symbol": "INTR",
+      "name": "Compañía Introductora de Buenos Aires S.A.",
+      "sector": "Productos de Primera Necesidad",
+      "isin": "ARP577611352",
+      "index": "MSCI Byma General",
+      "liquidityRank": 63,
+      "adtv40ARS": "1645090.0"
+    },
+    {
+      "symbol": "RIGO",
+      "name": "Rigolleau S.A.",
+      "sector": "Materiales",
+      "isin": "ARP809061780",
+      "index": "MSCI Byma General",
+      "liquidityRank": 64,
+      "adtv40ARS": "1409158.0"
+    },
+    {
+      "symbol": "DOME",
+      "name": "Domec S.A.",
+      "sector": "Consumo Discrecional",
+      "isin": "ARP3577N1097",
+      "index": "MSCI Byma General",
+      "liquidityRank": 65,
+      "adtv40ARS": "1071153.0"
+    },
+    {
+      "symbol": "HSAT",
+      "name": "Holdsat S.A.",
+      "sector": "Servicios de Comunicacion",
+      "isin": "AR0956262361",
+      "index": "MSCI Byma General",
+      "liquidityRank": 66,
+      "adtv40ARS": "541322.0"
+    },
+    {
+      "symbol": "RAGH",
+      "name": "RAGHSA S.A.",
+      "sector": "Bienes Inmobiliarios",
+      "isin": "AR0174950912",
+      "index": "General",
+      "liquidityRank": 67,
+      "adtv40ARS": "387371.0"
+    },
+    {
+      "symbol": "EDSH",
+      "name": "Edesa Holding S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "AREDEH010018",
+      "index": "General",
+      "liquidityRank": 68,
+      "adtv40ARS": "289171.0"
+    },
+    {
+      "symbol": "POLL",
+      "name": "Polledo S.A.",
+      "sector": "Industrial",
+      "isin": "ARP7905G1652",
+      "index": "General",
+      "liquidityRank": 69,
+      "adtv40ARS": "52252.0"
+    },
+    {
+      "symbol": "COUR",
+      "name": "Continental Urbana Sociedad Anónima Inversora",
+      "sector": "Bienes Inmobiliarios",
+      "isin": "ARCONI010015",
+      "index": "General",
+      "liquidityRank": 70,
+      "adtv40ARS": "0.0"
+    },
+    {
+      "symbol": "INAG",
+      "name": "Insumos Agroquímicos S.A.",
+      "sector": "Industrial",
+      "isin": "ARINAG010041",
+      "index": "General",
+      "liquidityRank": 71,
+      "adtv40ARS": "0.0"
+    },
+    {
+      "symbol": "DSUR",
+      "name": "Empresa Distribuidora Sur S.A. (EDESUR)",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARESUR010035"
+    },
+    {
+      "symbol": "EDLH",
+      "name": "Edesal Holding S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "AREDHO010016"
+    },
+    {
+      "symbol": "EMAC",
+      "name": "Electromac S.A.",
+      "sector": "Industrial",
+      "isin": "ARP3639H1083"
+    },
+    {
+      "symbol": "IEBA",
+      "name": "Inversora Eléctrica de Buenos Aires S.A.",
+      "sector": "Servicios de Utilidad Pública",
+      "isin": "ARIEBA010047"
+    },
+    {
+      "symbol": "NCON",
+      "name": "Nuevo Continente S.A.",
+      "sector": "Bienes Inmobiliarios",
+      "isin": "ARNUCO010019"
+    },
+    {
+      "symbol": "PATR",
+      "name": "Patricios S.A.I.C.",
+      "sector": "Finanzas",
+      "isin": "ARPATR010019"
+    },
+    {
+      "symbol": "PREN1",
+      "name": "Papel Prensa S.A.",
+      "sector": "Materiales",
+      "isin": "ARPREN010011"
+    },
+    {
+      "symbol": "URBA",
+      "name": "Central Urbana S.A.",
+      "sector": "Finanzas",
+      "isin": "ARP3611P1028"
+    },
+    {
+      "symbol": "ZOND",
+      "name": "ZONDA BITCOIN CAPITAL S.A.",
+      "sector": "Materiales",
+      "isin": "ARHULI010014"
+    }
+  ]
+}

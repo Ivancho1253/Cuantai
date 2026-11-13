@@ -1,4 +1,5 @@
 'use client';
+import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -9,6 +10,7 @@ import { toast } from 'sonner';
 import { useApp } from './app-shell';
 import { Button, SectionTitle, EmptyState, ErrorState } from './ui';
 import { api } from '@/lib/utils';
+import { useLocale, type Locale } from './locale-provider';
 type Preferences = {
   country: string;
   currency: string;
@@ -32,33 +34,39 @@ const defaults: Preferences = {
   onboarded: false,
 };
 export function Settings({ onboarding = false }: { onboarding?: boolean }) {
+  const uiText = useUiText();
   const { user, demo } = useApp();
   const data = useQuery({
     queryKey: ['settings'],
-    queryFn: () => api<{ preferences: Partial<Preferences> }>('settings'),
+    queryFn: () =>
+      api<{
+        preferences: Partial<Preferences>;
+      }>('settings'),
     enabled: Boolean(user) && !demo,
   });
   if (!user || demo)
     return (
       <>
         <SectionTitle
-          title="Un espacio a tu medida."
-          description="Tus preferencias se guardan de forma privada."
+          title={uiText('Un espacio a tu medida.')}
+          description={uiText('Tus preferencias se guardan de forma privada.')}
         />
         <EmptyState
-          title="Hacé tuyo Cuantai."
+          title={uiText('Hac\u00E9 tuyo Cuantai.')}
           action={
             <Link href="/register" className="button button-primary">
-              Crear cuenta
+              {uiText('Crear cuenta')}
             </Link>
           }
         >
-          Moneda, país, zona horaria, experiencia e intereses, sincronizados en tu cuenta.
+          {uiText(
+            'Moneda, pa\u00EDs, zona horaria, experiencia e intereses, sincronizados en tu cuenta.',
+          )}
         </EmptyState>
       </>
     );
   if (data.isError) return <ErrorState message={data.error.message} />;
-  if (data.isLoading) return <p className="muted">Cargando preferencias...</p>;
+  if (data.isLoading) return <p className="muted">{uiText('Cargando preferencias...')}</p>;
   return (
     <SettingsForm
       key={JSON.stringify(data.data?.preferences)}
@@ -68,6 +76,8 @@ export function Settings({ onboarding = false }: { onboarding?: boolean }) {
   );
 }
 function SettingsForm({ initial, onboarding }: { initial: Preferences; onboarding: boolean }) {
+  const uiText = useUiText();
+  const { setLocale } = useLocale();
   const { user } = useApp();
   const [form, setForm] = useState(initial);
   const [busy, setBusy] = useState(false);
@@ -96,13 +106,15 @@ function SettingsForm({ initial, onboarding }: { initial: Preferences; onboardin
   return (
     <>
       <SectionTitle
-        eyebrow={onboarding ? 'BIENVENIDO A CUANTAI' : 'PERSONAL WORKSPACE'}
-        title={onboarding ? 'Tu perspectiva es el punto de partida.' : 'Un espacio a tu medida.'}
-        description={
+        eyebrow={uiText(onboarding ? 'BIENVENIDO A CUANTAI' : 'PERSONAL WORKSPACE')}
+        title={uiText(
+          onboarding ? 'Tu perspectiva es el punto de partida.' : 'Un espacio a tu medida.',
+        )}
+        description={uiText(
           onboarding
             ? 'Contanos un poco sobre vos. Podés empezar sin cargar una cartera.'
-            : 'Configurá cómo querés explorar tus inversiones.'
-        }
+            : 'Configurá cómo querés explorar tus inversiones.',
+        )}
       />
       <form
         onSubmit={(e) => {
@@ -114,66 +126,77 @@ function SettingsForm({ initial, onboarding }: { initial: Preferences; onboardin
         <div className="panel settings-main">
           <div className="settings-section">
             <h2>
-              <UserRound size={18} /> Perfil
+              <UserRound size={18} />
+              {uiText(' Perfil')}
             </h2>
             <div className="profile-summary">
-              <span className="profile-large-avatar">{user?.name.slice(0, 2).toUpperCase()}</span>
+              <span className="profile-large-avatar">
+                {uiText(user?.name.slice(0, 2).toUpperCase())}
+              </span>
               <div>
-                <strong>{user?.name}</strong>
-                <p>{user?.email}</p>
-                <small>Cuenta personal · información privada</small>
+                <strong>{uiText(user?.name)}</strong>
+                <p>{uiText(user?.email)}</p>
+                <small>{uiText('Cuenta personal \u00B7 informaci\u00F3n privada')}</small>
               </div>
             </div>
           </div>
           <div className="settings-section">
             <h2>
-              <Globe2 size={18} /> Tu perspectiva
+              <Globe2 size={18} />
+              {uiText(' Tu perspectiva')}
             </h2>
             <div className="form-grid">
               <label>
-                País
+                {uiText('Pa\u00EDs')}
                 <select value={form.country} onChange={(e) => field('country', e.target.value)}>
-                  <option value="AR">Argentina</option>
-                  <option value="US">Estados Unidos</option>
-                  <option value="other">Otro</option>
+                  <option value="AR">{uiText('Argentina')}</option>
+                  <option value="US">{uiText('Estados Unidos')}</option>
+                  <option value="other">{uiText('Otro')}</option>
                 </select>
               </label>
               <label>
-                Moneda principal
+                {uiText('Moneda principal')}
                 <select value={form.currency} onChange={(e) => field('currency', e.target.value)}>
-                  {['USD', 'ARS', 'EUR', 'USDT'].map((v) => (
-                    <option key={v}>{v}</option>
-                  ))}
+                  {uiText(
+                    ['USD', 'ARS', 'EUR', 'USDT'].map((v) => <option key={v}>{uiText(v)}</option>),
+                  )}
                 </select>
               </label>
               <label>
-                Experiencia
+                {uiText('Experiencia')}
                 <select
                   value={form.experience}
                   onChange={(e) => field('experience', e.target.value)}
                 >
-                  <option value="beginner">Principiante</option>
-                  <option value="intermediate">Intermedia</option>
-                  <option value="advanced">Avanzada</option>
+                  <option value="beginner">{uiText('Principiante')}</option>
+                  <option value="intermediate">{uiText('Intermedia')}</option>
+                  <option value="advanced">{uiText('Avanzada')}</option>
                 </select>
               </label>
               <label>
-                Tema visual
+                {uiText('Tema visual')}
                 <select value={form.theme} onChange={(e) => field('theme', e.target.value)}>
-                  <option value="dark">Oscuro</option>
-                  <option value="light">Claro</option>
-                  <option value="system">Sistema</option>
+                  <option value="dark">{uiText('Oscuro')}</option>
+                  <option value="light">{uiText('Claro')}</option>
+                  <option value="system">{uiText('Sistema')}</option>
                 </select>
               </label>
               <label>
-                Idioma preferido
-                <select value={form.language} onChange={(e) => field('language', e.target.value)}>
-                  <option value="es">Español</option>
-                  <option value="en">English (traducción pendiente)</option>
+                {uiText('Idioma preferido')}
+                <select
+                  value={form.language}
+                  onChange={(e) => {
+                    field('language', e.target.value);
+                    setLocale(e.target.value as Locale);
+                  }}
+                >
+                  <option value="es">{uiText('Espa\u00F1ol')}</option>
+                  <option value="en">{uiText('English')}</option>
+                  <option value="pt">{uiText('Portugu\u00EAs')}</option>
                 </select>
               </label>
               <label>
-                Zona horaria
+                {uiText('Zona horaria')}
                 <input
                   value={form.timezone}
                   onChange={(e) => field('timezone', e.target.value)}
@@ -182,66 +205,71 @@ function SettingsForm({ initial, onboarding }: { initial: Preferences; onboardin
               </label>
             </div>
             <p className="form-hint">
-              La moneda principal es una preferencia. Cada cartera conserva su propia moneda base y
-              cada instrumento su moneda de negociación. Los timestamps de mercado se muestran en
-              UTC.
+              {uiText(
+                'La moneda principal es una preferencia. Cada cartera conserva su propia moneda base y cada instrumento su moneda de negociaci\u00F3n. Los timestamps de mercado se muestran en UTC.',
+              )}
             </p>
-            <label className="interest-label">Mercados que te interesan</label>
+            <label className="interest-label">{uiText('Mercados que te interesan')}</label>
             <div className="interest-options">
-              {[
-                ['stocks', 'Acciones'],
-                ['etfs', 'ETFs'],
-                ['crypto', 'Criptomonedas'],
-                ['argentina', 'Argentina & CEDEARs'],
-              ].map(([value, label]) => (
-                <button
-                  key={value}
-                  className={form.interests.includes(value) ? 'active' : ''}
-                  type="button"
-                  onClick={() =>
-                    field(
-                      'interests',
-                      form.interests.includes(value)
-                        ? form.interests.filter((i) => i !== value)
-                        : [...form.interests, value],
-                    )
-                  }
-                >
-                  {form.interests.includes(value) && <Check size={13} />} {label}
-                </button>
-              ))}
+              {uiText(
+                [
+                  ['stocks', 'Acciones'],
+                  ['etfs', 'ETFs'],
+                  ['crypto', 'Criptomonedas'],
+                  ['argentina', 'Argentina & CEDEARs'],
+                ].map(([value, label]) => (
+                  <button
+                    key={value}
+                    className={form.interests.includes(value) ? 'active' : ''}
+                    type="button"
+                    onClick={() =>
+                      field(
+                        'interests',
+                        form.interests.includes(value)
+                          ? form.interests.filter((i) => i !== value)
+                          : [...form.interests, value],
+                      )
+                    }
+                  >
+                    {uiText(form.interests.includes(value) && <Check size={13} />)} {uiText(label)}
+                  </button>
+                )),
+              )}
             </div>
             <div className="form-grid">
               <label>
-                Horizonte (opcional)
+                {uiText('Horizonte (opcional)')}
                 <input
                   value={form.horizon ?? ''}
-                  placeholder="Ej.: largo plazo"
+                  placeholder={uiText('Ej.: largo plazo')}
                   onChange={(e) => field('horizon', e.target.value)}
                 />
               </label>
               <label>
-                Perfil de riesgo (opcional)
+                {uiText('Perfil de riesgo (opcional)')}
                 <select
                   value={form.risk ?? ''}
                   onChange={(e) => field('risk', e.target.value || undefined)}
                 >
-                  <option value="">Sin definir</option>
-                  <option value="conservative">Conservador</option>
-                  <option value="moderate">Moderado</option>
-                  <option value="aggressive">Agresivo</option>
+                  <option value="">{uiText('Sin definir')}</option>
+                  <option value="conservative">{uiText('Conservador')}</option>
+                  <option value="moderate">{uiText('Moderado')}</option>
+                  <option value="aggressive">{uiText('Agresivo')}</option>
                 </select>
               </label>
             </div>
           </div>
           <div className="settings-save">
-            <span>Siempre podés cambiar tus preferencias.</span>
+            <span>{uiText('Siempre pod\u00E9s cambiar tus preferencias.')}</span>
             <Button type="submit" disabled={busy}>
-              {busy
-                ? 'Guardando...'
-                : onboarding
-                  ? 'Entrar a mi workspace'
-                  : 'Guardar preferencias'}{' '}
+              {uiText(
+                busy
+                  ? 'Guardando...'
+                  : onboarding
+                    ? 'Entrar a mi workspace'
+                    : 'Guardar preferencias',
+              )}
+              {uiText(' ')}
               <ArrowRight size={15} />
             </Button>
           </div>
@@ -250,35 +278,43 @@ function SettingsForm({ initial, onboarding }: { initial: Preferences; onboardin
           <section className="panel settings-connections">
             <div className="panel-header">
               <strong>
-                <PlugZap size={16} /> Conexiones de datos
+                <PlugZap size={16} />
+                {uiText(' Conexiones de datos')}
               </strong>
             </div>
             <div className="provider-list">
-              {Object.entries(status.data ?? {})
-                .filter(([, v]) => v && typeof v === 'object' && 'configured' in v)
-                .map(([k, v]) => {
-                  const item = v as { configured: boolean; label: string };
-                  return (
-                    <div key={k}>
-                      <span>{item.label}</span>
-                      <small className={item.configured ? 'positive' : 'muted'}>
-                        {item.configured ? 'Configurado' : 'Pendiente'}
-                      </small>
-                    </div>
-                  );
-                })}
+              {uiText(
+                Object.entries(status.data ?? {})
+                  .filter(([, v]) => v && typeof v === 'object' && 'configured' in v)
+                  .map(([k, v]) => {
+                    const item = v as {
+                      configured: boolean;
+                      label: string;
+                    };
+                    return (
+                      <div key={k}>
+                        <span>{uiText(item.label)}</span>
+                        <small className={item.configured ? 'positive' : 'muted'}>
+                          {uiText(item.configured ? 'Configurado' : 'Pendiente')}
+                        </small>
+                      </div>
+                    );
+                  }),
+              )}
             </div>
             <p>
-              Las credenciales se configuran exclusivamente en el servidor. No se almacenan en tu
-              navegador.
+              {uiText(
+                'Las credenciales se configuran exclusivamente en el servidor. No se almacenan en tu navegador.',
+              )}
             </p>
           </section>
           <div className="privacy-note">
             <Shield size={20} />
-            <h3>Tu espacio es privado.</h3>
+            <h3>{uiText('Tu espacio es privado.')}</h3>
             <p>
-              Watchlists, carteras e informes están asociados a tu cuenta y protegidos por
-              autorización del servidor.
+              {uiText(
+                'Watchlists, carteras e informes est\u00E1n asociados a tu cuenta y protegidos por autorizaci\u00F3n del servidor.',
+              )}
             </p>
           </div>
         </aside>

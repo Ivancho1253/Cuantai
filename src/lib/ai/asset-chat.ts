@@ -61,11 +61,13 @@ export function rulesAnswer(
         ? 'fundamental'
         : /noticia|titular/.test(text)
           ? 'news'
-          : /rendim|semana|mensual|anual|diario/.test(text)
+          : /rendim|semana|mensual|anual|diario|retorno/.test(text)
             ? 'returns'
-            : /tecnic|tendencia|rsi|media/.test(text)
+            : /tecnic|tendencia|rsi|media|momentum|soporte|resistencia|macd/.test(text)
               ? 'technical'
-              : null;
+              : /compr|vend|convien|invert/.test(text)
+                ? 'decision'
+                : null;
   const selected =
     topic(normalized(question)) ??
     (/eso|anterior|explica|por que/.test(normalized(question))
@@ -85,9 +87,11 @@ export function rulesAnswer(
                 .filter((p) => p.value === null)
                 .map((p) => `${p.label}: ${p.reason}`)
                 .join(' ')}`
-            : selected === 'technical'
-              ? overview.technical.conclusion
-              : `Podés consultar el rendimiento, la lectura técnica, los fundamentos, el riesgo o las noticias de ${overview.instrument.symbol}. ${overview.technical.conclusion} ${overview.fundamental.conclusion}`;
+            : selected === 'decision'
+              ? `Para evaluar ${overview.instrument.symbol}, separá tu horizonte, cuánto podrías perder y qué evidencia invalidaría la tesis. ${overview.technical.conclusion} ${overview.risk.conclusion} Sin IA conectada no puedo elaborar una recomendación personalizada ni ponderar tu situación financiera.`
+              : selected === 'technical'
+                ? overview.technical.conclusion
+                : `Esta consulta necesita interpretación de lenguaje con IA y el proveedor todavía no está conectado. Mientras tanto puedo calcular y explicar rendimiento, tendencia, momentum, riesgo, fundamentos disponibles y noticias de ${overview.instrument.symbol}. Probá una pregunta concreta sobre uno de esos temas.`;
   const factIds =
     selected === 'risk'
       ? ['volatility', 'drawdown']
@@ -100,7 +104,18 @@ export function rulesAnswer(
     text,
     mode: 'rules',
     facts: overview.facts.filter((f) => factIds.includes(f.id)),
-    sources: overview.sources,
+    sources:
+      selected === 'news'
+        ? news.items
+            .slice(0, 5)
+            .map((item, index) => ({
+              id: `news-${index}`,
+              title: item.title,
+              url: item.url,
+              asOf: item.publishedAt,
+              retrievedAt: new Date().toISOString(),
+            }))
+        : overview.sources,
     notice: `${overview.demo ? 'Datos sintéticos de demostración. Modo demo por reglas, sin consultar IA. ' : `${overview.stale ? 'El histórico está desactualizado. ' : ''}IA no configurada: respuesta por reglas sobre la evidencia disponible. `}No interpreta preguntas fuera de estos temas.`,
   };
 }

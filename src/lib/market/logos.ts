@@ -1,4 +1,5 @@
 import type { Instrument } from './types';
+import catalogLogos from './data/asset-logos.json';
 
 export type AssetLogo = { src: string; name: string; background: string; source: string };
 export const CRYPTO_LOGO_REVISION = '1a63530be6e374711a8554f31b17e4cb92c25fa5';
@@ -25,9 +26,11 @@ const logos: Record<string, AssetLogo> = {
   'NYSE:KO:USD': local('ko.png', 'Coca-Cola'),
   'NYSE:SPY:USD': local('spy.png', 'SPDR · SPY'),
   'AMEX:SPY:USD': local('spy.png', 'SPDR · SPY'),
+  'ARCA:SPY:USD': local('spy.png', 'SPDR · SPY'),
   'NASDAQ:QQQ:USD': local('qqq.png', 'Invesco · QQQ', stockSource, '#07234a'),
   'NYSE:DIA:USD': local('dia.png', 'SPDR · DIA'),
   'AMEX:DIA:USD': local('dia.png', 'SPDR · DIA'),
+  'ARCA:DIA:USD': local('dia.png', 'SPDR · DIA'),
   'BYMA:GGAL:ARS': local('ggal-ba.png', 'Grupo Financiero Galicia'),
   'BINANCE:BTCUSDT:USDT': local('btc.svg', 'Bitcoin', cryptoSource),
   'BINANCE:ETHUSDT:USDT': local('eth.svg', 'Ethereum', cryptoSource),
@@ -45,9 +48,22 @@ export function assetLogo(instrument: Instrument): AssetLogo | null {
   if (extra !== undefined || !exchange || !symbol || !currency) return null;
   const known = logos[identity];
   if (known) return known;
+  const stored = (
+    catalogLogos as Record<string, { src: string; source: string; background?: string }>
+  )[identity];
+  if (stored)
+    return {
+      ...stored,
+      name: instrument.name.replace(/ · CEDEAR.*$/, ''),
+      background: stored.background ?? '#ffffff',
+    };
   if (!/^[A-Z0-9][A-Z0-9.-]{0,24}$/.test(symbol)) return null;
   const corporate = ['stock', 'etf', 'cedear'].includes(instrument.type);
-  if (corporate && currency === 'USD' && ['NASDAQ', 'NYSE', 'AMEX', 'ARCA'].includes(exchange))
+  if (
+    corporate &&
+    currency === 'USD' &&
+    ['NASDAQ', 'NYSE', 'AMEX', 'ARCA', 'CBOE'].includes(exchange)
+  )
     return {
       src: `https://images.financialmodelingprep.com/symbol/${symbol === 'BRK-B' ? 'BRK.B' : symbol}.png`,
       name: instrument.name.replace(/ · CEDEAR.*$/, ''),
