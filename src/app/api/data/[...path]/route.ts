@@ -9,6 +9,8 @@ import {
   searchInstruments,
   marketSnapshot,
   marketOverview,
+  dashboardBenchmarks,
+  chartIndicators,
   marketListings,
   resolveInstrument,
   assetFundamentals,
@@ -58,6 +60,8 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
         'instruments',
         'market',
         'overview',
+        'benchmarks',
+        'chart-indicators',
         'market-catalog',
         'asset-overview',
         'fundamentals',
@@ -99,6 +103,9 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
       return json(await marketSnapshot(id, tf, demo));
     }
     if (method === 'GET' && route === 'overview') return json(await marketOverview(demo));
+    if (method === 'GET' && route === 'benchmarks') return json(await dashboardBenchmarks(demo));
+    if (method === 'GET' && route === 'chart-indicators')
+      return json(await chartIndicators(z.string().min(1).parse(url.searchParams.get('id')), demo));
     if (method === 'GET' && route === 'market-catalog') {
       const page = z.coerce
         .number()
@@ -148,6 +155,7 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
             ? await resolveInstrument(url.searchParams.get('id')!)
             : undefined,
           demo,
+          z.enum(['company', 'context']).parse(url.searchParams.get('scope') ?? 'company'),
         ),
       );
     const session = await getSession(req.headers);

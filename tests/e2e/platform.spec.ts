@@ -355,7 +355,6 @@ test('responsive demo navigation and official TradingView layouts', async ({ pag
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
     true,
   );
-  await page.getByRole('button', { name: 'Abrir menú' }).click();
   await page.getByRole('link', { name: 'Mercados', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Un mundo de oportunidades.' })).toBeVisible();
   expect(errors).toEqual([]);

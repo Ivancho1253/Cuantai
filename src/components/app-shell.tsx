@@ -19,15 +19,12 @@ import {
   ChevronDown,
   ArrowUpRight,
   Bell,
-  PanelLeftClose,
-  Menu,
-  Command,
   LogOut,
   Sun,
   Moon,
   CircleHelp,
 } from 'lucide-react';
-import { Brand, Modal, AssetIcon, DataBadge, Button } from './ui';
+import { Brand, Modal, AssetIcon, Button } from './ui';
 import { api, cn } from '@/lib/utils';
 import type { Instrument } from '@/lib/market/types';
 import { authClient } from '@/lib/auth-client';
@@ -87,9 +84,8 @@ export function AppShell({
   const [searchOpen, setSearchOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
-  const [mobile, setMobile] = useState(false);
-  const menuTrigger = useRef<HTMLButtonElement>(null);
-  const menuClose = useRef<HTMLButtonElement>(null);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountTrigger = useRef<HTMLButtonElement>(null);
   const [statusOpen, setStatusOpen] = useState(false);
   const [notifications, setNotifications] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
@@ -129,24 +125,6 @@ export function AppShell({
     }
   }
   const href = (view: string) => (demo ? `/demo?view=${view}` : `/${view}`);
-  useEffect(() => {
-    if (!mobile) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    const focusFrame = requestAnimationFrame(() => menuClose.current?.focus());
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setMobile(false);
-        menuTrigger.current?.focus();
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => {
-      cancelAnimationFrame(focusFrame);
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', onKey);
-    };
-  }, [mobile]);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -203,160 +181,38 @@ export function AppShell({
   });
   return (
     <AppContext.Provider value={{ user, demo, href, openSearch: () => setSearchOpen(true) }}>
-      <div className="app-layout">
+      <div className="app-layout workspace-horizontal">
         <a className="skip-link" href="#main-content">
           {uiText('Ir al contenido')}
         </a>
-        {uiText(
-          mobile && (
-            <button
-              className="sidebar-backdrop"
-              aria-label={uiText('Cerrar men\u00FA')}
-              onClick={() => setMobile(false)}
-            />
-          ),
-        )}
-        <aside id="workspace-navigation" className={cn('sidebar', mobile && 'sidebar-open')}>
-          <div className="sidebar-brand">
-            <div>
-              <Brand />
-              <p className="sidebar-caption">{uiText('Tu centro de inversi\u00F3n.')}</p>
-            </div>
-            <button
-              ref={menuClose}
-              className="icon-button mobile-only"
-              onClick={() => setMobile(false)}
-              aria-label={uiText('Cerrar men\u00FA')}
-            >
-              <PanelLeftClose size={18} />
-            </button>
-          </div>
-          <button
-            className="sidebar-search"
-            aria-label={uiText('Buscar activo')}
-            title={uiText('Buscar activo \u00B7 Ctrl K')}
-            onClick={() => {
-              setMobile(false);
-              setSearchOpen(true);
-            }}
-          >
-            <Search size={15} aria-hidden="true" />
-            <span>{uiText('Buscar activo')}</span>
-            <kbd>{uiText('Ctrl K')}</kbd>
-          </button>
-          <nav className="sidebar-navigation" aria-label={uiText('Navegaci\u00F3n principal')}>
-            {uiText(
-              navigation.map((group, index) => (
-                <div className="sidebar-nav-group" key={group.label}>
-                  <div className="sidebar-group-heading">
-                    <span>{uiText(group.label)}</span>
-                    <span aria-hidden="true">0{uiText(index + 1)}</span>
-                  </div>
-                  {uiText(
-                    group.items.map(([key, label, Icon]) => (
-                      <Link
-                        key={key}
-                        href={href(key)}
-                        onClick={() => setMobile(false)}
-                        className={cn('nav-item', active === key && 'active')}
-                        aria-current={active === key ? 'page' : undefined}
-                      >
-                        <span>{uiText(label)}</span>
-                        <Icon size={18} aria-hidden="true" />
-                      </Link>
-                    )),
-                  )}
-                </div>
-              )),
-            )}
-          </nav>
-          <div className="sidebar-bottom">
-            <Link
-              className={cn('nav-item sidebar-utility', active === 'settings' && 'active')}
-              href={href('settings')}
-              onClick={() => setMobile(false)}
-              aria-current={active === 'settings' ? 'page' : undefined}
-            >
-              <span>{uiText('Ajustes')}</span>
-              <Settings2 size={16} aria-hidden="true" />
-            </Link>
-            <Link className="nav-item sidebar-utility" href="/data-policy">
-              <span>{uiText('Fuentes y datos')}</span>
-              <CircleHelp size={16} aria-hidden="true" />
-            </Link>
-            <div className="sidebar-user">
-              <span className="user-avatar" title={uiText(user?.name ?? 'Explorador')}>
-                {uiText(user?.name.slice(0, 2).toUpperCase() ?? 'EX')}
-              </span>
-              <div>
-                <strong>{uiText(user?.name ?? 'Explorador')}</strong>
-                <small>{uiText(user ? 'Cuenta personal' : 'Estás en la demo')}</small>
-              </div>
-              {uiText(
-                user ? (
-                  <button
-                    className="icon-button"
-                    title={uiText('Cerrar sesi\u00F3n')}
-                    aria-label={uiText('Cerrar sesi\u00F3n')}
-                    onClick={async () => {
-                      await authClient.signOut();
-                      qc.clear();
-                      router.replace('/login');
-                      router.refresh();
-                    }}
-                  >
-                    <LogOut size={16} />
-                  </button>
-                ) : (
-                  <Link
-                    href="/register"
-                    className="icon-button"
-                    aria-label={uiText('Crear cuenta')}
-                  >
-                    <ArrowUpRight size={16} />
-                  </Link>
-                ),
-              )}
-            </div>
-          </div>
-        </aside>
         <div className="app-main">
-          <header className="topbar">
+          <header className="topbar workspace-topbar">
+            <Brand compact href={href('dashboard')} label="Cuantai, resumen" />
             <button
-              ref={menuTrigger}
-              className="icon-button mobile-only"
-              aria-label={uiText('Abrir men\u00FA')}
-              aria-expanded={mobile}
-              aria-controls="workspace-navigation"
-              onClick={() => setMobile(true)}
+              className="workspace-search icon-button"
+              aria-label={uiText('Buscar activo')}
+              title={uiText('Buscar activo · Ctrl K')}
+              onClick={() => setSearchOpen(true)}
             >
-              <Menu size={20} />
+              <Search size={20} />
             </button>
-            <button className="global-search" onClick={() => setSearchOpen(true)}>
-              <Search size={16} />
-              <span>{uiText('Buscar activos, mercados...')}</span>
-              <kbd>
-                <Command size={10} />
-                {uiText(' K')}
-              </kbd>
-            </button>
+            <nav className="workspace-nav" aria-label={uiText('Navegación principal')}>
+              {navigation.map((group) =>
+                group.items.map(([key, label, Icon]) => (
+                  <Link
+                    key={key}
+                    href={href(key)}
+                    className={cn('workspace-nav-link', active === key && 'active')}
+                    aria-current={active === key ? 'page' : undefined}
+                  >
+                    <Icon size={17} aria-hidden="true" />
+                    <span>{uiText(label)}</span>
+                  </Link>
+                )),
+              )}
+            </nav>
             <div className="topbar-actions">
               <LanguageSwitcher persist={Boolean(user) && !demo} />
-              <Link className="market-select" href={href('markets')}>
-                <Globe2 size={14} />
-                {uiText(' Global markets ')}
-                <ChevronDown size={12} />
-              </Link>
-              <span className="topbar-divider" />
-              <button className="status-trigger" onClick={() => setStatusOpen(true)}>
-                {uiText(
-                  demo || status.data?.mode === 'demo' ? (
-                    <DataBadge status="demo" />
-                  ) : (
-                    <span className="outlined-chip">{uiText('Fuentes de datos')}</span>
-                  ),
-                )}
-              </button>
               <button
                 className="icon-button theme-toggle"
                 aria-label={uiText('Cambiar tema')}
@@ -366,19 +222,23 @@ export function AppShell({
                 <Moon size={17} className="theme-icon-light" />
               </button>
               <button
-                className="icon-button"
+                className="icon-button workspace-notifications"
                 aria-label={uiText('Notificaciones')}
                 onClick={() => setNotifications(true)}
               >
                 <Bell size={18} />
               </button>
-              <Link
-                href={href('settings')}
-                className="user-avatar top-avatar"
-                aria-label={uiText('Perfil')}
+              <button
+                ref={accountTrigger}
+                className="workspace-account"
+                aria-label={uiText('Tu cuenta')}
+                aria-haspopup="dialog"
+                aria-expanded={accountOpen}
+                onClick={() => setAccountOpen(true)}
               >
-                {uiText(user?.name.slice(0, 1) ?? 'C')}
-              </Link>
+                <span className="user-avatar top-avatar">{user?.name.slice(0, 1) ?? 'C'}</span>
+                <ChevronDown size={13} />
+              </button>
             </div>
           </header>
           <MarketTicker />
@@ -420,6 +280,58 @@ export function AppShell({
           </footer>
         </div>
       </div>
+      <Modal
+        open={accountOpen}
+        onOpenChange={(open) => {
+          setAccountOpen(open);
+          if (!open) requestAnimationFrame(() => accountTrigger.current?.focus());
+        }}
+        title={uiText('Tu cuenta')}
+        description={user?.email ?? uiText('Estás en la demo')}
+        className="workspace-account-modal"
+      >
+        <strong className="account-name">{user?.name ?? uiText('Explorador')}</strong>
+        <div className="account-links">
+          <Link href={href('settings')} onClick={() => setAccountOpen(false)}>
+            <Settings2 size={19} />
+            {uiText('Ajustes')}
+            <ArrowUpRight size={16} />
+          </Link>
+          <Link href="/data-policy">
+            <CircleHelp size={19} />
+            {uiText('Fuentes y datos')}
+            <ArrowUpRight size={16} />
+          </Link>
+          <button
+            onClick={() => {
+              setAccountOpen(false);
+              setStatusOpen(true);
+            }}
+          >
+            <Globe2 size={19} />
+            {uiText('Fuentes de datos')}
+            <ArrowUpRight size={16} />
+          </button>
+          {user ? (
+            <button
+              onClick={async () => {
+                await authClient.signOut();
+                qc.clear();
+                router.replace('/login');
+                router.refresh();
+              }}
+            >
+              <LogOut size={19} />
+              {uiText('Cerrar sesión')}
+            </button>
+          ) : (
+            <Link href="/register">
+              <ArrowUpRight size={19} />
+              {uiText('Crear cuenta')}
+            </Link>
+          )}
+        </div>
+      </Modal>
       <Modal
         open={searchOpen}
         onOpenChange={setSearchOpen}

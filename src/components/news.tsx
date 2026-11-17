@@ -39,31 +39,36 @@ export function News({
   instrumentId,
   embedded = false,
   compact = false,
+  contextual = false,
 }: {
   instrumentId?: string;
   embedded?: boolean;
   compact?: boolean;
+  contextual?: boolean;
 }) {
   const uiText = useUiText();
   const { locale } = useLocale();
   const { demo } = useApp();
   const [search, setSearch] = useState('');
   const [article, setArticle] = useState<NewsItem | null>(null);
+  const [scope, setScope] = useState<'company' | 'context'>('company');
+  const [visibleCount, setVisibleCount] = useState(6);
   const news = useQuery({
-    queryKey: ['news', instrumentId, demo],
+    queryKey: ['news', instrumentId, demo, scope],
     queryFn: () =>
       api<{
         items: NewsItem[];
         error?: string;
       }>(
-        `news?${instrumentId ? `id=${encodeURIComponent(instrumentId)}&` : ''}${demo ? 'demo=true' : ''}`,
+        `news?${instrumentId ? `id=${encodeURIComponent(instrumentId)}&` : ''}${demo ? 'demo=true&' : ''}scope=${scope}`,
       ),
     refetchInterval: 300000,
   });
-  const items =
-    news.data?.items
-      .filter((i) => `${i.title} ${i.source}`.toLowerCase().includes(search.toLowerCase()))
-      .slice(0, compact ? 5 : 30) ?? [];
+  const filteredItems =
+    news.data?.items.filter((i) =>
+      `${i.title} ${i.source}`.toLowerCase().includes(search.toLowerCase()),
+    ) ?? [];
+  const items = filteredItems.slice(0, compact ? 5 : contextual ? visibleCount : 30);
   return (
     <>
       {uiText(
@@ -78,10 +83,41 @@ export function News({
         ),
       )}
       <div className={`panel news-container news-editorial${compact ? ' asset-news-compact' : ''}`}>
+        {contextual && (
+          <div className="asset-news-scopes" role="group" aria-label={uiText('Tipo de noticias')}>
+            <button
+              aria-pressed={scope === 'company'}
+              onClick={() => {
+                setScope('company');
+                setVisibleCount(6);
+                setSearch('');
+              }}
+            >
+              {uiText('Sobre la empresa')}
+            </button>
+            <button
+              aria-pressed={scope === 'context'}
+              onClick={() => {
+                setScope('context');
+                setVisibleCount(6);
+                setSearch('');
+              }}
+            >
+              {uiText('Sector y mercado')}
+            </button>
+            <p>
+              {uiText(
+                scope === 'company'
+                  ? 'Titulares que mencionan a la empresa o al activo.'
+                  : 'Contexto por sector y temas macroeconómicos; no implica un impacto confirmado.',
+              )}
+            </p>
+          </div>
+        )}
         <div className="panel-header">
           <strong>
             <Newspaper size={16} />
-            {uiText(compact ? 'Últimas noticias' : 'Noticias del mercado')}
+            {uiText(compact || contextual ? 'Últimas noticias' : 'Noticias del mercado')}
           </strong>
           <button
             className="icon-button"
@@ -122,6 +158,11 @@ export function News({
                         </time>
                       </div>
                       <h2>{uiText(item.title)}</h2>
+                      {contextual && item.relevance && (
+                        <span className="news-relevance" title={uiText(item.relevance.reason)}>
+                          {uiText(item.relevance.label)}
+                        </span>
+                      )}
                       {uiText(
                         !compact && item.summary && (
                           <p>
@@ -158,6 +199,15 @@ export function News({
           ),
         )}
       </div>
+      {contextual && filteredItems.length > items.length && (
+        <button
+          className="button button-secondary asset-news-more"
+          onClick={() => setVisibleCount((count) => count + 6)}
+        >
+          {uiText('Ver más noticias')}
+          <ArrowUpRight size={16} />
+        </button>
+      )}
       <Modal
         open={Boolean(article)}
         onOpenChange={(open) => {

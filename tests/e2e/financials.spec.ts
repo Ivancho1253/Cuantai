@@ -13,7 +13,7 @@ test('financials demo and unsupported instruments never fabricate statements', a
   request,
 }) => {
   await page.goto('/asset/NASDAQ/AAPL?demo=true');
-  await page.getByRole('button', { name: 'Financials', exact: true }).click();
+  await page.getByRole('button', { name: 'Estados financieros', exact: true }).click();
   await expect(
     page.getByText('El modo demo no incluye balances ficticios.', { exact: false }),
   ).toBeVisible();
@@ -62,7 +62,7 @@ test('statement tables use fiscal sources, keyboard tabs, correct scales and mob
     }),
   );
   await page.goto('/asset/NASDAQ/AAPL?demo=true');
-  await page.getByRole('button', { name: 'Financials', exact: true }).click();
+  await page.getByRole('button', { name: 'Estados financieros', exact: true }).click();
   await expect(
     page.getByRole('heading', { name: 'La evidencia detrás del negocio.' }),
   ).toBeVisible();

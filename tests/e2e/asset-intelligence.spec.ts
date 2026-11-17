@@ -3,7 +3,7 @@ import { installTradingViewFixture } from './tradingview-fixture';
 test.beforeEach(async ({ page }) => {
   await installTradingViewFixture(page);
 });
-test('asset opens with returns, conclusions, risk, chat, news and a small TradingView preview', async ({
+test('asset opens with returns, conclusions, risk, chat, news and a large primary TradingView chart', async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -19,18 +19,18 @@ test('asset opens with returns, conclusions, risk, chat, news and a small Tradin
     'Conclusión del análisis fundamental',
     'Riesgo del activo',
     'Chat con IA del activo',
-    'Gráfico pequeño de TradingView',
+    'Gráfico principal del activo',
   ])
     await expect(page.getByRole('region', { name, exact: true })).toBeVisible();
   await expect(page.getByText('Últimas noticias', { exact: true })).toBeVisible();
-  await expect(page.locator('.asset-price-preview .tv-chart')).toHaveCSS('height', '300px');
+  await expect(page.locator('.asset-chart-hero .tv-chart')).toHaveCSS('height', '680px');
   await expect(page.locator('.chart-tile')).toHaveCount(0);
   await page.getByLabel('Pregunta sobre el activo', { exact: true }).fill('¿Qué riesgo tiene?');
   await page.getByRole('button', { name: 'Enviar pregunta', exact: true }).click();
   await expect(page.locator('.asset-chat-answer')).toContainText('Modo demo por reglas');
   await page.getByRole('button', { name: 'Ver gráfico', exact: true }).first().click();
   await expect(page.locator('.chart-tile iframe')).toBeVisible();
-  await expect(page.locator('.asset-price-preview')).toHaveCount(0);
+  await expect(page.locator('.asset-chart-hero')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Pantalla completa', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Volver al resumen', exact: true }).click();
   await expect(page.locator('.performance-card')).toHaveCount(4);

@@ -118,7 +118,7 @@ export function AssetChat({ overview }: { overview: AssetOverview }) {
         <span className="badge">{uiText(overview.instrument.symbol)}</span>
       </div>
       <p className="asset-chat-intro">
-        {uiText('Convers\u00E1 sobre sus rendimientos, fundamentos y riesgos.')}
+        {uiText('Consultá sus fundamentos, indicadores, riesgos y noticias.')}
         {uiText(' ')}
         {uiText(
           persistent
@@ -130,7 +130,7 @@ export function AssetChat({ overview }: { overview: AssetOverview }) {
         (!status.data?.ai.configured || overview.demo) && (
           <p className="asset-chat-intro research-data-note">
             {uiText(
-              'Sin IA conectada: respuestas t\u00E9cnicas por reglas sobre los datos disponibles. Las preguntas abiertas requieren conectar el proveedor.',
+              'Sin IA conectada: podés consultar las lecturas disponibles por reglas. Las preguntas abiertas estarán disponibles al conectar la IA.',
             )}
           </p>
         ),
@@ -169,10 +169,10 @@ export function AssetChat({ overview }: { overview: AssetOverview }) {
           !turns.length && (
             <div className="asset-chat-welcome">
               <span className="eyebrow">{uiText('TU INVESTIGACI\u00D3N, CON CONTEXTO')}</span>
-              <h3>{uiText('\u00BFQu\u00E9 quer\u00E9s entender de este activo?')}</h3>
+              <h3>{uiText('Una buena pregunta abre otra perspectiva.')}</h3>
               <p>
                 {uiText(
-                  'Las respuestas identifican sus fuentes y los datos que faltan. La IA requiere una conexi\u00F3n configurada; en su ausencia, se informa el modo por reglas.',
+                  'Preguntá por resultados, deuda, tendencia o noticias. Cada respuesta distingue los datos disponibles de lo que falta investigar.',
                 )}
               </p>
             </div>
@@ -239,7 +239,8 @@ export function AssetChat({ overview }: { overview: AssetOverview }) {
               [
                 '¿Qué riesgo tiene?',
                 'Resumí el análisis técnico',
-                '¿Cómo fue su rendimiento semanal?',
+                '¿Qué noticias le afectan?',
+                '¿Qué dicen sus fundamentos?',
               ].map((prompt) => (
                 <button
                   key={prompt}

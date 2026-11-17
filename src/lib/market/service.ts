@@ -12,9 +12,11 @@ import { BymaProvider } from './byma';
 import { FinnhubProvider } from './finnhub';
 import { publicMarketNews } from './rss-news';
 import { addNewsImages } from './news-images';
+import { contextualNews, isCompanyNews } from './news-relevance';
 import { SecProvider } from './sec';
 import type { FinancialStatementsResult } from '../finance/statements';
 import { cached } from './transport';
+import { buildChartIndicators } from '../finance/chart-indicators';
 import {
   ProviderError,
   type Instrument,
@@ -191,6 +193,82 @@ export async function marketOverview(demo = false) {
   );
 }
 
+export async function chartIndicators(id: string, demo = false) {
+  const instrument = await resolveInstrument(id);
+  // The real TradingView chart needs real readings, including in the public demo.
+  // Explicit fixtures remain available separately and are labelled as demo data.
+  if (demo) {
+    const snapshot = demoHistory(instrument, '1D');
+    return buildChartIndicators(instrument, snapshot.candles, snapshot.provenance);
+  }
+  return cached(`chart-indicators:${id}`, 60000, async () => {
+    try {
+      const provider = listingProvider(instrument);
+      const history =
+        provider instanceof YahooProvider
+          ? await provider.dailyHistory(instrument)
+          : await provider.history(instrument, '1D');
+      return buildChartIndicators(instrument, history.candles, history.provenance);
+    } catch (error) {
+      return {
+        ...buildChartIndicators(instrument, [], {
+          source: instrument.source,
+          url: '',
+          asOf: '',
+          retrievedAt: new Date().toISOString(),
+          status: 'unavailable',
+          delayMinutes: null,
+          adjusted: 'unknown',
+        }),
+        error: error instanceof Error ? error.message : 'Historial no disponible.',
+      };
+    }
+  });
+}
+
+// Quote-only refresh: never request histories or the full catalog on the dashboard timer.
+export async function dashboardBenchmarks(demo = false): Promise<MarketSnapshot[]> {
+  return Promise.all(
+    ['NYSE:SPY:USD', 'NASDAQ:QQQ:USD', 'NYSE:DIA:USD', 'BINANCE:BTCUSDT:USDT'].map(async (id) => {
+      const instrument = await resolveInstrument(id);
+      if (demo || dataMode() === 'demo') {
+        const snapshot = demoHistory(instrument, '1D');
+        return { ...snapshot, candles: [] };
+      }
+      const provider = listingProvider(instrument);
+      // Keyed providers retain a conservative cache to respect their request quotas.
+      const ttl =
+        provider instanceof YahooProvider || provider instanceof BinanceProvider ? 10000 : 60000;
+      return cached(`benchmark:${id}:${ttl}`, ttl, async () => {
+        try {
+          const quote =
+            provider instanceof YahooProvider
+              ? await provider.quote(instrument, ttl)
+              : await provider.quote(instrument);
+          return { instrument, quote, candles: [], timeframe: '1D' as const, provenance: quote };
+        } catch (error) {
+          return {
+            instrument,
+            quote: null,
+            candles: [],
+            timeframe: '1D' as const,
+            provenance: {
+              source: 'Provider unavailable',
+              url: '',
+              asOf: '',
+              retrievedAt: new Date().toISOString(),
+              status: 'unavailable' as const,
+              delayMinutes: null,
+              adjusted: 'unknown' as const,
+            },
+            error: error instanceof Error ? error.message : 'Datos no disponibles',
+          };
+        }
+      });
+    }),
+  );
+}
+
 export async function marketListings(
   options: Parameters<typeof discoverInstruments>[0],
   demo = false,
@@ -291,7 +369,11 @@ export async function assetFinancialStatements(
     };
   }
 }
-export async function marketNews(instrument?: Instrument, demo = false) {
+export async function marketNews(
+  instrument?: Instrument,
+  demo = false,
+  scope: 'company' | 'context' = 'company',
+) {
   // News is always sourced from publishers, independently of simulated market prices.
   void demo;
   try {
@@ -299,17 +381,23 @@ export async function marketNews(instrument?: Instrument, demo = false) {
       instrument?.type === 'cedear' && instrument.underlyingId
         ? await resolveInstrument(instrument.underlyingId)
         : instrument;
+    if (issuer && scope === 'context') {
+      const items = await cached('news:market-context:v1', 300000, () => publicMarketNews());
+      return { items: contextualNews(items, issuer) };
+    }
     return {
-      items: await cached(`news:images-v3:${instrument?.id ?? 'all'}`, 300000, async () => {
+      items: await cached(`news:images-v4:${instrument?.id ?? 'all'}`, 300000, async () => {
         if (process.env.FINNHUB_API_KEY) {
           try {
             const items = await new FinnhubProvider().news(issuer);
-            if (items.length) return addNewsImages(items);
+            const relevant = issuer ? items.filter((item) => isCompanyNews(item, issuer)) : items;
+            if (relevant.length) return addNewsImages(relevant);
           } catch {
             /* Public publisher feeds remain available if this provider fails. */
           }
         }
-        return publicMarketNews(issuer);
+        const items = await publicMarketNews(issuer);
+        return issuer ? items.filter((item) => isCompanyNews(item, issuer)) : items;
       }),
     };
   } catch (e) {

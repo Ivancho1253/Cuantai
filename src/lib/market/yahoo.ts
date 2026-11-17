@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import Decimal from 'decimal.js';
 import { cached, fetchJson } from './transport';
-import { ProviderError, type Instrument, type Quote, type Timeframe } from './types';
+import { ProviderError, candleSchema, type Instrument, type Quote, type Timeframe } from './types';
 
 // Public indicative quotes. Never present them as an authorized BYMA feed or
 // substitute a US underlying for the local certificate.
@@ -35,9 +35,9 @@ async function limited<T>(load: () => Promise<T>) {
   }
 }
 export class YahooProvider {
-  async quote(i: Instrument): Promise<Quote> {
+  async quote(i: Instrument, ttl = 120000): Promise<Quote> {
     const symbol = yahooSymbol(i);
-    return cached(`yahoo:quote:${i.id}`, 120000, () =>
+    return cached(`yahoo:quote:${i.id}:${ttl}`, ttl, () =>
       limited(async () => {
         const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=1d`;
         const data = z
@@ -87,6 +87,84 @@ export class YahooProvider {
   async history(_i: Instrument, timeframe: Timeframe): Promise<never> {
     throw new ProviderError(
       `Historial ${timeframe} sin proveedor configurado. La cotización pública se consulta por separado.`,
+    );
+  }
+  async dailyHistory(i: Instrument) {
+    const symbol = yahooSymbol(i);
+    return cached(`yahoo:daily-indicators:2y:${i.id}`, 300000, () =>
+      limited(async () => {
+        const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=2y`;
+        const nullableNumbers = z.array(z.number().nullable());
+        const data = z
+          .object({
+            chart: z.object({
+              result: z
+                .array(
+                  z.object({
+                    meta: metaSchema,
+                    timestamp: z.array(z.number().int().positive()),
+                    indicators: z.object({
+                      quote: z.array(
+                        z.object({
+                          open: nullableNumbers,
+                          high: nullableNumbers,
+                          low: nullableNumbers,
+                          close: nullableNumbers,
+                          volume: nullableNumbers,
+                        }),
+                      ),
+                    }),
+                  }),
+                )
+                .nullable(),
+            }),
+          })
+          .parse(await fetchJson(url));
+        const result = data.chart.result?.[0];
+        const allowed: Record<string, string[]> = {
+          NASDAQ: ['NMS', 'NGM', 'NCM'],
+          NYSE: ['NYQ'],
+          BYMA: ['BUE'],
+          AMEX: ['ASE', 'PCX'],
+          ARCA: ['PCX'],
+          CBOE: ['BTS', 'BATS'],
+        };
+        if (
+          !result ||
+          result.meta.symbol.toUpperCase() !== symbol.toUpperCase() ||
+          result.meta.currency !== i.currency ||
+          !allowed[i.exchange]?.includes(result.meta.exchangeName)
+        )
+          throw new ProviderError(
+            'La fuente no confirmó el activo, mercado y moneda del historial.',
+          );
+        const values = result.indicators.quote[0];
+        if (!values) throw new ProviderError('Historial diario no disponible.');
+        const candles = result.timestamp.flatMap((time, index) => {
+          const parsed = candleSchema.safeParse({
+            time,
+            open: values.open[index],
+            high: values.high[index],
+            low: values.low[index],
+            close: values.close[index],
+            volume: values.volume[index],
+          });
+          return parsed.success ? [parsed.data] : [];
+        });
+        if (!candles.length) throw new ProviderError('No hay velas diarias verificables.');
+        return {
+          candles,
+          provenance: {
+            source: 'Yahoo Finance · histórico diario público',
+            url: `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}/history/`,
+            asOf: new Date(candles.at(-1)!.time * 1000).toISOString(),
+            retrievedAt: new Date().toISOString(),
+            status: 'delayed' as const,
+            delayMinutes: null,
+            adjusted: 'unknown' as const,
+          },
+        };
+      }),
     );
   }
 }

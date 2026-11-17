@@ -6,7 +6,7 @@ test('official embed receives exact symbols and fullscreen preserves the iframe'
   await installTradingViewFixture(page);
   const localMarketRequests: string[] = [];
   page.on('request', (request) => {
-    // The shell ribbon loads overview quotes; the chart must not load Cuantai candles.
+    // The chart stays on TradingView; the separate daily reading has its own endpoint.
     if (/\/api\/data\/market(\?|$)/.test(request.url())) localMarketRequests.push(request.url());
   });
   await page.goto('/demo?view=charts');
@@ -18,12 +18,14 @@ test('official embed receives exact symbols and fullscreen preserves the iframe'
   });
   await page.getByRole('button', { name: 'Pantalla completa', exact: true }).click();
   await expect(chart).toHaveAttribute('data-expanded', 'true');
+  await expect(page.locator('.chart-indicators')).toHaveCount(0);
   await expect.poll(() => page.evaluate(() => Boolean(document.fullscreenElement))).toBe(true);
   await expect
     .poll(() => chart.evaluate((el) => Math.round(el.getBoundingClientRect().width) === innerWidth))
     .toBe(true);
   await page.getByRole('button', { name: 'Salir de pantalla completa', exact: true }).click();
   await expect(chart).toHaveAttribute('data-expanded', 'false');
+  await expect(page.locator('.chart-indicators')).toBeVisible();
   await expect(frame).toHaveAttribute('data-identity', 'same-frame');
   await page.getByLabel('Activo del gráfico 1').selectOption('BYMA:JPMD:USD');
   await expect(chart).toHaveAttribute('data-state', 'embedded');

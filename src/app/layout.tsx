@@ -6,21 +6,15 @@ import './globals.css';
 import './workspace.css';
 import './research.css';
 import './features.css';
+import './horizontal-workspace.css';
+import './chart-insights.css';
+import './asset-detail.css';
 
-const manrope = localFont({
-  src: './fonts/Manrope-Variable.ttf',
+const jakarta = localFont({
+  src: './fonts/PlusJakartaSans-Variable.ttf',
   variable: '--font-sans',
   weight: '200 800',
   display: 'swap',
-  fallback: ['Arial', 'sans-serif'],
-});
-
-const plexSans = localFont({
-  src: './fonts/IBMPlexSans-Variable.ttf',
-  variable: '--font-workspace',
-  weight: '100 700',
-  display: 'swap',
-  preload: false,
   fallback: ['Arial', 'sans-serif'],
 });
 
@@ -53,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html
       lang={locale}
-      className={`${manrope.variable} ${plexSans.variable}`}
+      className={jakarta.variable}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

@@ -7,10 +7,18 @@ import { ArrowUpRight, X, Activity, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Provenance } from '@/lib/market/types';
 export { AssetIcon } from './asset-icon';
-export function Brand({ compact = false }: { compact?: boolean }) {
+export function Brand({
+  compact = false,
+  href = '/',
+  label = 'Cuantai, inicio',
+}: {
+  compact?: boolean;
+  href?: string;
+  label?: string;
+}) {
   const uiText = useUiText();
   return (
-    <Link href="/" className="brand" aria-label={uiText('Cuantai, inicio')}>
+    <Link href={href} className="brand" aria-label={uiText(label)}>
       <span className="brand-mark">
         <i />
         <i />

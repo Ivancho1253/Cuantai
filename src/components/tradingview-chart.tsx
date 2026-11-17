@@ -12,18 +12,21 @@ import {
 } from '@/lib/market/tradingview';
 import type { Timeframe } from '@/lib/market/types';
 import { cn } from '@/lib/utils';
+import { ChartIndicators } from './chart-indicators';
 export function TradingViewChart({
   symbol,
   timeframe = '1D',
   chartType = 'candles',
   height = 620,
   theme: themeOverride,
+  instrumentId,
 }: {
   symbol: string | null;
   timeframe?: Timeframe;
   chartType?: TradingViewChartType;
   height?: number;
   theme?: 'dark' | 'light';
+  instrumentId?: string;
 }) {
   const uiText = useUiText();
   const { locale } = useLocale();
@@ -141,107 +144,114 @@ export function TradingViewChart({
     }
   }
   return (
-    <div
-      ref={root}
-      className={cn('tv-chart', expanded && 'tv-chart-expanded')}
-      style={{ height }}
-      data-symbol={symbol ?? ''}
-      data-expanded={expanded}
-      data-state={phase}
-    >
-      <div className="tv-chart-heading">
-        <div>
-          <strong>{uiText('TradingView')}</strong>
-          <span>{uiText(symbol ?? 'Sin símbolo compatible')}</span>
+    <>
+      <div
+        ref={root}
+        className={cn('tv-chart', expanded && 'tv-chart-expanded')}
+        style={{ height }}
+        data-symbol={symbol ?? ''}
+        data-expanded={expanded}
+        data-state={phase}
+      >
+        <div className="tv-chart-heading">
+          <div>
+            <strong>{uiText('TradingView')}</strong>
+            <span>{uiText(symbol ?? 'Sin símbolo compatible')}</span>
+          </div>
+          <div className="tv-chart-actions">
+            {uiText(
+              symbol && (
+                <a
+                  className="icon-button"
+                  href={tradingViewChartUrl(symbol)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={uiText('Abrir {0} en TradingView', [symbol])}
+                  title={uiText('Abrir en TradingView')}
+                >
+                  <ExternalLink size={14} />
+                </a>
+              ),
+            )}
+            <button
+              className="icon-button"
+              aria-label={uiText('Recargar TradingView')}
+              title={uiText('Recargar widget')}
+              onClick={() => {
+                setAttempt((n) => n + 1);
+              }}
+            >
+              <RefreshCw size={14} />
+            </button>
+            <button
+              ref={fullButton}
+              className="tv-fullscreen-button"
+              onClick={toggleFullScreen}
+              aria-label={uiText(expanded ? 'Salir de pantalla completa' : 'Pantalla completa')}
+              title={uiText(expanded ? 'Salir · Esc' : 'Ampliar gráfico')}
+            >
+              {uiText(expanded ? <Minimize2 size={15} /> : <Maximize2 size={15} />)}
+              <span>{uiText(expanded ? 'Salir' : 'Pantalla completa')}</span>
+            </button>
+          </div>
         </div>
-        <div className="tv-chart-actions">
+        <div className="tv-chart-body">
+          <div ref={host} className="tv-chart-host" />
           {uiText(
-            symbol && (
-              <a
-                className="icon-button"
-                href={tradingViewChartUrl(symbol)}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={uiText('Abrir {0} en TradingView', [symbol])}
-                title={uiText('Abrir en TradingView')}
-              >
-                <ExternalLink size={14} />
-              </a>
+            !symbol ? (
+              <div className="tv-chart-state">
+                <strong>{uiText('Sin correspondencia verificada para TradingView.')}</strong>
+                <p>
+                  {uiText(
+                    'Busc\u00E1 la especie y el mercado exactos en TradingView. No se reemplaza por otro activo.',
+                  )}
+                </p>
+              </div>
+            ) : (
+              phase !== 'embedded' && (
+                <div className="tv-chart-state" role="status">
+                  {uiText(
+                    phase === 'loading' ? (
+                      <>
+                        <span className="loading-dot" />
+                        <p>{uiText('Cargando el gr\u00E1fico oficial de TradingView\u2026')}</p>
+                      </>
+                    ) : (
+                      <>
+                        <strong>{uiText('No se pudo cargar TradingView.')}</strong>
+                        <p>
+                          {uiText(
+                            'Revis\u00E1 la conexi\u00F3n o el bloqueo de contenido externo.',
+                          )}
+                        </p>
+                        <button
+                          className="button button-secondary"
+                          onClick={() => {
+                            setAttempt((n) => n + 1);
+                          }}
+                        >
+                          {uiText('Reintentar')}
+                        </button>
+                        <a
+                          href={tradingViewChartUrl(symbol)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {uiText('Abrir directamente en TradingView ')}
+                          <ExternalLink size={12} />
+                        </a>
+                      </>
+                    ),
+                  )}
+                </div>
+              )
             ),
           )}
-          <button
-            className="icon-button"
-            aria-label={uiText('Recargar TradingView')}
-            title={uiText('Recargar widget')}
-            onClick={() => {
-              setAttempt((n) => n + 1);
-            }}
-          >
-            <RefreshCw size={14} />
-          </button>
-          <button
-            ref={fullButton}
-            className="tv-fullscreen-button"
-            onClick={toggleFullScreen}
-            aria-label={uiText(expanded ? 'Salir de pantalla completa' : 'Pantalla completa')}
-            title={uiText(expanded ? 'Salir · Esc' : 'Ampliar gráfico')}
-          >
-            {uiText(expanded ? <Minimize2 size={15} /> : <Maximize2 size={15} />)}
-            <span>{uiText(expanded ? 'Salir' : 'Pantalla completa')}</span>
-          </button>
         </div>
       </div>
-      <div className="tv-chart-body">
-        <div ref={host} className="tv-chart-host" />
-        {uiText(
-          !symbol ? (
-            <div className="tv-chart-state">
-              <strong>{uiText('Sin correspondencia verificada para TradingView.')}</strong>
-              <p>
-                {uiText(
-                  'Busc\u00E1 la especie y el mercado exactos en TradingView. No se reemplaza por otro activo.',
-                )}
-              </p>
-            </div>
-          ) : (
-            phase !== 'embedded' && (
-              <div className="tv-chart-state" role="status">
-                {uiText(
-                  phase === 'loading' ? (
-                    <>
-                      <span className="loading-dot" />
-                      <p>{uiText('Cargando el gr\u00E1fico oficial de TradingView\u2026')}</p>
-                    </>
-                  ) : (
-                    <>
-                      <strong>{uiText('No se pudo cargar TradingView.')}</strong>
-                      <p>
-                        {uiText('Revis\u00E1 la conexi\u00F3n o el bloqueo de contenido externo.')}
-                      </p>
-                      <button
-                        className="button button-secondary"
-                        onClick={() => {
-                          setAttempt((n) => n + 1);
-                        }}
-                      >
-                        {uiText('Reintentar')}
-                      </button>
-                      <a
-                        href={tradingViewChartUrl(symbol)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {uiText('Abrir directamente en TradingView ')}
-                        <ExternalLink size={12} />
-                      </a>
-                    </>
-                  ),
-                )}
-              </div>
-            )
-          ),
-        )}
-      </div>
-    </div>
+      {instrumentId && !expanded && (
+        <ChartIndicators key={instrumentId} instrumentId={instrumentId} />
+      )}
+    </>
   );
 }

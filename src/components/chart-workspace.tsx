@@ -292,6 +292,7 @@ function ChartTile({
       {uiText(
         instrument ? (
           <TradingViewChart
+            instrumentId={instrument.id}
             symbol={tradingViewSymbol(instrument)}
             timeframe={timeframe}
             chartType={chartType}

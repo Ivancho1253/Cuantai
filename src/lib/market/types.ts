@@ -88,6 +88,7 @@ export type NewsItem = {
   category: string;
   summary?: string;
   imageUrl?: string;
+  relevance?: { kind: 'company' | 'sector' | 'macro'; label: string; reason: string };
 };
 export type Fundamental = { label: string; value: string | null; unit?: string; period?: string };
 export interface InstrumentSearchProvider {

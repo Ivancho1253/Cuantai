@@ -19,7 +19,7 @@ export function AssetPage({ instrument }: { instrument: Instrument }) {
   const [tab, setTab] = useState('Overview');
   const [watchOpen, setWatchOpen] = useState(false);
   return (
-    <>
+    <div className="asset-detail">
       <Link className="breadcrumb" href={href('markets')}>
         <ArrowLeft size={13} />
         {uiText(' Markets ')}
@@ -77,9 +77,16 @@ export function AssetPage({ instrument }: { instrument: Instrument }) {
       )}
       <div className="tabs asset-tabs">
         {uiText(
-          ['Overview', 'Chart', 'Financials', 'Valuation', 'News', 'AI Analysis'].map((t) => (
-            <button className={tab === t ? 'active' : ''} key={t} onClick={() => setTab(t)}>
-              {uiText(t)}
+          [
+            ['Overview', 'Vista general'],
+            ['Chart', 'Terminal'],
+            ['Financials', 'Estados financieros'],
+            ['Valuation', 'Valuación'],
+            ['News', 'Noticias'],
+            ['AI Analysis', 'Analista IA'],
+          ].map(([key, label]) => (
+            <button className={tab === key ? 'active' : ''} key={key} onClick={() => setTab(key)}>
+              {uiText(label)}
             </button>
           )),
         )}
@@ -122,7 +129,7 @@ export function AssetPage({ instrument }: { instrument: Instrument }) {
           </EmptyState>
         ),
       )}
-      {uiText(tab === 'News' && <News instrumentId={instrument.id} embedded />)}
+      {uiText(tab === 'News' && <News instrumentId={instrument.id} embedded contextual />)}
       {uiText(
         tab === 'AI Analysis' && (
           <Analyst
@@ -134,6 +141,6 @@ export function AssetPage({ instrument }: { instrument: Instrument }) {
         ),
       )}
       <WatchlistPicker instrumentId={instrument.id} open={watchOpen} onOpenChange={setWatchOpen} />
-    </>
+    </div>
   );
 }

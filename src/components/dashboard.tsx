@@ -1,5 +1,5 @@
 'use client';
-import { useText as useUiText } from './locale-provider';
+import { useText as useUiText, useLocale } from './locale-provider';
 import { useState } from 'react';
 import Link from 'next/link';
 import { assetHref } from '@/lib/market/asset-href';
@@ -15,13 +15,14 @@ import {
   Wallet,
 } from 'lucide-react';
 import { useApp } from './app-shell';
-import { api, number, cn } from '@/lib/utils';
+import { api, cn } from '@/lib/utils';
 import type { MarketSnapshot } from '@/lib/market/types';
 import { TradingViewChart } from './tradingview-chart';
 import { instruments } from '@/lib/market/catalog';
 import { tradingViewSymbol } from '@/lib/market/tradingview';
 import { MarketTable } from './market-table';
 import { ErrorState, Skeleton, AssetIcon } from './ui';
+import { RollingNumber } from './rolling-number';
 const benchmarks = [
   ['NYSE:SPY:USD', 'S&P 500', 'SPY · ETF proxy'],
   ['NASDAQ:QQQ:USD', 'Nasdaq-100', 'QQQ · ETF proxy'],
@@ -30,12 +31,27 @@ const benchmarks = [
 ];
 export function Dashboard() {
   const uiText = useUiText();
+  const { locale } = useLocale();
+  const localeNumber = (value: string | null | undefined) =>
+    value == null
+      ? '—'
+      : new Intl.NumberFormat(locale === 'en' ? 'en-US' : locale === 'pt' ? 'pt-BR' : 'es-AR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(Number(value));
   const { user, demo, href, openSearch } = useApp();
   const [selected, setSelected] = useState('NASDAQ:NVDA:USD');
   const [tab, setTab] = useState('Destacados');
   const overview = useQuery({
     queryKey: ['overview', demo],
     queryFn: () => api<MarketSnapshot[]>(`overview${demo ? '?demo=true' : ''}`),
+  });
+  const quotes = useQuery({
+    queryKey: ['benchmarks', demo],
+    queryFn: () => api<MarketSnapshot[]>(`benchmarks${demo ? '?demo=true' : ''}`),
+    refetchInterval: 10000,
+    refetchIntervalInBackground: false,
+    staleTime: 10000,
   });
   const selectedInstrument = instruments.find((i) => i.id === selected);
   const data = overview.data ?? [];
@@ -62,16 +78,31 @@ export function Dashboard() {
             {uiText('Tu universo de inversi\u00F3n, conectado en un solo lugar.')}
           </p>
         </div>
-        <Link className="button button-secondary" href={href('charts')}>
-          <CandlesIcon />
-          {uiText(' Abrir terminal ')}
-          <ArrowUpRight size={15} />
-        </Link>
+        <div className="dashboard-actions">
+          <Link className="button button-primary portfolio-primary" href={href('portfolio')}>
+            <Wallet size={19} />
+            {uiText(user ? 'Ver mi cartera' : 'Explorar portfolio')}
+            <ArrowUpRight size={17} />
+          </Link>
+          <Link className="button button-secondary" href={href('charts')}>
+            <CandlesIcon />
+            {uiText(' Abrir terminal ')}
+            <ArrowUpRight size={15} />
+          </Link>
+        </div>
+      </div>
+      <div className="benchmark-refresh">
+        <span className={quotes.isFetching ? 'refresh-dot fetching' : 'refresh-dot'} />
+        {uiText(
+          demo
+            ? 'Vista demo · valores de ejemplo'
+            : 'Consulta cada 10 s · disponibilidad según la fuente',
+        )}
       </div>
       <div className="benchmark-grid">
         {uiText(
           benchmarks.map(([id, name, sub]) => {
-            const item = data.find((d) => d.instrument.id === id);
+            const item = quotes.data?.find((d) => d.instrument.id === id);
             const up = Number(item?.quote?.changePercent ?? 0) >= 0;
             return (
               <button
@@ -85,21 +116,51 @@ export function Dashboard() {
                 </div>
                 <div className="benchmark-value">
                   {uiText(
-                    overview.isLoading ? (
+                    quotes.isPending ? (
                       <Skeleton className="price-skeleton" />
                     ) : (
-                      number(item?.quote?.price)
+                      <RollingNumber value={item?.quote?.price} />
                     ),
                   )}
-                  <span className={up ? 'positive' : 'negative'}>
+                  <span className={cn('benchmark-change', up ? 'positive' : 'negative')}>
                     {uiText(
-                      item?.quote ? `${up ? '+' : ''}${number(item.quote.changePercent)}%` : '—',
+                      item?.quote
+                        ? `${up ? '+' : ''}${localeNumber(item.quote.changePercent)}%`
+                        : '—',
                     )}
                   </span>
                 </div>
                 <div className="benchmark-bottom">
-                  <small>{uiText(sub)}</small>
+                  <small>
+                    {uiText(sub)} · {item?.instrument.currency ?? id.split(':')[2]}
+                  </small>
                   <small className="muted">{uiText('Ver gr\u00E1fico')}</small>
+                </div>
+                <div className="benchmark-source">
+                  {uiText(
+                    item?.quote?.status === 'demo'
+                      ? 'Demo'
+                      : item?.quote?.status === 'realtime'
+                        ? 'En vivo'
+                        : item?.quote
+                          ? 'Cotización indicativa'
+                          : 'Sin cotización',
+                  )}
+                  {item?.quote?.asOf && (
+                    <time dateTime={item.quote.asOf}>
+                      {' '}
+                      ·{' '}
+                      {new Date(item.quote.asOf).toLocaleString(
+                        locale === 'pt' ? 'pt-BR' : locale === 'en' ? 'en-US' : 'es-AR',
+                        {
+                          day: '2-digit',
+                          month: 'short',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        },
+                      )}
+                    </time>
+                  )}
                 </div>
               </button>
             );
@@ -129,6 +190,7 @@ export function Dashboard() {
             </Link>
           </div>
           <TradingViewChart
+            instrumentId={selected}
             symbol={selectedInstrument ? tradingViewSymbol(selectedInstrument) : null}
             height={490}
           />
@@ -169,7 +231,10 @@ export function Dashboard() {
           </section>
           <section className="panel watch-preview">
             <div className="panel-header">
-              <strong>{uiText('En tu radar')}</strong>
+              <div>
+                <strong>{uiText('En tu radar')}</strong>
+                <p className="radar-caption">{uiText('Activos para seguir de cerca')}</p>
+              </div>
               <button
                 onClick={openSearch}
                 className="icon-button"
@@ -187,28 +252,29 @@ export function Dashboard() {
                     className="radar-row"
                     key={i.instrument.id}
                   >
-                    <AssetIcon instrument={i.instrument} small />
-                    <div>
+                    <AssetIcon instrument={i.instrument} />
+                    <div className="radar-identity">
                       <strong>{uiText(i.instrument.symbol)}</strong>
-                      <small>{uiText(i.instrument.exchange)}</small>
+                      <small title={i.instrument.name}>{i.instrument.name}</small>
                     </div>
                     <div className="radar-price">
-                      <strong>{uiText(number(i.quote?.price))}</strong>
+                      <strong>{localeNumber(i.quote?.price)}</strong>
                       <small
                         className={
                           Number(i.quote?.changePercent ?? 0) >= 0 ? 'positive' : 'negative'
                         }
                       >
-                        {uiText(Number(i.quote?.changePercent ?? 0) >= 0 ? '+' : '')}
-                        {uiText(number(i.quote?.changePercent))}%
+                        {i.quote
+                          ? `${Number(i.quote.changePercent) >= 0 ? '+' : ''}${localeNumber(i.quote.changePercent)}%`
+                          : '—'}
                       </small>
                     </div>
                   </Link>
                 )),
             )}
             <Link className="text-link" href={href('watchlists')}>
-              {uiText('Crear mi watchlist ')}
-              <ArrowRight size={13} />
+              {uiText('Abrir seguimiento')}
+              <ArrowRight size={17} />
             </Link>
           </section>
         </aside>

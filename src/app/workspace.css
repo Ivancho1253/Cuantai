@@ -1,6 +1,7 @@
 /* Product typography is separate from the public site's wordmark and display type. */
 body:has(.app-layout) {
-  font-family: var(--font-workspace), Arial, sans-serif;
+  --font-workspace: var(--font-sans);
+  font-family: var(--font-sans), Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.55;
