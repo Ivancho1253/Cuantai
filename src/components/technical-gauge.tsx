@@ -86,10 +86,6 @@ export function TechnicalGauge({
             </g>
           )}
         </svg>
-        <div className="gauge-extremes">
-          <span>{t('Bajista')}</span>
-          <span>{t('Alcista')}</span>
-        </div>
       </div>
       <strong
         className="gauge-verdict"
