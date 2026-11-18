@@ -1,4 +1,6 @@
 import type { Instrument } from './types';
+import fundIssuers from './data/fund-issuer-logos.json';
+import certificateLogos from './data/certificate-logos.json';
 import catalogLogos from './data/asset-logos.json';
 
 export type AssetLogo = { src: string; name: string; background: string; source: string };
@@ -31,7 +33,11 @@ const logos: Record<string, AssetLogo> = {
   'NYSE:DIA:USD': local('dia.png', 'SPDR · DIA'),
   'AMEX:DIA:USD': local('dia.png', 'SPDR · DIA'),
   'ARCA:DIA:USD': local('dia.png', 'SPDR · DIA'),
-  'BYMA:GGAL:ARS': local('ggal-ba.png', 'Grupo Financiero Galicia'),
+  'BYMA:GGAL:ARS': local(
+    'ggal-official.svg',
+    'Grupo Financiero Galicia',
+    'https://www.gfgsa.com/es',
+  ),
   'BINANCE:BTCUSDT:USDT': local('btc.svg', 'Bitcoin', cryptoSource),
   'BINANCE:ETHUSDT:USDT': local('eth.svg', 'Ethereum', cryptoSource),
   'BINANCE:SOLUSDT:USDT': local('sol.svg', 'Solana', cryptoSource),
@@ -43,11 +49,27 @@ const logos: Record<string, AssetLogo> = {
 
 export function assetLogo(instrument: Instrument): AssetLogo | null {
   const identity = instrument.type === 'cedear' ? instrument.underlyingId : instrument.id;
-  if (!identity) return null;
+  if (!identity) {
+    const certificate = (certificateLogos as Record<string, AssetLogo>)[instrument.id];
+    return instrument.type === 'cedear' ? (certificate ?? null) : null;
+  }
   const [exchange, symbol, currency, extra] = identity.split(':');
   if (extra !== undefined || !exchange || !symbol || !currency) return null;
   const known = logos[identity];
   if (known) return known;
+  // Fund tickers can overlap operating companies; use the identified manager's brand.
+  if (instrument.type === 'etf' || instrument.cedearKind === 'etf') {
+    const manager = fundIssuers.find((entry) =>
+      new RegExp('^(?:' + entry.prefix + ')(?=\\s|$)', 'i').test(instrument.name),
+    );
+    if (manager)
+      return {
+        src: manager.src,
+        name: manager.name + ' · gestora del fondo',
+        background: manager.background,
+        source: manager.source,
+      };
+  }
   const stored = (
     catalogLogos as Record<string, { src: string; source: string; background?: string }>
   )[identity];

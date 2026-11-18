@@ -1,3 +1,4 @@
+import { publicFundamentals } from '@/lib/market/public-fundamentals';
 import { NextResponse } from 'next/server';
 import { and, asc, desc, eq, inArray, lte, sql } from 'drizzle-orm';
 import { z, ZodError } from 'zod';
@@ -7,6 +8,7 @@ import * as s from '@/lib/db/schema';
 import { assertOrigin, HttpError, rateLimit, readJson } from '@/lib/security';
 import {
   searchInstruments,
+  searchNewsInstruments,
   marketSnapshot,
   marketOverview,
   dashboardBenchmarks,
@@ -65,6 +67,7 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
         'market-catalog',
         'asset-overview',
         'fundamentals',
+        'fundamental-research',
         'financials',
         'news',
       ].includes(route)
@@ -90,10 +93,9 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
     }
     if (method === 'GET' && route === 'instruments')
       return json(
-        await searchInstruments(
-          (url.searchParams.get('q') ?? '').slice(0, 100),
-          dataMode() === 'live' && !demo,
-        ),
+        await (
+          url.searchParams.get('purpose') === 'news' ? searchNewsInstruments : searchInstruments
+        )((url.searchParams.get('q') ?? '').slice(0, 100), dataMode() === 'live' && !demo),
       );
     if (method === 'GET' && route === 'instrument')
       return json(await resolveInstrument(z.string().min(1).parse(url.searchParams.get('id'))));
@@ -105,7 +107,13 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
     if (method === 'GET' && route === 'overview') return json(await marketOverview(demo));
     if (method === 'GET' && route === 'benchmarks') return json(await dashboardBenchmarks(demo));
     if (method === 'GET' && route === 'chart-indicators')
-      return json(await chartIndicators(z.string().min(1).parse(url.searchParams.get('id')), demo));
+      return json(
+        await chartIndicators(
+          z.string().min(1).parse(url.searchParams.get('id')),
+          demo,
+          z.enum(['short', 'medium', 'long']).parse(url.searchParams.get('horizon') ?? 'short'),
+        ),
+      );
     if (method === 'GET' && route === 'market-catalog') {
       const page = z.coerce
         .number()
@@ -134,6 +142,16 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
     }
     if (method === 'GET' && route === 'asset-overview')
       return json(await assetOverview(z.string().min(1).parse(url.searchParams.get('id')), demo));
+    if (method === 'GET' && route === 'fundamental-research') {
+      const instrument = await resolveInstrument(
+        z.string().min(1).parse(url.searchParams.get('id')),
+      );
+      const issuer =
+        instrument.type === 'cedear' && instrument.underlyingId
+          ? await resolveInstrument(instrument.underlyingId)
+          : instrument;
+      return json(await publicFundamentals(instrument, issuer));
+    }
     if (method === 'GET' && route === 'fundamentals')
       return json(
         await assetFundamentals(

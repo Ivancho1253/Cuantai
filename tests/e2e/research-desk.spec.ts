@@ -40,10 +40,10 @@ test('research asset picker searches the catalog without opening a native select
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-test('news displays publisher links, filters headlines, and can refresh', async ({ page }) => {
-  let loads = 0;
+test('news displays publisher links and filters headlines without a refresh control', async ({
+  page,
+}) => {
   await page.route('**/api/data/news?*', (route) => {
-    loads++;
     return route.fulfill({
       json: {
         items: [
@@ -75,9 +75,11 @@ test('news displays publisher links, filters headlines, and can refresh', async 
   await page.getByLabel('Buscar noticias').fill('no match');
   await expect(card).toHaveCount(0);
   await expect(page.getByText('No hay titulares que coincidan con tu búsqueda.')).toBeVisible();
-  await page.getByLabel('Buscar noticias').clear();
-  await page.getByRole('button', { name: 'Actualizar noticias' }).click();
-  await expect.poll(() => loads).toBeGreaterThan(1);
+  await page.getByRole('button', { name: 'Limpiar búsqueda', exact: true }).click();
+  await expect(card).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Actualizar noticias', exact: true })).toHaveCount(
+    0,
+  );
 });
 
 test('signed-in research saves the answer and conversation without an AI key', async ({
@@ -106,4 +108,25 @@ test('signed-in research saves the answer and conversation without an AI key', a
   await page.reload();
   await page.getByRole('tab', { name: 'Preguntas y respuestas' }).click();
   await expect(page.locator('.asset-chat-question')).toContainText('Explicá la tendencia');
+});
+
+test('conversation prompts, keyboard submission and source disclosure remain usable on mobile', async ({
+  page,
+}) => {
+  await page.goto('/demo?view=analyst');
+  await page.getByRole('tab', { name: 'Preguntas y respuestas' }).click();
+  await page.getByRole('button', { name: 'Medir el riesgo', exact: true }).click();
+  const input = page.getByRole('textbox', { name: 'Pregunta sobre el activo', exact: true });
+  await expect(input).toHaveValue('¿Qué riesgo tiene?');
+  await input.press('Shift+Enter');
+  await expect(page.locator('.asset-chat-turn')).toHaveCount(0);
+  await input.press('Enter');
+  await expect(page.locator('.asset-chat-answer')).toContainText('Reglas');
+  await expect(input).toHaveValue('');
+  const sources = page.locator('.conversation-source-list');
+  await sources.locator('summary').click();
+  await expect(sources.locator('a').first()).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await expect(page.locator('.asset-chat-log')).toHaveCSS('overflow', 'visible');
 });

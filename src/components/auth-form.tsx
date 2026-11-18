@@ -3,7 +3,7 @@ import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowRight, ArrowUpRight, ArrowLeft, Sparkles, LockKeyhole } from 'lucide-react';
 import { Brand, Button } from './ui';
 import { authClient } from '@/lib/auth-client';
@@ -17,6 +17,8 @@ export function AuthForm({
 }) {
   const uiText = useUiText();
   const router = useRouter();
+  const requestedNext = useSearchParams().get('next');
+  const next = requestedNext?.startsWith('/portfolio?asset=') ? requestedNext : null;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -76,7 +78,7 @@ export function AuthForm({
               password: String(f.get('password')),
             });
         if (r.error) throw new Error(r.error.message ?? 'No se pudo iniciar sesión');
-        router.replace(register ? '/onboarding' : '/dashboard');
+        router.replace(next ?? (register ? '/onboarding' : '/dashboard'));
         router.refresh();
       }
     } catch (e) {
@@ -155,7 +157,7 @@ export function AuthForm({
                     setError('');
                     const r = await authClient.signIn.social({
                       provider: 'google',
-                      callbackURL: '/dashboard',
+                      callbackURL: next ?? '/dashboard',
                     });
                     if (r.error) setError(r.error.message ?? 'Google no disponible');
                   }}

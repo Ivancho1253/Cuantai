@@ -1,3 +1,5 @@
+import { newsInstruments } from './news-instruments';
+import { publicFundamentals } from './public-fundamentals';
 import { eq } from 'drizzle-orm';
 import { getDb } from '../db';
 import { instrumentTable } from '../db/schema';
@@ -16,7 +18,7 @@ import { contextualNews, isCompanyNews } from './news-relevance';
 import { SecProvider } from './sec';
 import type { FinancialStatementsResult } from '../finance/statements';
 import { cached } from './transport';
-import { buildChartIndicators } from '../finance/chart-indicators';
+import { type TechnicalHorizon, buildChartIndicators } from '../finance/chart-indicators';
 import {
   ProviderError,
   type Instrument,
@@ -103,6 +105,10 @@ export async function searchInstruments(query: string, live = false) {
     catalog:
       'SPY equity holdings + SEC exchanges + active CoinGecko coins + configured provider search',
   };
+}
+export async function searchNewsInstruments(query: string, live = false) {
+  const results = await searchInstruments(query, live);
+  return { ...results, instruments: await newsInstruments(results.instruments, resolveInstrument) };
 }
 export async function marketSnapshot(
   id: string,
@@ -193,33 +199,55 @@ export async function marketOverview(demo = false) {
   );
 }
 
-export async function chartIndicators(id: string, demo = false) {
+export async function chartIndicators(
+  id: string,
+  demo = false,
+  horizon: TechnicalHorizon = 'short',
+) {
   const instrument = await resolveInstrument(id);
   // The real TradingView chart needs real readings, including in the public demo.
   // Explicit fixtures remain available separately and are labelled as demo data.
   if (demo) {
     const snapshot = demoHistory(instrument, '1D');
-    return buildChartIndicators(instrument, snapshot.candles, snapshot.provenance);
+    return buildChartIndicators(
+      instrument,
+      snapshot.candles,
+      snapshot.provenance,
+      Date.now(),
+      horizon,
+    );
   }
-  return cached(`chart-indicators:${id}`, 60000, async () => {
+  return cached(`chart-indicators:v3:${id}:${horizon}`, 60000, async () => {
     try {
       const provider = listingProvider(instrument);
       const history =
         provider instanceof YahooProvider
           ? await provider.dailyHistory(instrument)
           : await provider.history(instrument, '1D');
-      return buildChartIndicators(instrument, history.candles, history.provenance);
+      return buildChartIndicators(
+        instrument,
+        history.candles,
+        history.provenance,
+        Date.now(),
+        horizon,
+      );
     } catch (error) {
       return {
-        ...buildChartIndicators(instrument, [], {
-          source: instrument.source,
-          url: '',
-          asOf: '',
-          retrievedAt: new Date().toISOString(),
-          status: 'unavailable',
-          delayMinutes: null,
-          adjusted: 'unknown',
-        }),
+        ...buildChartIndicators(
+          instrument,
+          [],
+          {
+            source: instrument.source,
+            url: '',
+            asOf: '',
+            retrievedAt: new Date().toISOString(),
+            status: 'unavailable',
+            delayMinutes: null,
+            adjusted: 'unknown',
+          },
+          Date.now(),
+          horizon,
+        ),
         error: error instanceof Error ? error.message : 'Historial no disponible.',
       };
     }
@@ -315,19 +343,40 @@ export async function marketListings(
   return { ...page, rows };
 }
 export async function assetFundamentals(instrument: Instrument, demo = false) {
-  if (demo || dataMode() === 'demo')
+  void demo;
+  const issuer =
+    instrument.type === 'cedear' && instrument.underlyingId
+      ? await resolveInstrument(instrument.underlyingId)
+      : instrument;
+  const research = await publicFundamentals(instrument, issuer);
+  if (research.metrics.length && research.asOf)
     return {
-      metrics: [],
-      error:
-        'No hay fundamentales en el dataset demo. Conectá Finnhub para consultar métricas verificables.',
+      metrics: research.metrics.map((m) => ({
+        label: m.label,
+        value: String(m.value),
+        unit: m.unit,
+        period: research.asOf!,
+      })),
+      provenance: {
+        source: research.source,
+        url: research.url,
+        asOf: research.asOf,
+        retrievedAt: research.retrievedAt,
+        status: 'eod' as const,
+        delayMinutes: null,
+        adjusted: 'unknown' as const,
+      },
     };
-  try {
-    return await cached(`fundamentals:${instrument.id}`, 3600000, () =>
-      new FinnhubProvider().fundamentals(instrument),
-    );
-  } catch (e) {
-    return { metrics: [], error: e instanceof Error ? e.message : 'Fundamentales no disponibles' };
+  if (process.env.FINNHUB_API_KEY) {
+    try {
+      return await cached('fundamentals:' + issuer.id, 3600000, () =>
+        new FinnhubProvider().fundamentals(issuer),
+      );
+    } catch {
+      /* Keep the public source coverage details. */
+    }
   }
+  return { metrics: [], error: research.error };
 }
 export async function assetFinancialStatements(
   instrument: Instrument,
@@ -386,7 +435,7 @@ export async function marketNews(
       return { items: contextualNews(items, issuer) };
     }
     return {
-      items: await cached(`news:images-v4:${instrument?.id ?? 'all'}`, 300000, async () => {
+      items: await cached(`news:images-v5:${issuer?.id ?? 'all'}`, 300000, async () => {
         if (process.env.FINNHUB_API_KEY) {
           try {
             const items = await new FinnhubProvider().news(issuer);

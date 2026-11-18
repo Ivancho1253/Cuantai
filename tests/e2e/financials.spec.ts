@@ -14,9 +14,8 @@ test('financials demo and unsupported instruments never fabricate statements', a
 }) => {
   await page.goto('/asset/NASDAQ/AAPL?demo=true');
   await page.getByRole('button', { name: 'Estados financieros', exact: true }).click();
-  await expect(
-    page.getByText('El modo demo no incluye balances ficticios.', { exact: false }),
-  ).toBeVisible();
+  await expect(page.locator('.public-statements table')).toBeVisible();
+  await expect(page.locator('.public-statements')).toContainText('Yahoo Finance');
   expect(
     await (await request.get('/api/data/financials?id=NASDAQ%3AAAPL%3AUSD&demo=true')).json(),
   ).toMatchObject({ data: null, reason: 'DEMO' });

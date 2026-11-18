@@ -7,14 +7,15 @@ import { Columns2, FolderOpen, LayoutGrid, Save, Square } from 'lucide-react';
 import { toast } from 'sonner';
 import { useApp } from './app-shell';
 import { TradingViewChart } from './tradingview-chart';
-import { AssetIcon, Button, Modal, SectionTitle } from './ui';
+import { Button, Modal, SectionTitle } from './ui';
 import { instruments } from '@/lib/market/catalog';
+import { ResearchAssetPicker } from './research-asset-picker';
 import {
   tradingViewSymbol,
   type TradingViewWorkspaceConfig,
   type TradingViewChartType,
 } from '@/lib/market/tradingview';
-import { timeframes, type Instrument, type Timeframe } from '@/lib/market/types';
+import { type Instrument, type Timeframe } from '@/lib/market/types';
 import { api, cn } from '@/lib/utils';
 type Workspace = {
   id: string;
@@ -109,56 +110,32 @@ export function ChartWorkspace({
           />
         ),
       )}
-      <div className="terminal-toolbar">
-        <label>
-          {uiText('Per\u00EDodo al abrir')}
-          <select
-            aria-label={uiText('Temporalidad inicial')}
-            value={timeframe}
-            onChange={(e) => setTimeframe(e.target.value as Timeframe)}
-          >
-            {uiText(timeframes.map((tf) => <option key={tf}>{uiText(tf)}</option>))}
-          </select>
-        </label>
-        <label>
-          {uiText('Estilo al abrir')}
-          <select
-            aria-label={uiText('Tipo de gr\u00E1fico')}
-            value={chartType}
-            onChange={(e) => setChartType(e.target.value as TradingViewChartType)}
-          >
-            <option value="candles">{uiText('Velas')}</option>
-            <option value="line">{uiText('L\u00EDnea')}</option>
-            <option value="area">{uiText('\u00C1rea')}</option>
-            <option value="bars">{uiText('Barras OHLC')}</option>
-          </select>
-        </label>
-        <div className="layout-buttons">
-          {uiText(
-            [
-              [1, Square],
-              [2, Columns2],
-              [4, LayoutGrid],
-            ].map(([count, Icon]) => {
-              const I = Icon as typeof Square;
-              return (
-                <button
-                  key={String(count)}
-                  aria-label={uiText('{0} gr\u00E1ficos', [count])}
-                  aria-pressed={ids.length === count}
-                  className={ids.length === count ? 'active' : ''}
-                  onClick={() => layout(count as number)}
-                >
-                  <I size={15} />
-                </button>
-              );
-            }),
-          )}
-        </div>
-      </div>
       <div className="workspace-meta">
         <span>{uiText(name)}</span>
         <div>
+          <div className="layout-buttons">
+            {uiText(
+              [
+                [1, Square],
+                [2, Columns2],
+                [4, LayoutGrid],
+              ].map(([count, Icon]) => {
+                const I = Icon as typeof Square;
+                return (
+                  <button
+                    key={String(count)}
+                    aria-label={uiText('{0} gr\u00E1ficos', [count])}
+                    aria-pressed={ids.length === count}
+                    className={ids.length === count ? 'active' : ''}
+                    onClick={() => layout(count as number)}
+                  >
+                    <I size={15} />
+                  </button>
+                );
+              }),
+            )}
+          </div>
+
           {uiText(
             Boolean(workspaces.data?.length) && (
               <label className="workspace-picker">
@@ -268,25 +245,11 @@ function ChartTile({
   return (
     <section className="panel chart-tile">
       <div className="chart-tile-header">
-        <div className="asset-cell">
-          {uiText(instrument && <AssetIcon instrument={instrument} small />)}
-          <select
-            aria-label={uiText('Activo del gr\u00E1fico {0}', [index + 1])}
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          >
-            {uiText(!seed && <option value={id}>{uiText(instrument?.name ?? id)}</option>)}
-            {uiText(
-              instruments
-                .filter((i) => i.type !== 'cash')
-                .map((i) => (
-                  <option value={i.id} key={i.id}>
-                    {uiText(i.symbol)} · {uiText(i.exchange)} · {uiText(i.currency)}
-                  </option>
-                )),
-            )}
-          </select>
-        </div>
+        <ResearchAssetPicker
+          instrument={instrument}
+          label={uiText('Activo del gr\u00E1fico {0}', [index + 1])}
+          onChange={(selected) => setId(selected.id)}
+        />
         <span className="outlined-chip">{uiText('Datos de TradingView')}</span>
       </div>
       {uiText(

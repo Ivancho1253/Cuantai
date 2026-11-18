@@ -270,8 +270,9 @@
 }
 .import-ocr textarea {
   font:
-    13px/1.7 ui-monospace,
-    monospace;
+    13px/1.7 var(--font-sans),
+    Arial,
+    sans-serif;
   margin: 12px 0;
 }
 .import-wallet-controls {

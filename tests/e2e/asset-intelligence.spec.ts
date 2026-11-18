@@ -13,8 +13,12 @@ test('asset opens with returns, conclusions, risk, chat, news and a large primar
     page.getByRole('region', { name: 'Rendimiento del activo', exact: true }),
   ).toBeVisible();
   await expect(page.locator('.performance-card')).toHaveCount(4);
-  await expect(page.locator('.performance-card').last()).toContainText('Histórico insuficiente');
+  await expect(page.locator('.performance-card').last()).toHaveAttribute(
+    'title',
+    /Histórico insuficiente/,
+  );
   for (const name of [
+    'Sesgo técnico del activo',
     'Conclusión del análisis técnico',
     'Conclusión del análisis fundamental',
     'Riesgo del activo',

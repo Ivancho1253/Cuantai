@@ -74,3 +74,38 @@ describe('Issuer logos and asset identity', () => {
     ).toBeNull();
   });
 });
+
+describe('reviewed issuer images', () => {
+  it('uses the current official Galicia mark and explicit recovered certificate identities', () => {
+    expect(assetLogo(listing('BYMA:GGAL:ARS'))?.src).toBe('/asset-logos/ggal-official.svg');
+    const certificate = {
+      ...listing('BYMA:AAPL:ARS'),
+      id: 'BYMA:ADBE:ARS',
+      symbol: 'ADBE',
+      name: 'Adobe Systems Incorporated · CEDEAR',
+      underlyingId: undefined,
+    };
+    expect(assetLogo(certificate)?.src).toBe(
+      assetLogo({
+        ...listing('NASDAQ:AAPL:USD'),
+        id: 'NASDAQ:ADBE:USD',
+        symbol: 'ADBE',
+        name: 'Adobe Inc.',
+      })?.src,
+    );
+    expect(
+      assetLogo({ ...certificate, id: 'BYMA:UNVERIFIED:ARS', symbol: 'UNVERIFIED' }),
+    ).toBeNull();
+  });
+  it('uses the verified fund manager instead of a company sharing the fund ticker', () => {
+    const fund = {
+      ...listing('NYSE:SPY:USD'),
+      id: 'ARCA:EXAMPLE:USD',
+      symbol: 'EXAMPLE',
+      exchange: 'ARCA',
+      name: 'Vanguard Example Fund ETF',
+    };
+    expect(assetLogo(fund)?.name).toContain('Vanguard');
+    expect(assetLogo(fund)?.src).toMatch(/^\/asset-logos\/issuers\//);
+  });
+});

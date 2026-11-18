@@ -1,14 +1,14 @@
 'use client';
 import { useText as useUiText } from './locale-provider';
 import { useLocale } from './locale-provider';
-import { useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
-import { ExternalLink, Newspaper, ArrowUpRight, RefreshCw } from 'lucide-react';
+import { ExternalLink, Newspaper, ArrowUpRight, Search, X } from 'lucide-react';
 import { useApp } from './app-shell';
 import { api, dateLabel } from '@/lib/utils';
-import type { NewsItem } from '@/lib/market/types';
-import { EmptyState, SectionTitle, ErrorState, Skeleton, Modal } from './ui';
+import type { Instrument, NewsItem } from '@/lib/market/types';
+import { AssetIcon, EmptyState, SectionTitle, ErrorState, Skeleton, Modal } from './ui';
 function NewsMedia({ item }: { item: NewsItem }) {
   const uiText = useUiText();
   const [failed, setFailed] = useState(false);
@@ -50,25 +50,107 @@ export function News({
   const { locale } = useLocale();
   const { demo } = useApp();
   const [search, setSearch] = useState('');
+  const [selectedAsset, setSelectedAsset] = useState<Instrument | null>(null);
+  const [assetQuery, setAssetQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [activeResult, setActiveResult] = useState(-1);
+  const searchRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const resultsId = useId();
+  const selectedId = instrumentId ?? selectedAsset?.id;
+  const related = contextual || Boolean(selectedAsset);
+  useEffect(() => {
+    const timer = setTimeout(() => setAssetQuery(search.trim()), 220);
+    return () => clearTimeout(timer);
+  }, [search]);
+  useEffect(() => {
+    const close = (event: PointerEvent) => {
+      if (!searchRef.current?.contains(event.target as Node)) setSearchOpen(false);
+    };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, []);
+  const assets = useQuery({
+    queryKey: ['news-asset-search', 'issuers', assetQuery],
+    queryFn: () =>
+      api<{ instruments: Instrument[] }>(
+        'instruments?purpose=news&q=' + encodeURIComponent(assetQuery),
+      ),
+    enabled: !instrumentId && searchOpen && assetQuery.length >= 2,
+    staleTime: 60000,
+  });
+  const normalizeSearch = (value: string) =>
+    value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+  const exactSearch = normalizeSearch(assetQuery);
+  const relevance = (asset: Instrument) => {
+    if (
+      normalizeSearch(asset.symbol) === exactSearch ||
+      normalizeSearch(asset.name) === exactSearch ||
+      normalizeSearch(asset.providerSymbol ?? '') === exactSearch
+    )
+      return 0;
+    return normalizeSearch(asset.name).startsWith(exactSearch) ? 1 : 2;
+  };
+  const matches =
+    (assetQuery === search.trim() ? assets.data?.instruments : [])
+      ?.filter((i) => i.type !== 'cash')
+      .sort(
+        (a, b) =>
+          relevance(a) - relevance(b) ||
+          Number(a.type === 'cedear') - Number(b.type === 'cedear') ||
+          (a.marketCapRank ?? Infinity) - (b.marketCapRank ?? Infinity),
+      )
+      .slice(0, 6) ?? [];
+  const showMatches = !compact && !instrumentId && searchOpen && search.trim().length >= 2;
+  function chooseAsset(asset: Instrument) {
+    setSelectedAsset(asset);
+    setScope('company');
+    setSearch('');
+    setSearchOpen(false);
+    setVisibleCount(6);
+    setActiveResult(-1);
+    inputRef.current?.focus();
+  }
+  function clearAsset() {
+    setSelectedAsset(null);
+    setScope('company');
+    setSearch('');
+    setSearchOpen(false);
+    setVisibleCount(6);
+    inputRef.current?.focus();
+  }
   const [article, setArticle] = useState<NewsItem | null>(null);
   const [scope, setScope] = useState<'company' | 'context'>('company');
   const [visibleCount, setVisibleCount] = useState(6);
   const news = useQuery({
-    queryKey: ['news', instrumentId, demo, scope],
+    queryKey: ['news', selectedId, demo, scope],
     queryFn: () =>
       api<{
         items: NewsItem[];
         error?: string;
       }>(
-        `news?${instrumentId ? `id=${encodeURIComponent(instrumentId)}&` : ''}${demo ? 'demo=true&' : ''}scope=${scope}`,
+        `news?${selectedId ? `id=${encodeURIComponent(selectedId)}&` : ''}${demo ? 'demo=true&' : ''}scope=${scope}`,
       ),
     refetchInterval: 300000,
   });
   const filteredItems =
     news.data?.items.filter((i) =>
-      `${i.title} ${i.source}`.toLowerCase().includes(search.toLowerCase()),
+      `${i.title} ${i.source}`
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .includes(
+          search
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase(),
+        ),
     ) ?? [];
-  const items = filteredItems.slice(0, compact ? 5 : contextual ? visibleCount : 30);
+  const items = filteredItems.slice(0, compact ? 5 : related ? visibleCount : 30);
   return (
     <>
       {uiText(
@@ -83,7 +165,146 @@ export function News({
         ),
       )}
       <div className={`panel news-container news-editorial${compact ? ' asset-news-compact' : ''}`}>
-        {contextual && (
+        <div className="panel-header">
+          <strong>
+            <Newspaper size={16} />
+            {uiText(compact || contextual ? 'Últimas noticias' : 'Noticias del mercado')}
+          </strong>
+          {!compact && (
+            <div
+              className="news-search"
+              ref={searchRef}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setSearchOpen(false);
+              }}
+            >
+              <label className="news-search-field">
+                <Search size={18} aria-hidden="true" />
+                <input
+                  ref={inputRef}
+                  aria-label={uiText('Buscar noticias')}
+                  role={instrumentId ? undefined : 'combobox'}
+                  aria-autocomplete={instrumentId ? undefined : 'list'}
+                  aria-expanded={instrumentId ? undefined : showMatches}
+                  aria-controls={!instrumentId && showMatches ? resultsId : undefined}
+                  aria-activedescendant={
+                    showMatches && activeResult >= 0 ? resultsId + '-' + activeResult : undefined
+                  }
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setSearchOpen(true);
+                    setActiveResult(-1);
+                  }}
+                  onFocus={() => setSearchOpen(true)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                      setSearchOpen(false);
+                      setActiveResult(-1);
+                    }
+                    if (!showMatches || !matches.length) return;
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault();
+                      setActiveResult((i) => Math.min(i + 1, matches.length - 1));
+                    }
+                    if (e.key === 'ArrowUp') {
+                      e.preventDefault();
+                      setActiveResult((i) => Math.max(i - 1, 0));
+                    }
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      chooseAsset(matches[Math.max(0, activeResult)]);
+                    }
+                  }}
+                  placeholder={uiText(
+                    instrumentId ? 'Buscar en estos titulares…' : 'Buscar titulares o activos…',
+                  )}
+                />
+              </label>
+              {search && (
+                <button
+                  type="button"
+                  className="news-search-clear"
+                  aria-label={uiText('Borrar búsqueda')}
+                  onClick={() => {
+                    setSearch('');
+                    setSearchOpen(false);
+                    inputRef.current?.focus();
+                  }}
+                >
+                  <X size={15} />
+                </button>
+              )}
+              {showMatches && (
+                <div className="news-asset-suggestions">
+                  <div className="news-suggestions-heading">
+                    <Search size={14} />
+                    {uiText('Ver noticias de un activo')}
+                  </div>
+                  <div id={resultsId} role="listbox" aria-label={uiText('Activos encontrados')}>
+                    {matches.map((asset, index) => (
+                      <button
+                        type="button"
+                        role="option"
+                        id={resultsId + '-' + index}
+                        aria-selected={index === activeResult}
+                        key={asset.id}
+                        onClick={() => chooseAsset(asset)}
+                      >
+                        <AssetIcon instrument={asset} />
+                        <span>
+                          <strong>{asset.symbol}</strong>
+                          <small>{asset.name}</small>
+                        </span>
+                        <small className="news-suggestion-market">
+                          {asset.exchange} · {asset.currency}
+                        </small>
+                        <ArrowUpRight size={15} />
+                      </button>
+                    ))}
+                  </div>
+                  {assets.isError ? (
+                    <p role="status">
+                      {uiText('No se pudo buscar activos. Podés seguir filtrando titulares.')}
+                    </p>
+                  ) : assetQuery !== search.trim() || assets.isPending ? (
+                    <p role="status">{uiText('Buscando activos…')}</p>
+                  ) : !matches.length ? (
+                    <p>
+                      {uiText(
+                        'Sin activos coincidentes. La búsqueda sigue filtrando los titulares.',
+                      )}
+                    </p>
+                  ) : null}
+                  <p className="news-suggestions-hint">
+                    {uiText(
+                      'Elegí un activo para consultar sus noticias. El texto también filtra los titulares actuales.',
+                    )}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        {selectedAsset && (
+          <div className="news-selected-asset" role="status">
+            <AssetIcon instrument={selectedAsset} small />
+            <span>
+              <strong>{uiText('Noticias de {0}', [selectedAsset.symbol])}</strong>
+              <small>
+                {selectedAsset.name} · {selectedAsset.exchange}
+              </small>
+            </span>
+            <button
+              type="button"
+              onClick={clearAsset}
+              aria-label={uiText('Quitar filtro de activo')}
+            >
+              <X size={16} />
+            </button>
+          </div>
+        )}
+        {related && (
           <div className="asset-news-scopes" role="group" aria-label={uiText('Tipo de noticias')}>
             <button
               aria-pressed={scope === 'company'}
@@ -114,31 +335,6 @@ export function News({
             </p>
           </div>
         )}
-        <div className="panel-header">
-          <strong>
-            <Newspaper size={16} />
-            {uiText(compact || contextual ? 'Últimas noticias' : 'Noticias del mercado')}
-          </strong>
-          <button
-            className="icon-button"
-            aria-label={uiText('Actualizar noticias')}
-            disabled={news.isFetching}
-            onClick={() => news.refetch()}
-          >
-            <RefreshCw size={16} />
-          </button>
-          {uiText(
-            !compact && (
-              <input
-                className="compact-input"
-                aria-label={uiText('Buscar noticias')}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder={uiText('Filtrar titulares...')}
-              />
-            ),
-          )}
-        </div>
         {uiText(
           news.isLoading ? (
             <Skeleton className="table-skeleton" />
@@ -158,7 +354,7 @@ export function News({
                         </time>
                       </div>
                       <h2>{uiText(item.title)}</h2>
-                      {contextual && item.relevance && (
+                      {related && item.relevance && (
                         <span className="news-relevance" title={uiText(item.relevance.reason)}>
                           {uiText(item.relevance.label)}
                         </span>
@@ -184,8 +380,23 @@ export function News({
             <EmptyState
               title={uiText('Sin titulares para mostrar.')}
               action={
-                <button className="button button-secondary" onClick={() => news.refetch()}>
-                  {uiText('Actualizar noticias')}
+                <button
+                  className="button button-secondary"
+                  onClick={() => {
+                    if (search) {
+                      setSearch('');
+                      setSearchOpen(false);
+                    } else if (selectedAsset) clearAsset();
+                    else news.refetch();
+                  }}
+                >
+                  {uiText(
+                    search
+                      ? 'Limpiar búsqueda'
+                      : selectedAsset
+                        ? 'Ver noticias del mercado'
+                        : 'Reintentar',
+                  )}
                 </button>
               }
             >
@@ -199,7 +410,7 @@ export function News({
           ),
         )}
       </div>
-      {contextual && filteredItems.length > items.length && (
+      {related && filteredItems.length > items.length && (
         <button
           className="button button-secondary asset-news-more"
           onClick={() => setVisibleCount((count) => count + 6)}

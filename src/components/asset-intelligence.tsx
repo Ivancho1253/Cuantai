@@ -1,36 +1,32 @@
 'use client';
+import type { TechnicalHorizon } from '@/lib/finance/chart-indicators';
 import { useText, useLocale } from './locale-provider';
 import { useQuery } from '@tanstack/react-query';
-import {
-  Activity,
-  Shield,
-  Building2,
-  Maximize2,
-  RefreshCw,
-  ArrowUpRight,
-  MessageSquare,
-  Newspaper,
-} from 'lucide-react';
+import { Shield, Maximize2, MessageSquare, Newspaper } from 'lucide-react';
 import { useApp } from './app-shell';
-import { Button, Skeleton, ErrorState, DataBadge } from './ui';
-import { api, dateLabel, cn } from '@/lib/utils';
+import { Button } from './ui';
+import { api, dateLabel } from '@/lib/utils';
 import type { Instrument } from '@/lib/market/types';
 import type { AssetOverview } from '@/lib/finance/asset-overview';
 import { TradingViewChart } from './tradingview-chart';
 import { tradingViewSymbol } from '@/lib/market/tradingview';
 import { AssetChat } from './asset-chat';
 import { News } from './news';
-import { TechnicalGauge } from './technical-gauge';
+import { FundamentalPanel } from './fundamental-research';
 import { ChartIndicators } from './chart-indicators';
 
 export function AssetIntelligence({
   instrument,
   onChart,
   onFinancials,
+  horizon,
+  onHorizonChange,
 }: {
   instrument: Instrument;
   onChart: () => void;
   onFinancials: () => void;
+  horizon: TechnicalHorizon;
+  onHorizonChange: (horizon: TechnicalHorizon) => void;
 }) {
   const t = useText();
   const { locale } = useLocale();
@@ -53,14 +49,6 @@ export function AssetIntelligence({
           maximumFractionDigits: 2,
           ...(compact ? { notation: 'compact' as const } : {}),
         }).format(Number(value));
-  const financialFacts =
-    data?.facts
-      .filter(
-        (f) =>
-          ['net-income', 'operating-cash-flow', 'revenue-growth'].includes(f.id) ||
-          f.id.startsWith('fundamental-'),
-      )
-      .slice(0, 6) ?? [];
   return (
     <div className="asset-intelligence asset-priority-layout">
       <section
@@ -95,158 +83,20 @@ export function AssetIntelligence({
         </div>
         <TradingViewChart symbol={tradingViewSymbol(instrument)} chartType="candles" height={680} />
       </section>
-      <div className="asset-pulse-row">
-        <TechnicalGauge instrumentId={instrument.id} />
-        <section className="panel asset-returns-panel" aria-label={t('Rendimiento del activo')}>
-          <div className="asset-detail-heading">
-            <div>
-              <span className="asset-overline">{t('EVOLUCIÓN')}</span>
-              <h2>{t('Rendimiento en perspectiva')}</h2>
-            </div>
-            <Button variant="ghost" onClick={() => query.refetch()} disabled={query.isFetching}>
-              <RefreshCw size={16} />
-              {t('Actualizar datos')}
-            </Button>
-          </div>
-          {query.isPending ? (
-            <Skeleton className="asset-overview-skeleton" />
-          ) : query.isError ? (
-            <ErrorState message={query.error.message} retry={() => query.refetch()} />
-          ) : (
-            data && (
-              <>
-                <div className="asset-data-note">
-                  <DataBadge status={data.provenance.status} />
-                  <span>
-                    {data.provenance.source} · {t('Último cierre')}:{' '}
-                    {data.dataAsOf ? dateLabel(data.dataAsOf, locale) : t('no disponible')}
-                  </span>
-                  {data.stale && <span className="negative">{t('Histórico desactualizado')}</span>}
-                </div>
-                <div className="asset-performance">
-                  {data.performance.map((period) => (
-                    <article className="performance-card" key={period.id}>
-                      <span>{t(period.label)}</span>
-                      <strong
-                        className={cn(
-                          period.value !== null &&
-                            (period.value > 0 ? 'positive' : period.value < 0 ? 'negative' : ''),
-                        )}
-                      >
-                        {period.value === null
-                          ? '—'
-                          : `${period.value > 0 ? '+' : ''}${format(period.value)}%`}
-                      </strong>
-                      <small>
-                        {period.value === null
-                          ? t(period.reason)
-                          : `${dateLabel(period.from!, locale)} → ${dateLabel(period.to!, locale)}`}
-                      </small>
-                    </article>
-                  ))}
-                </div>
-                <details className="asset-methodology">
-                  <summary>{t('Cómo se calculan estos rendimientos')}</summary>
-                  <p>{t(data.methodology)}</p>
-                </details>
-              </>
-            )
-          )}
-          {query.isError && (
-            <Button variant="secondary" onClick={() => query.refetch()}>
-              {t('Reintentar resumen')}
-            </Button>
-          )}
-        </section>
-      </div>
       <section
         className="asset-technical-section"
         id="asset-technical"
         aria-label={t('Conclusión del análisis técnico')}
       >
-        <div className="asset-detail-heading">
-          <div>
-            <span className="asset-overline">{t('ENTENDÉ LA TENDENCIA')}</span>
-            <h2>
-              <Activity size={24} />
-              {t('Análisis técnico')}
-            </h2>
-            <p>
-              {t('Momentum, fuerza y dirección. Tres lecturas para poner el precio en contexto.')}
-            </p>
-          </div>
-        </div>
-        <ChartIndicators instrumentId={instrument.id} />
+        <ChartIndicators
+          instrumentId={instrument.id}
+          detailed
+          horizon={horizon}
+          onHorizonChange={onHorizonChange}
+        />
       </section>
       <div className="asset-business-row">
-        <section
-          className="panel asset-fundamental-panel"
-          id="asset-fundamental"
-          aria-label={t('Conclusión del análisis fundamental')}
-        >
-          <div className="asset-detail-heading">
-            <div>
-              <span className="asset-overline">{t('MIRÁ DETRÁS DEL PRECIO')}</span>
-              <h2>
-                <Building2 size={24} />
-                {t('Análisis fundamental')}
-              </h2>
-            </div>
-            <Button variant="secondary" onClick={onFinancials}>
-              {t('Ver estados financieros')}
-              <ArrowUpRight size={16} />
-            </Button>
-          </div>
-          {query.isPending ? (
-            <Skeleton className="asset-overview-skeleton" />
-          ) : data ? (
-            <>
-              <h3 className="fundamental-verdict">{t(data.fundamental.title)}</h3>
-              <p className="fundamental-description">{t(data.fundamental.conclusion)}</p>
-              <div className="asset-fundamental-metrics">
-                {financialFacts.length
-                  ? financialFacts.map((fact) => (
-                      <div key={fact.id}>
-                        <span>{t(fact.label)}</span>
-                        <strong>
-                          {format(fact.value, fact.unit !== '%')}
-                          <small>{fact.unit}</small>
-                        </strong>
-                        <time>{dateLabel(fact.asOf, locale)}</time>
-                      </div>
-                    ))
-                  : [
-                      'Resultado neto anual',
-                      'Flujo operativo anual',
-                      'Crecimiento anual de ingresos',
-                    ].map((label) => (
-                      <div key={label}>
-                        <span>{t(label)}</span>
-                        <strong>—</strong>
-                        <small>{t('Sin datos verificados')}</small>
-                      </div>
-                    ))}
-              </div>
-              <details className="asset-methodology">
-                <summary>{t('Fuentes y cobertura')}</summary>
-                <p>{t(data.fundamental.error ?? data.fundamentals.error ?? '')}</p>
-                {data.fundamental.issuerName && (
-                  <p>
-                    {data.fundamental.issuerName} ·{' '}
-                    {data.fundamental.period && dateLabel(data.fundamental.period, locale)}
-                  </p>
-                )}
-                {data.fundamental.warnings.map((warning) => (
-                  <p key={warning}>{t(warning)}</p>
-                ))}
-              </details>
-            </>
-          ) : (
-            <p className="fundamental-description">
-              {t('No se pudo recuperar el análisis. El gráfico sigue disponible.')}
-            </p>
-          )}
-        </section>
+        <FundamentalPanel instrument={instrument} onFinancials={onFinancials} />
         <section className="panel asset-risk-panel" aria-label={t('Riesgo del activo')}>
           <div className="asset-detail-heading">
             <div>

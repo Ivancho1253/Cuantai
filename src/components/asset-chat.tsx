@@ -1,16 +1,37 @@
 'use client';
-import { useText as useUiText } from './locale-provider';
+import { useLocale, useText as useUiText } from './locale-provider';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowUp, MessageSquare, ExternalLink, LoaderCircle } from 'lucide-react';
+import {
+  ArrowUp,
+  MessageSquare,
+  ExternalLink,
+  LoaderCircle,
+  ArrowUpRight,
+  ChartNoAxesCombined,
+  Building2,
+  ShieldCheck,
+  BookOpen,
+} from 'lucide-react';
 import type { NewsItem } from '@/lib/market/types';
 import { useApp } from './app-shell';
-import { Button } from './ui';
+import { Button, AssetIcon } from './ui';
 import { api, dateLabel } from '@/lib/utils';
 import type { AssetOverview } from '@/lib/finance/asset-overview';
 import { rulesAnswer, type ChatTurn } from '@/lib/ai/asset-chat';
 export function AssetChat({ overview }: { overview: AssetOverview }) {
   const uiText = useUiText();
+  const { locale } = useLocale();
+  const formatFact = (value: string) => {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return value;
+    return new Intl.NumberFormat(
+      locale === 'en' ? 'en-US' : locale === 'pt' ? 'pt-BR' : 'es-AR',
+      numeric !== 0 && Math.abs(numeric) < 0.01
+        ? { maximumSignificantDigits: 4 }
+        : { maximumFractionDigits: 2 },
+    ).format(numeric);
+  };
   const { user, demo } = useApp();
   const persistent = Boolean(user) && !demo;
   const qc = useQueryClient();
@@ -104,191 +125,206 @@ export function AssetChat({ overview }: { overview: AssetOverview }) {
       input.current?.focus();
     }
   }
+  const connected = Boolean(status.data?.ai.configured && !overview.demo);
+  const prompts = [
+    {
+      title: 'Leer la tendencia',
+      question: 'Resumí el análisis técnico',
+      Icon: ChartNoAxesCombined,
+    },
+    { title: 'Entender el negocio', question: '¿Qué dicen sus fundamentos?', Icon: Building2 },
+    { title: 'Medir el riesgo', question: '¿Qué riesgo tiene?', Icon: ShieldCheck },
+    { title: 'Interpretar el RSI', question: '¿Qué dice el momentum?', Icon: BookOpen },
+  ];
   return (
     <section
-      className="panel asset-chat"
+      className="panel asset-chat conversation-studio"
       id="asset-chat"
       aria-label={uiText('Chat con IA del activo')}
     >
-      <div className="panel-header">
-        <strong>
-          <MessageSquare size={16} />
-          {uiText(' Preguntale a Cuantai')}
-        </strong>
-        <span className="badge">{uiText(overview.instrument.symbol)}</span>
-      </div>
-      <p className="asset-chat-intro">
-        {uiText('Consultá sus fundamentos, indicadores, riesgos y noticias.')}
-        {uiText(' ')}
-        {uiText(
-          persistent
-            ? 'Historial privado guardado en tu cuenta.'
-            : 'Demo por reglas · historial temporal en esta página.',
-        )}
-      </p>
-      {uiText(
-        (!status.data?.ai.configured || overview.demo) && (
-          <p className="asset-chat-intro research-data-note">
+      <header className="conversation-heading">
+        <div className="conversation-identity">
+          <AssetIcon instrument={overview.instrument} />
+          <div>
+            <h3>{uiText('Preguntale a Cuantai')}</h3>
+            <p>
+              {overview.instrument.symbol} · {overview.instrument.name}
+            </p>
+          </div>
+        </div>
+        <span className="conversation-mode" data-connected={connected}>
+          {uiText(connected ? 'IA conectada' : 'Lectura por reglas')}
+        </span>
+      </header>
+      <div className="conversation-context">
+        <span>
+          {uiText(
+            persistent
+              ? 'Historial privado guardado en tu cuenta.'
+              : 'Conversación temporal de demostración.',
+          )}
+        </span>
+        <details>
+          <summary>{uiText('Cómo responde')}</summary>
+          <p>
             {uiText(
-              'Sin IA conectada: podés consultar las lecturas disponibles por reglas. Las preguntas abiertas estarán disponibles al conectar la IA.',
+              connected
+                ? 'Las respuestas usan los datos del activo y enlazan sus fuentes.'
+                : 'Sin IA conectada: las respuestas técnicas se calculan con reglas a partir de los datos disponibles.',
             )}
           </p>
-        ),
+        </details>
+      </div>
+      {persistent && history.isPending && (
+        <p role="status" className="asset-chat-intro">
+          {uiText('Cargando conversación…')}
+        </p>
       )}
-      {uiText(
-        persistent && history.isPending ? (
-          <p role="status" className="asset-chat-intro">
-            {uiText('Cargando conversaci\u00F3n\u2026')}
-          </p>
-        ) : history.isError ? (
-          <div className="asset-chat-intro" role="alert">
-            {uiText(history.error.message)}
-            {uiText(' ')}
-            <Button variant="ghost" onClick={() => history.refetch()}>
-              {uiText('Reintentar historial')}
-            </Button>
-          </div>
-        ) : null,
+      {history.isError && (
+        <div role="alert" className="asset-chat-intro">
+          {uiText(history.error.message)}
+          <Button variant="ghost" onClick={() => history.refetch()}>
+            {uiText('Reintentar historial')}
+          </Button>
+        </div>
       )}
       <div
         className="asset-chat-log"
         role="log"
-        aria-label={uiText('Conversaci\u00F3n del activo')}
+        aria-label={uiText('Conversación del activo')}
         aria-live="polite"
         ref={log}
         tabIndex={0}
       >
-        {uiText(
-          history.data?.hasMore && (
-            <p className="form-hint">
-              {uiText('Se muestran los \u00FAltimos treinta intercambios.')}
+        {history.data?.hasMore && (
+          <p className="form-hint">{uiText('Se muestran los últimos treinta intercambios.')}</p>
+        )}
+        {!turns.length && (
+          <div className="asset-chat-welcome">
+            <span className="conversation-welcome-icon">
+              <MessageSquare size={28} />
+            </span>
+            <span className="eyebrow">{uiText('UNA CONVERSACIÓN SOBRE TU ACTIVO')}</span>
+            <h3>{uiText('¿Qué querés entender de {0}?', [overview.instrument.symbol])}</h3>
+            <p>
+              {uiText(
+                'De un indicador al negocio completo. Hacé tu pregunta y encontrá una explicación con datos y fuentes.',
+              )}
             </p>
-          ),
+          </div>
         )}
-        {uiText(
-          !turns.length && (
-            <div className="asset-chat-welcome">
-              <span className="eyebrow">{uiText('TU INVESTIGACI\u00D3N, CON CONTEXTO')}</span>
-              <h3>{uiText('Una buena pregunta abre otra perspectiva.')}</h3>
-              <p>
-                {uiText(
-                  'Preguntá por resultados, deuda, tendencia o noticias. Cada respuesta distingue los datos disponibles de lo que falta investigar.',
-                )}
-              </p>
+        {turns.map((turn) => (
+          <article className="asset-chat-turn" key={turn.id}>
+            <div className="asset-chat-question">
+              <small>{uiText('Vos')}</small>
+              <p>{turn.question}</p>
             </div>
-          ),
-        )}
-        {uiText(
-          turns.map((turn) => (
-            <div className="asset-chat-turn" key={turn.id}>
-              <div className="asset-chat-question">
-                <small>{uiText('Vos')}</small>
-                <p>{uiText(turn.question)}</p>
-              </div>
-              <div className="asset-chat-answer">
+            <div className="asset-chat-answer">
+              <div className="conversation-answer-heading">
+                <span className="conversation-answer-mark">C</span>
                 <small>
-                  {uiText('Cuantai \u00B7 ')}
+                  {uiText('Cuantai · ')}
                   {uiText(turn.answer.mode === 'ai' ? 'IA' : 'Reglas')}
                 </small>
-                <p>{uiText(turn.answer.text)}</p>
-                {uiText(
-                  turn.answer.facts.length > 0 && (
-                    <dl className="chat-facts">
-                      {uiText(
-                        turn.answer.facts.map((fact) => (
-                          <div key={fact.id}>
-                            <dt>{uiText(fact.label)}</dt>
-                            <dd>
-                              {uiText(fact.value)} {uiText(fact.unit)}
-                            </dd>
-                            <small>{uiText(dateLabel(fact.asOf))}</small>
-                          </div>
-                        )),
-                      )}
-                    </dl>
-                  ),
-                )}
-                <small className="chat-notice">{uiText(turn.answer.notice)}</small>
-                <div className="chat-sources">
-                  {uiText(
-                    turn.answer.sources.map((source) => (
-                      <a key={source.id} href={source.url} target="_blank" rel="noreferrer">
-                        {uiText(source.title)} · {uiText(dateLabel(source.asOf))}{' '}
-                        <ExternalLink size={10} />
-                      </a>
-                    )),
-                  )}
-                </div>
               </div>
+              <p>{uiText(turn.answer.text)}</p>
+              {turn.answer.facts.length > 0 && (
+                <dl className="chat-facts">
+                  {turn.answer.facts.map((fact) => (
+                    <div key={fact.id}>
+                      <dt>{uiText(fact.label)}</dt>
+                      <dd>
+                        {formatFact(fact.value)} <span>{fact.unit}</span>
+                      </dd>
+                      <small>{dateLabel(fact.asOf)}</small>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              <small className="chat-notice">{uiText(turn.answer.notice)}</small>
+              {turn.answer.sources.length > 0 && (
+                <details className="conversation-source-list">
+                  <summary>
+                    {uiText('Consultar fuentes')} <span>{turn.answer.sources.length}</span>
+                  </summary>
+                  <div className="chat-sources">
+                    {turn.answer.sources.map((source) => (
+                      <a key={source.id} href={source.url} target="_blank" rel="noreferrer">
+                        {source.title} · {dateLabel(source.asOf)}
+                        <ExternalLink size={13} />
+                      </a>
+                    ))}
+                  </div>
+                </details>
+              )}
             </div>
-          )),
-        )}
-        {uiText(
-          busy && (
-            <p className="asset-chat-intro" role="status">
-              <LoaderCircle size={14} className="spin" />
-              {uiText(' Revisando la evidencia\u2026')}
-            </p>
-          ),
+          </article>
+        ))}
+        {busy && (
+          <p className="conversation-loading" role="status">
+            <LoaderCircle size={17} className="spin" />
+            {uiText('Revisando la evidencia…')}
+          </p>
         )}
       </div>
-      {uiText(
-        !turns.length && (
-          <div className="asset-chat-prompts">
-            {uiText(
-              [
-                '¿Qué riesgo tiene?',
-                'Resumí el análisis técnico',
-                '¿Qué noticias le afectan?',
-                '¿Qué dicen sus fundamentos?',
-              ].map((prompt) => (
-                <button
-                  key={prompt}
-                  onClick={() => {
-                    setQuestion(prompt);
-                    input.current?.focus();
-                  }}
-                >
-                  {uiText(prompt)}
-                </button>
-              )),
-            )}
-          </div>
-        ),
+      {!turns.length && (
+        <div className="asset-chat-prompts">
+          {prompts.map(({ title, question: prompt, Icon }, i) => (
+            <button
+              type="button"
+              key={prompt}
+              data-accent={i}
+              onClick={() => {
+                setQuestion(prompt);
+                input.current?.focus();
+              }}
+            >
+              <Icon size={19} />
+              <span>{uiText(title)}</span>
+              <ArrowUpRight size={15} />
+            </button>
+          ))}
+        </div>
       )}
-      <form className="asset-chat-form" onSubmit={send}>
-        <label className="sr-only" htmlFor="asset-question">
-          {uiText('Pregunta sobre el activo')}
-        </label>
-        <textarea
-          id="asset-question"
-          ref={input}
-          placeholder={uiText('Pregunt\u00E1 sobre {0}\u2026', [overview.instrument.symbol])}
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          maxLength={1000}
-          rows={2}
-          disabled={busy}
-        />
-        <Button
-          type="submit"
-          aria-label={uiText('Enviar pregunta')}
-          disabled={!question.trim() || busy || (persistent && !history.data)}
-        >
-          <ArrowUp size={18} />
-        </Button>
-      </form>
-      {uiText(
-        error && (
+      <div className="conversation-compose">
+        <form className="asset-chat-form" onSubmit={send}>
+          <label className="sr-only" htmlFor="asset-question">
+            {uiText('Pregunta sobre el activo')}
+          </label>
+          <textarea
+            id="asset-question"
+            ref={input}
+            placeholder={uiText('Preguntá sobre {0}…', [overview.instrument.symbol])}
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+                e.preventDefault();
+                e.currentTarget.form?.requestSubmit();
+              }
+            }}
+            maxLength={1000}
+            rows={2}
+            disabled={busy}
+          />
+          <Button
+            type="submit"
+            aria-label={uiText('Enviar pregunta')}
+            disabled={!question.trim() || busy || (persistent && !history.data)}
+          >
+            {busy ? <LoaderCircle size={20} className="spin" /> : <ArrowUp size={20} />}
+          </Button>
+        </form>
+        {error && (
           <p className="asset-chat-intro negative" role="alert">
             {uiText(error)}
           </p>
-        ),
-      )}
-      <p className="asset-chat-footer">
-        {uiText(question.length)}
-        {uiText('/1000 \u00B7 Informaci\u00F3n educativa. Sin ejecuci\u00F3n de operaciones.')}
-      </p>
+        )}
+        <p className="asset-chat-footer">
+          <span>{uiText('Enter para enviar · Shift + Enter para otra línea')}</span>
+          <span>{question.length}/1000</span>
+        </p>
+      </div>
     </section>
   );
 }

@@ -2,6 +2,8 @@
 import { useText as useUiText } from './locale-provider';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { ResearchAssetPicker } from './research-asset-picker';
 import { assetHref } from '@/lib/market/asset-href';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -57,6 +59,13 @@ export function Portfolio() {
   const [createOpen, setCreateOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const [transactionOpen, setTransactionOpen] = useState(false);
+  const [handledAsset, setHandledAsset] = useState('');
+  const requestedAsset = useSearchParams().get('asset');
+  const requestedInstrument = useQuery({
+    queryKey: ['instrument', requestedAsset],
+    queryFn: () => api<Instrument>('instrument?id=' + encodeURIComponent(requestedAsset!)),
+    enabled: !!requestedAsset,
+  });
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [fxOpen, setFxOpen] = useState(false);
   const [report, setReport] = useState<{
@@ -79,6 +88,11 @@ export function Portfolio() {
     enabled: Boolean(current),
   });
   const data = detail.data;
+  const assetIntentOpen = !!(
+    requestedInstrument.data &&
+    current &&
+    requestedAsset !== handledAsset
+  );
   async function submit(endpoint: string, payload: unknown, after?: () => void) {
     setBusy(true);
     try {
@@ -152,7 +166,15 @@ export function Portfolio() {
           <EmptyState
             title={uiText('Tu cartera empieza con vos.')}
             action={
-              <Link className="button button-primary" href="/register">
+              <Link
+                className="button button-primary"
+                href={
+                  requestedAsset
+                    ? '/register?next=' +
+                      encodeURIComponent('/portfolio?asset=' + encodeURIComponent(requestedAsset))
+                    : '/register'
+                }
+              >
                 {uiText('Crear mi cuenta ')}
                 <ArrowUpRight size={15} />
               </Link>
@@ -575,8 +597,11 @@ export function Portfolio() {
         )}
       </Modal>
       <Modal
-        open={transactionOpen}
-        onOpenChange={setTransactionOpen}
+        open={transactionOpen || assetIntentOpen}
+        onOpenChange={(open) => {
+          setTransactionOpen(open);
+          if (!open && requestedAsset) setHandledAsset(requestedAsset);
+        }}
         title={uiText('Registrar movimiento')}
         description={uiText(
           'Una operaci\u00F3n registrada no ejecuta ninguna orden en el mercado.',
@@ -586,9 +611,16 @@ export function Portfolio() {
         {uiText(
           current && (
             <TransactionForm
+              key={requestedInstrument.data?.id ?? 'manual'}
+              initialInstrument={requestedInstrument.data}
               portfolio={current}
               busy={busy}
-              onSubmit={(body) => submit('transactions', body, () => setTransactionOpen(false))}
+              onSubmit={(body) =>
+                submit('transactions', body, () => {
+                  setTransactionOpen(false);
+                  if (requestedAsset) setHandledAsset(requestedAsset);
+                })
+              }
             />
           ),
         )}
@@ -780,17 +812,21 @@ export function Portfolio() {
   );
 }
 function TransactionForm({
+  initialInstrument,
   portfolio,
   busy,
   onSubmit,
 }: {
+  initialInstrument?: Instrument;
   portfolio: PortfolioInfo;
   busy: boolean;
   onSubmit: (data: unknown) => void;
 }) {
   const uiText = useUiText();
-  const [id, setId] = useState('BYMA:JPM:ARS');
-  const instrument = instruments.find((i) => i.id === id)!;
+  const [instrument, setInstrument] = useState<Instrument>(
+    initialInstrument ?? instruments.find((i) => i.id === 'BYMA:JPM:ARS')!,
+  );
+  const id = instrument.id;
   const crossCurrency = instrument.currency !== portfolio.baseCurrency;
   return (
     <form
@@ -817,19 +853,11 @@ function TransactionForm({
     >
       <label>
         {uiText('Instrumento exacto')}
-        <select
-          aria-label={uiText('Instrumento exacto')}
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-        >
-          {uiText(
-            instruments.map((i) => (
-              <option key={i.id} value={i.id}>
-                {uiText(i.symbol)} · {uiText(i.exchange)} · {uiText(i.currency)} — {uiText(i.name)}
-              </option>
-            )),
-          )}
-        </select>
+        <ResearchAssetPicker
+          label="Instrumento exacto"
+          instrument={instrument}
+          onChange={setInstrument}
+        />
       </label>
       {uiText(
         instrument.type === 'cedear' && (

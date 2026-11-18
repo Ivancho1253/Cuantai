@@ -1,0 +1,108 @@
+/* Explicit popup colors also cover Windows' native select menus. */
+:root {
+  --native-control-scheme: dark;
+}
+:root[data-theme='light'] {
+  --native-control-scheme: light;
+}
+select {
+  color-scheme: var(--native-control-scheme);
+}
+select :is(option, optgroup) {
+  background-color: var(--surface);
+  color: var(--text);
+  font-size: 15px;
+}
+select option:checked {
+  background-color: var(--surface-3);
+  color: var(--text);
+}
+select option:disabled {
+  color: var(--muted);
+}
+.chart-tile-header > .research-picker {
+  padding: 6px 0;
+  min-width: 0;
+  width: min(560px, 100%);
+}
+.chart-tile-header > .research-picker strong {
+  font-size: 18px;
+  font-weight: 600;
+}
+.chart-tile-header > .research-picker small {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.chart-tile-header > .research-picker .asset-icon {
+  width: 40px;
+  height: 40px;
+}
+.workspace-meta .layout-buttons {
+  margin: 0;
+}
+.tv-workspace .workspace-meta {
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.tv-workspace .workspace-meta > div {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.research-picker-results > button {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  color: var(--text);
+  background: var(--surface);
+  font-size: 16px;
+}
+.research-picker-results > button > .asset-icon {
+  width: 40px;
+  height: 40px;
+  flex: none;
+}
+.research-picker-results > button > small {
+  white-space: nowrap;
+  text-align: right;
+}
+.research-picker-results > button > span:not(.asset-icon) small {
+  overflow-wrap: anywhere;
+}
+.research-picker-modal {
+  width: min(620px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+}
+.research-picker-modal .research-picker-search {
+  padding: 0 0 18px;
+}
+.research-picker-modal .research-picker-results {
+  padding-inline: 0;
+}
+.research-picker-results > button:hover,
+.research-picker-results > button:focus-visible {
+  background: var(--surface-2);
+}
+.research-picker-results > button small {
+  color: var(--muted);
+  font-size: 14px;
+}
+.research-picker-modal .research-picker-results {
+  max-height: min(55vh, 480px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media (max-width: 600px) {
+  .chart-tile-header > .research-picker .research-exchange {
+    display: none;
+  }
+  .chart-tile-header > .outlined-chip {
+    display: none;
+  }
+  .research-picker-results > button {
+    gap: 10px;
+  }
+  .research-picker-results > button > small {
+    font-size: 12px;
+  }
+}

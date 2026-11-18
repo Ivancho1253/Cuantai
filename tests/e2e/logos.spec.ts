@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { installTradingViewFixture } from './tradingview-fixture';
+import { installTradingViewFixture, pickChartAsset } from './tradingview-fixture';
 import { instruments } from '../../src/lib/market/catalog';
 import { assetLogo } from '../../src/lib/market/logos';
 import { findPrimaryEtf } from '../../src/lib/market/discovery';
@@ -72,7 +72,7 @@ test('broken logos have an accessible fallback and a listing change restores its
   await expect(icon).toHaveAttribute('data-logo-state', 'fallback');
   await expect(icon.locator('img')).toHaveCount(0);
   await expect(icon.getByRole('img')).toHaveAccessibleName(/logo no disponible/);
-  await page.getByLabel('Activo del gráfico 1').selectOption('BYMA:JPMD:USD');
+  await pickChartAsset(page, 1, 'BYMA:JPMD:USD');
   await expect(icon).toHaveAttribute('data-logo-state', 'loaded');
   expect(
     await icon.locator('img').evaluate((image: HTMLImageElement) => new URL(image.src).pathname),

@@ -13,3 +13,16 @@ export async function installTradingViewFixture(page: Page) {
     (route) => route.fulfill({ contentType: 'application/javascript', body: widgetFixture }),
   );
 }
+
+export async function pickChartAsset(page: Page, index: number, id: string) {
+  const [exchange, symbol, currency] = id.split(':');
+  await page.getByRole('button', { name: `Activo del gráfico ${index}`, exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: 'Elegir activo', exact: true });
+  await dialog.getByRole('textbox').fill(symbol);
+  await dialog
+    .locator('.research-picker-results > button')
+    .filter({ has: page.getByText(symbol, { exact: true }) })
+    .filter({ hasText: `${exchange} · ${currency}` })
+    .first()
+    .click();
+}

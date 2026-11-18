@@ -1,0 +1,303 @@
+[
+  {
+    "prefix": "Advisorshares|AdvisorShares",
+    "name": "AdvisorShares",
+    "src": "/asset-logos/issuers/advisorshares.png",
+    "source": "https://cdn-ilejgdg.nitrocdn.com/KInKxapHhsYXsVppzLUvuiwqyjllptyJ/assets/images/optimized/rev-221357d/advisorshares.com/wp-content/uploads/2018/11/AS_Icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "First Trust|FT Vest",
+    "name": "First Trust",
+    "src": "/asset-logos/issuers/first-trust.png",
+    "source": "https://www.ftportfolios.com/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Franklin|Templeton",
+    "name": "Franklin Templeton",
+    "src": "/asset-logos/issuers/franklin-templeton.png",
+    "source": "https://franklintempletonprod.widen.net/content/pmhnbht3ff/png/favicon_ft.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "State Street|SPDR",
+    "name": "State Street SPDR",
+    "src": "/asset-logos/issuers/state-street-spdr.png",
+    "source": "https://www.ssga.com/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "American Century",
+    "name": "American Century",
+    "src": "/asset-logos/issuers/american-century.ico",
+    "source": "https://www.americancentury.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Janus Henderson",
+    "name": "Janus Henderson",
+    "src": "/asset-logos/issuers/janus-henderson.png",
+    "source": "https://www.janushenderson.com/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Leverage Shares",
+    "name": "Leverage Shares",
+    "src": "/asset-logos/issuers/leverage-shares.png",
+    "source": "https://leverageshares.com/assets/en/build/assets/favicon-dark-CKcM58iY.svg",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "BNY|BNY Mellon",
+    "name": "BNY",
+    "src": "/asset-logos/issuers/bny.png",
+    "source": "https://www.bny.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Capital Group",
+    "name": "Capital Group",
+    "src": "/asset-logos/issuers/capital-group.png",
+    "source": "https://www.capitalgroup.com/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "VictoryShares",
+    "name": "Victory Capital",
+    "src": "/asset-logos/issuers/victory-capital.ico",
+    "source": "https://www.vcm.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Goldman Sachs",
+    "name": "Goldman Sachs",
+    "src": "/asset-logos/issuers/goldman-sachs.png",
+    "source": "https://cdn.gs.com/images/goldman-sachs/v1/gs-favicon-180.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "T. Rowe Price",
+    "name": "T. Rowe Price",
+    "src": "/asset-logos/issuers/t-rowe-price.png",
+    "source": "https://www.troweprice.com/content/dam/public/enterprise/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "GraniteShares",
+    "name": "GraniteShares",
+    "src": "/asset-logos/issuers/graniteshares.png",
+    "source": "https://graniteshares.com/granite-shares.svg",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Dimensional",
+    "name": "Dimensional",
+    "src": "/asset-logos/issuers/dimensional.ico",
+    "source": "https://www.dimensional.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "ProShares",
+    "name": "ProShares",
+    "src": "/asset-logos/issuers/proshares.png",
+    "source": "https://www.proshares.com/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Innovator",
+    "name": "Innovator",
+    "src": "/asset-logos/issuers/innovator.png",
+    "source": "https://www.innovatoretfs.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "BlackRock",
+    "name": "BlackRock",
+    "src": "/asset-logos/issuers/blackrock.ico",
+    "source": "https://www.blackrock.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Roundhill",
+    "name": "Roundhill",
+    "src": "/asset-logos/issuers/roundhill.png",
+    "source": "https://www.roundhillinvestments.com/assets/img/favicon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Vanguard",
+    "name": "Vanguard",
+    "src": "/asset-logos/issuers/vanguard.ico",
+    "source": "https://investor.vanguard.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Fidelity",
+    "name": "Fidelity",
+    "src": "/asset-logos/issuers/fidelity.png",
+    "source": "https://www.fidelity.com/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Direxion",
+    "name": "Direxion",
+    "src": "/asset-logos/issuers/direxion.ico",
+    "source": "https://www.direxion.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Defiance",
+    "name": "Defiance",
+    "src": "/asset-logos/issuers/defiance.png",
+    "source": "https://www.defianceetfs.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Simplify",
+    "name": "Simplify",
+    "src": "/asset-logos/issuers/simplify.png",
+    "source": "https://www.simplify.us/themes/custom/simplifyetfs/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "21Shares",
+    "name": "21Shares",
+    "src": "/asset-logos/issuers/21shares.png",
+    "source": "https://cdn.prod.website-files.com/68b01c26946cffef7d668608/692daba390e17b3d3d4e8a9e_Frame%201.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "iShares",
+    "name": "iShares / BlackRock",
+    "src": "/asset-logos/issuers/ishares-blackrock.ico",
+    "source": "https://www.ishares.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Invesco",
+    "name": "Invesco",
+    "src": "/asset-logos/issuers/invesco.ico",
+    "source": "https://www.invesco.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Avantis",
+    "name": "Avantis",
+    "src": "/asset-logos/issuers/avantis.ico",
+    "source": "https://www.avantisinvestors.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Calamos",
+    "name": "Calamos",
+    "src": "/asset-logos/issuers/calamos.ico",
+    "source": "https://www.calamos.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Bitwise",
+    "name": "Bitwise",
+    "src": "/asset-logos/issuers/bitwise.png",
+    "source": "https://bitwiseinvestments.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Hashdex",
+    "name": "Hashdex",
+    "src": "/asset-logos/issuers/hashdex.ico",
+    "source": "https://hashdex.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Amplify",
+    "name": "Amplify",
+    "src": "/asset-logos/issuers/amplify.png",
+    "source": "https://amplifyetfs.com/wp-content/plugins/amplify-firestore-shortcodes/images/favicon.svg?ver=1794960236",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Cambria",
+    "name": "Cambria",
+    "src": "/asset-logos/issuers/cambria.png",
+    "source": "https://www.cambriafunds.com/assets/img/cambria-favicon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "VanEck",
+    "name": "VanEck",
+    "src": "/asset-logos/issuers/vaneck.ico",
+    "source": "https://www.vaneck.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Schwab",
+    "name": "Charles Schwab",
+    "src": "/asset-logos/issuers/charles-schwab.ico",
+    "source": "https://www.schwabassetmanagement.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Pacer",
+    "name": "Pacer",
+    "src": "/asset-logos/issuers/pacer.ico",
+    "source": "https://www.paceretfs.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Tradr",
+    "name": "Tradr",
+    "src": "/asset-logos/issuers/tradr.png",
+    "source": "https://www.tradretfs.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "PIMCO",
+    "name": "PIMCO",
+    "src": "/asset-logos/issuers/pimco.png",
+    "source": "https://www.pimco.com/ren-assets/img/favicons/favicon.png?rev=39FF4811267ED9A29FB01C3CBB9955EF",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "T-REX",
+    "name": "REX Shares",
+    "src": "/asset-logos/issuers/rex-shares.png",
+    "source": "https://www.rexshares.com/wp-content/uploads/2022/11/fav.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "PGIM",
+    "name": "PGIM",
+    "src": "/asset-logos/issuers/pgim.png",
+    "source": "https://www.pgim.com/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "ALPS",
+    "name": "ALPS",
+    "src": "/asset-logos/issuers/alps.png",
+    "source": "https://www.alpsfunds.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "Tema",
+    "name": "Tema",
+    "src": "/asset-logos/issuers/tema.png",
+    "source": "https://www.temaetfs.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "ARK",
+    "name": "ARK Invest",
+    "src": "/asset-logos/issuers/ark-invest.ico",
+    "source": "https://www.ark-funds.com/favicon.ico",
+    "background": "#ffffff"
+  },
+  {
+    "prefix": "REX",
+    "name": "REX Shares",
+    "src": "/asset-logos/issuers/rex-shares.png",
+    "source": "https://www.rexshares.com/wp-content/uploads/2022/11/fav.png",
+    "background": "#ffffff"
+  }
+]

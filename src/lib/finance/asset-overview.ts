@@ -1,3 +1,4 @@
+import type { FundamentalResearch } from '../market/public-fundamentals';
 import Decimal from 'decimal.js';
 import { technicalMetrics } from './indicators';
 import type { FinancialStatementsResult } from './statements';
@@ -35,6 +36,7 @@ export function buildAssetOverview(
   fundamentals: FundamentalsResult,
   financials: FinancialStatementsResult,
   now = new Date(),
+  research?: FundamentalResearch,
 ) {
   const demo = snapshot.provenance.status === 'demo';
   const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) / 1000;
@@ -197,6 +199,14 @@ export function buildAssetOverview(
     warnings: data?.warnings ?? [],
     issuerName: data?.entityName ?? null,
   };
+  if (research) {
+    fundamental.title = research.title;
+    fundamental.conclusion = research.conclusion;
+    fundamental.period = research.asOf;
+    fundamental.issuerName = research.issuer;
+    fundamental.warnings = research.coverage;
+    fundamental.error = research.error;
+  }
   const sources: ResearchSource[] = [
     ...(snapshot.quote
       ? [

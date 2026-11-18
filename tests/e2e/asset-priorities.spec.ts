@@ -49,29 +49,25 @@ test('chart comes first, uses Jakarta, and stays available when research fails',
   );
   await page.goto('/asset/NASDAQ/AMZN?demo=true');
   await expect(page.locator('.asset-chart-hero iframe')).toBeVisible();
-  const dimensions = await page
-    .locator('.asset-chart-hero')
-    .evaluate((el) => ({
-      width: el.getBoundingClientRect().width,
-      parent: el.parentElement!.getBoundingClientRect().width,
-      height: el.querySelector('.tv-chart')!.getBoundingClientRect().height,
-      next: el.nextElementSibling!.getBoundingClientRect().top,
-      bottom: el.getBoundingClientRect().bottom,
-    }));
+  const dimensions = await page.locator('.asset-chart-hero').evaluate((el) => ({
+    width: el.getBoundingClientRect().width,
+    parent: el.parentElement!.getBoundingClientRect().width,
+    height: el.querySelector('.tv-chart')!.getBoundingClientRect().height,
+    next: el.nextElementSibling!.getBoundingClientRect().top,
+    bottom: el.getBoundingClientRect().bottom,
+  }));
   expect(dimensions.width / dimensions.parent).toBeGreaterThan(0.95);
   expect(dimensions.height).toBeGreaterThanOrEqual(650);
   expect(dimensions.next).toBeGreaterThan(dimensions.bottom);
   await page.evaluate(() => document.fonts.ready);
-  const font = await page
-    .locator('.asset-detail h1')
-    .evaluate((el) => ({
-      family: getComputedStyle(el).fontFamily,
-      size: parseFloat(getComputedStyle(el).fontSize),
-      loaded: document.fonts.check(`600 20px ${getComputedStyle(el).fontFamily.split(',')[0]}`),
-    }));
+  const font = await page.locator('.asset-detail h1').evaluate((el) => ({
+    family: getComputedStyle(el).fontFamily,
+    size: parseFloat(getComputedStyle(el).fontSize),
+    loaded: document.fonts.check(`600 20px ${getComputedStyle(el).fontFamily.split(',')[0]}`),
+  }));
   expect(font.family).toContain('jakarta');
   expect(font.loaded).toBe(true);
-  expect(font.size).toBeGreaterThanOrEqual(32);
+  expect(font.size).toBeGreaterThanOrEqual(27);
   await expect(page.getByRole('button', { name: 'Reintentar resumen', exact: true })).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator('.asset-chart-hero .tv-chart')).toHaveCSS('height', '520px');

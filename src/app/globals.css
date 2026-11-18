@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 :root {
+  --font-workspace: var(--font-sans);
   --bg: #0b0e11;
   --surface: #111519;
   --surface-2: #171c20;
@@ -57,8 +58,20 @@ a {
 button,
 input,
 textarea,
-select {
+select,
+optgroup,
+option {
   font: inherit;
+}
+/* Keep app labels, shortcuts, imported text and tabular values in the shared family. */
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-sans), Arial, sans-serif;
+}
+svg text {
+  font-family: inherit;
 }
 button,
 a,

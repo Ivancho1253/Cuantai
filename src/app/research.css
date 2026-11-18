@@ -144,8 +144,9 @@
 }
 .research-outline b {
   font:
-    11px ui-monospace,
-    monospace;
+    11px var(--font-sans),
+    Arial,
+    sans-serif;
   color: var(--muted);
 }
 .research-outline strong {
@@ -361,8 +362,9 @@
 }
 .research-scenarios > div > span {
   font:
-    11px ui-monospace,
-    monospace;
+    11px var(--font-sans),
+    Arial,
+    sans-serif;
   color: var(--subtle);
   padding-top: 3px;
 }

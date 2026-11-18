@@ -1,6 +1,5 @@
-/* Product typography is separate from the public site's wordmark and display type. */
+/* Landing and workspace share the locally hosted Plus Jakarta Sans family. */
 body:has(.app-layout) {
-  --font-workspace: var(--font-sans);
   font-family: var(--font-sans), Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -98,7 +97,7 @@ body:has(.app-layout) {
 }
 
 .sidebar-group-heading > :last-child {
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-sans), Arial, sans-serif;
   font-size: 12px;
   color: var(--subtle);
 }

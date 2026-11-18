@@ -1,3 +1,6 @@
+import { YahooProvider } from '../market/yahoo';
+import { publicFundamentals } from '../market/public-fundamentals';
+import { resolveInstrument } from '../market/service';
 import OpenAI from 'openai';
 import { zodTextFormat } from 'openai/helpers/zod';
 import { buildAssetOverview } from '../finance/asset-overview';
@@ -20,12 +23,25 @@ export async function createAnalysis(
   question?: string,
   demo = false,
 ): Promise<AnalysisReport> {
-  const snapshot = await marketSnapshot(id, '1D', demo);
+  let snapshot = await marketSnapshot(id, '1D', demo);
+  if (snapshot.provenance.status !== 'demo' && snapshot.candles.length < 50) {
+    try {
+      const history = await new YahooProvider().dailyHistory(snapshot.instrument);
+      snapshot = { ...snapshot, ...history };
+    } catch {
+      /* The report retains its explicit insufficient-history error. */
+    }
+  }
   const report = deterministicReport(snapshot);
-  const [fundamentals, financials, news] = await Promise.all([
+  const issuer =
+    snapshot.instrument.type === 'cedear' && snapshot.instrument.underlyingId
+      ? await resolveInstrument(snapshot.instrument.underlyingId)
+      : snapshot.instrument;
+  const [fundamentals, financials, news, research] = await Promise.all([
     assetFundamentals(snapshot.instrument, demo),
     assetFinancialStatements(snapshot.instrument, demo),
     marketNews(snapshot.instrument, demo),
+    publicFundamentals(snapshot.instrument, issuer),
   ]);
   const financialPeriods = financials.data?.periods.slice(0, 3) ?? [];
   const sources: ResearchSource[] = [
@@ -74,10 +90,11 @@ export async function createAnalysis(
         }
       : financials,
     news: news.items.slice(0, 5),
+    fundamentalResearch: research,
     sources,
   };
   if (!process.env.OPENAI_API_KEY || !process.env.AI_MODEL) {
-    const overview = buildAssetOverview(snapshot, fundamentals, financials);
+    const overview = buildAssetOverview(snapshot, fundamentals, financials, new Date(), research);
     return {
       ...report,
       question,

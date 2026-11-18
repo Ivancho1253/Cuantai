@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { installTradingViewFixture, widgetFixture } from './tradingview-fixture';
+import { installTradingViewFixture, widgetFixture, pickChartAsset } from './tradingview-fixture';
 test('official embed receives exact symbols and fullscreen preserves the iframe', async ({
   page,
 }) => {
   await installTradingViewFixture(page);
   const localMarketRequests: string[] = [];
   page.on('request', (request) => {
-    // The chart stays on TradingView; the separate daily reading has its own endpoint.
+    // Chart history remains inside the TradingView widget.
     if (/\/api\/data\/market(\?|$)/.test(request.url())) localMarketRequests.push(request.url());
   });
   await page.goto('/demo?view=charts');
@@ -27,11 +27,12 @@ test('official embed receives exact symbols and fullscreen preserves the iframe'
   await expect(chart).toHaveAttribute('data-expanded', 'false');
   await expect(page.locator('.chart-indicators')).toBeVisible();
   await expect(frame).toHaveAttribute('data-identity', 'same-frame');
-  await page.getByLabel('Activo del gráfico 1').selectOption('BYMA:JPMD:USD');
+  await pickChartAsset(page, 1, 'BYMA:JPMD:USD');
   await expect(chart).toHaveAttribute('data-state', 'embedded');
   await expect(chart.locator('iframe')).toHaveAttribute('data-config', /"symbol":"BCBA:JPMD"/);
-  await page.getByLabel('Temporalidad inicial').selectOption('1M');
-  await expect(chart.locator('iframe')).toHaveAttribute('data-config', /"interval":"M"/);
+  await expect(page.getByLabel('Temporalidad inicial')).toHaveCount(0);
+  await expect(page.getByLabel('Tipo de gráfico', { exact: true })).toHaveCount(0);
+  await expect(chart.locator('iframe')).toHaveAttribute('data-config', /"interval":"D"/);
   const targetTheme =
     (await page.locator('html').getAttribute('data-theme')) === 'dark' ? 'light' : 'dark';
   await page.getByRole('button', { name: 'Cambiar tema', exact: true }).click();

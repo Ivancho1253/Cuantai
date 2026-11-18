@@ -1,21 +1,24 @@
 'use client';
 import { useText as useUiText } from './locale-provider';
+import type { TechnicalHorizon } from '@/lib/finance/chart-indicators';
 import { useState } from 'react';
-import { Star, Maximize2, ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { Star, Maximize2, ArrowLeft, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { useApp } from './app-shell';
 import type { Instrument } from '@/lib/market/types';
-import { Button, AssetIcon, EmptyState } from './ui';
+import { Button, AssetIcon } from './ui';
 import { AssetIntelligence } from './asset-intelligence';
 import { ChartWorkspace } from './chart-workspace';
 import { Analyst } from './analyst';
 import { News } from './news';
 import { WatchlistPicker } from './watchlists';
 import { CedearRatio } from './cedear-ratio';
-import { FinancialStatementsPanel } from './financial-statements';
+import { PublicFinancialStatements, AssetValuation } from './fundamental-research';
+import { AssetHeaderMarket } from './asset-header-market';
 export function AssetPage({ instrument }: { instrument: Instrument }) {
   const uiText = useUiText();
   const { href } = useApp();
+  const [horizon, setHorizon] = useState<TechnicalHorizon>('short');
   const [tab, setTab] = useState('Overview');
   const [watchOpen, setWatchOpen] = useState(false);
   return (
@@ -43,7 +46,20 @@ export function AssetPage({ instrument }: { instrument: Instrument }) {
             </small>
           </div>
         </div>
+        <AssetHeaderMarket instrument={instrument} horizon={horizon} />
         <div className="inline-actions">
+          <Link
+            className="button button-secondary"
+            href={
+              href('portfolio') +
+              (href('portfolio').includes('?') ? '&' : '?') +
+              'asset=' +
+              encodeURIComponent(instrument.id)
+            }
+          >
+            <Plus size={15} />
+            {uiText('Agregar al portfolio')}
+          </Link>
           <Button variant="secondary" onClick={() => setWatchOpen(true)}>
             <Star size={15} />
             {uiText(' Seguir')}
@@ -97,6 +113,8 @@ export function AssetPage({ instrument }: { instrument: Instrument }) {
             instrument={instrument}
             onChart={() => setTab('Chart')}
             onFinancials={() => setTab('Financials')}
+            horizon={horizon}
+            onHorizonChange={setHorizon}
           />
         ),
       )}
@@ -111,24 +129,8 @@ export function AssetPage({ instrument }: { instrument: Instrument }) {
           </>
         ),
       )}
-      {uiText(tab === 'Financials' && <FinancialStatementsPanel instrument={instrument} />)}
-      {uiText(
-        tab === 'Valuation' && (
-          <EmptyState
-            title={uiText('Una valuaci\u00F3n necesita supuestos.')}
-            action={
-              <Button variant="secondary" onClick={() => setTab('Overview')}>
-                {uiText('Ver m\u00E9tricas disponibles ')}
-                <ArrowUpRight size={14} />
-              </Button>
-            }
-          >
-            {uiText(
-              'El modelo DCF y los comparables sectoriales est\u00E1n pendientes. No se estima un precio objetivo sin flujos de caja, estructura de capital y supuestos expl\u00EDcitos.',
-            )}
-          </EmptyState>
-        ),
-      )}
+      {uiText(tab === 'Financials' && <PublicFinancialStatements instrument={instrument} />)}
+      {tab === 'Valuation' && <AssetValuation instrument={instrument} />}
       {uiText(tab === 'News' && <News instrumentId={instrument.id} embedded contextual />)}
       {uiText(
         tab === 'AI Analysis' && (

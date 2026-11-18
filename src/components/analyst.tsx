@@ -1,8 +1,19 @@
 'use client';
 import { useText as useUiText } from './locale-provider';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowRight, Clock3, ExternalLink, FileText, MessageSquare, RefreshCw } from 'lucide-react';
+import {
+  ArrowRight,
+  Clock3,
+  ExternalLink,
+  FileText,
+  MessageSquare,
+  RefreshCw,
+  ChartNoAxesCombined,
+  Building2,
+  ShieldCheck,
+  BookOpen,
+} from 'lucide-react';
 import { useApp } from './app-shell';
 import { api, number, dateLabel } from '@/lib/utils';
 import { instruments } from '@/lib/market/catalog';
@@ -14,7 +25,6 @@ import { rulesAnswer } from '@/lib/ai/asset-chat';
 import { Button, SectionTitle, DataBadge, ErrorState } from './ui';
 import { ResearchAssetPicker } from './research-asset-picker';
 import { AssetChat } from './asset-chat';
-import { News } from './news';
 export function Analyst({
   instrumentId,
   initialInstrument,
@@ -31,6 +41,13 @@ export function Analyst({
     () => initialInstrument ?? instruments.find((i) => i.id === instrumentId) ?? instruments[0],
   );
   const [tab, setTab] = useState<'report' | 'chat'>('report');
+  const focusReport = useRef(false);
+  useEffect(() => {
+    if (tab === 'report' && focusReport.current) {
+      document.getElementById('research-question')?.focus();
+      focusReport.current = false;
+    }
+  }, [tab]);
   const [question, setQuestion] = useState('');
   const [report, setReport] = useState<AnalysisReport | null>(null);
   const [busy, setBusy] = useState(false);
@@ -73,6 +90,8 @@ export function Analyst({
           ...deterministicReport(demoHistory(instrument)),
           question: question.trim() || undefined,
         };
+        if (overview.data)
+          result.narrative.fundamentalAnalysis = overview.data.fundamental.conclusion;
         if (question.trim() && overview.data) {
           const headlines = await api<{
             items: NewsItem[];
@@ -123,7 +142,7 @@ export function Analyst({
     }
   }
   return (
-    <div className="analyst-page research-desk">
+    <div className="analyst-page research-desk analyst-studio">
       {uiText(
         !embedded && (
           <SectionTitle
@@ -221,40 +240,71 @@ export function Analyst({
                     <ReportView report={report} />
                   ) : (
                     <section className="research-start">
-                      <span className="research-document-label">
-                        {uiText(instrument.symbol)}
-                        {uiText(' / DOCUMENTO DE TRABAJO')}
-                      </span>
-                      <h2>{uiText('Un informe que puedas poner a prueba.')}</h2>
+                      <div className="studio-intro-heading">
+                        <span className="studio-intro-icon">
+                          <BookOpen size={25} />
+                        </span>
+                        <span className="research-document-label">
+                          {uiText('TU PUNTO DE PARTIDA')} · {instrument.symbol}
+                        </span>
+                      </div>
+                      <h2>
+                        {uiText('Entendé el activo.')}
+                        <br />
+                        <span>{uiText('Encontrá tu perspectiva.')}</span>
+                      </h2>
                       <p>
                         {uiText(
-                          'Compar\u00E1 tendencia, fuerza del movimiento y amplitud del rango. Despu\u00E9s contrast\u00E1 la lectura con escenarios y fuentes.',
+                          'Elegí qué querés investigar. Cuantai reúne la lectura técnica, los fundamentos y los riesgos en un informe con fuentes.',
                         )}
                       </p>
-                      <div className="research-outline">
-                        <div>
-                          <b>01</b>
-                          <strong>{uiText('Se\u00F1ales')}</strong>
-                          <span>{uiText('Medias, RSI, MACD y volatilidad.')}</span>
-                        </div>
-                        <div>
-                          <b>02</b>
-                          <strong>{uiText('Escenarios')}</strong>
-                          <span>
-                            {uiText(
-                              'Qu\u00E9 deber\u00EDa pasar y qu\u00E9 invalidar\u00EDa la lectura.',
-                            )}
-                          </span>
-                        </div>
-                        <div>
-                          <b>03</b>
-                          <strong>{uiText('Evidencia')}</strong>
-                          <span>{uiText('Datos fechados y publicaciones originales.')}</span>
-                        </div>
+                      <div className="studio-research-paths">
+                        {[
+                          {
+                            title: 'Tendencia y señales',
+                            description: 'RSI, medias móviles y fuerza del movimiento.',
+                            question: 'Explicá la tendencia y la EMA 200',
+                            Icon: ChartNoAxesCombined,
+                          },
+                          {
+                            title: 'Detrás del negocio',
+                            description: 'Resultados, flujo de caja y situación financiera.',
+                            question: 'Resumí los fundamentos y el flujo de caja',
+                            Icon: Building2,
+                          },
+                          {
+                            title: 'Riesgo y contexto',
+                            description: 'Volatilidad, caídas y factores a seguir.',
+                            question: '¿Qué riesgo tiene?',
+                            Icon: ShieldCheck,
+                          },
+                        ].map(({ title, description, question: prompt, Icon }, index) => (
+                          <button
+                            type="button"
+                            key={title}
+                            data-accent={index}
+                            onClick={() => {
+                              setQuestion(prompt);
+                              document.getElementById('research-question')?.focus();
+                            }}
+                          >
+                            <span className="studio-path-icon">
+                              <Icon size={22} />
+                            </span>
+                            <strong>{uiText(title)}</strong>
+                            <span>{uiText(description)}</span>
+                            <span className="studio-path-action">
+                              {uiText('Investigar')}
+                              <ArrowRight size={15} />
+                            </span>
+                          </button>
+                        ))}
                       </div>
                       <p className="research-availability">
                         {uiText(
-                          'Sin clave de IA, el informe y las respuestas t\u00E9cnicas se calculan con reglas. Las consultas abiertas con IA se habilitar\u00E1n cuando conectes el proveedor.',
+                          status.data?.ai.configured && !demo
+                            ? 'El informe usa la evidencia disponible del activo y cita sus fuentes.'
+                            : 'Modo por reglas: indicadores calculados y respuestas sobre los datos disponibles.',
                         )}
                       </p>
                     </section>
@@ -306,7 +356,30 @@ export function Analyst({
               ),
             )}
           </section>
-          <News instrumentId={instrument.id} embedded compact />
+          <section className="analyst-prompt-library">
+            <span className="asset-overline">{uiText('ENFOCÁ TU INVESTIGACIÓN')}</span>
+            <h2>{uiText('Una pregunta, una lectura.')}</h2>
+            {[
+              'Explicá la tendencia y la EMA 200',
+              '¿Qué indica el RSI actual?',
+              'Resumí los fundamentos y el flujo de caja',
+            ].map((prompt, i) => (
+              <button
+                key={prompt}
+                data-accent={i}
+                onClick={() => {
+                  focusReport.current = true;
+                  setTab('report');
+                  setQuestion(prompt);
+                  document.getElementById('research-question')?.focus();
+                }}
+              >
+                <span>0{i + 1}</span>
+                {uiText(prompt)}
+                <ArrowRight size={17} />
+              </button>
+            ))}
+          </section>
         </aside>
       </div>
     </div>

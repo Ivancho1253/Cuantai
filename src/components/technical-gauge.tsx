@@ -1,12 +1,19 @@
 'use client';
+import type { TechnicalHorizon } from '@/lib/finance/chart-indicators';
 import { useId } from 'react';
-import { Gauge } from 'lucide-react';
-import { useChartIndicatorData } from './chart-indicators';
+import { Gauge, RefreshCw } from 'lucide-react';
+import { useChartIndicatorData } from './use-chart-indicators';
 import { useText, useLocale } from './locale-provider';
 import { technicalBias } from '@/lib/finance/technical-bias';
 
-export function TechnicalGauge({ instrumentId }: { instrumentId: string }) {
-  const query = useChartIndicatorData(instrumentId);
+export function TechnicalGauge({
+  instrumentId,
+  horizon = 'short',
+}: {
+  instrumentId: string;
+  horizon?: TechnicalHorizon;
+}) {
+  const query = useChartIndicatorData(instrumentId, horizon);
   const t = useText();
   const { locale } = useLocale();
   const gradient = useId();
@@ -21,7 +28,23 @@ export function TechnicalGauge({ instrumentId }: { instrumentId: string }) {
       <div className="gauge-heading">
         <Gauge size={20} />
         <h2>{t('Pulso del activo')}</h2>
-        <span>1D</span>
+        <span>
+          {t(
+            horizon === 'short'
+              ? 'Corto plazo'
+              : horizon === 'medium'
+                ? 'Mediano plazo'
+                : 'Largo plazo',
+          )}
+        </span>
+        <button
+          className="icon-button"
+          aria-label={t('Actualizar indicadores')}
+          disabled={query.isFetching}
+          onClick={() => query.refetch()}
+        >
+          <RefreshCw size={16} />
+        </button>
       </div>
       <div className="gauge-dial">
         <svg viewBox="0 0 240 140" role="img" aria-label={t('Sesgo técnico: {0}', [t(bias.label)])}>
@@ -96,7 +119,7 @@ export function TechnicalGauge({ instrumentId }: { instrumentId: string }) {
         <summary>{t('Cómo se interpreta')}</summary>
         <p>
           {t(
-            'Tres lecturas con el mismo peso: RSI mayor a 55 o menor a 45, MACD respecto de su señal y EMA 20 respecto de EMA 50. El centro indica equilibrio; los extremos, coincidencia de dirección. No representa una probabilidad de ganancia.',
+            'Tres lecturas con el mismo peso: RSI mayor a 55 o menor a 45, MACD respecto de su señal y EMA corta respecto de la EMA larga del horizonte elegido. El centro indica equilibrio; los extremos, coincidencia de dirección. No representa una probabilidad de ganancia.',
           )}
         </p>
       </details>

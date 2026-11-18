@@ -9,6 +9,12 @@ import './features.css';
 import './horizontal-workspace.css';
 import './chart-insights.css';
 import './asset-detail.css';
+import './form-controls.css';
+import './technical-reading.css';
+import './research-refresh.css';
+import './asset-typography.css';
+import './analyst-studio.css';
+import './news-search.css';
 
 const jakarta = localFont({
   src: './fonts/PlusJakartaSans-Variable.ttf',
@@ -47,7 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html
       lang={locale}
-      className={jakarta.variable}
+      className={`${jakarta.variable} ${jakarta.className}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

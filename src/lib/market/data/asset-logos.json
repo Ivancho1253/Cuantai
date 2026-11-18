@@ -3233,5 +3233,120 @@
     "src": "/asset-logos/catalog/ARCA_XLK_USD.png",
     "source": "https://images.financialmodelingprep.com/symbol/XLK.png",
     "background": "#ffffff"
+  },
+  "BYMA:AGRO:ARS": {
+    "src": "/asset-logos/catalog/BYMA_AGRO_ARS_official.png",
+    "source": "https://www.agrometal.com/assets/images/favicon.png",
+    "background": "#ffffff"
+  },
+  "BYMA:BPAT:ARS": {
+    "src": "/asset-logos/catalog/BYMA_BPAT_ARS_official.png",
+    "source": "https://www.bancopatagonia.com.ar/favicon.ico",
+    "background": "#ffffff"
+  },
+  "BYMA:BOLT:ARS": {
+    "src": "/asset-logos/catalog/BYMA_BOLT_ARS_official.png",
+    "source": "https://www.boldt.com.ar/wp-content/themes/boldt/ico/apple-icon-57x57.png",
+    "background": "#ffffff"
+  },
+  "BYMA:BHIP:ARS": {
+    "src": "/asset-logos/catalog/BYMA_BHIP_ARS_official.png",
+    "source": "https://www.hipotecario.com.ar/wp-content/uploads/2019/07/favicon_bh.png",
+    "background": "#ffffff"
+  },
+  "BYMA:AUSO:ARS": {
+    "src": "/asset-logos/catalog/BYMA_AUSO_ARS_official.png",
+    "source": "https://www.ausol.com.ar/favicon.ico?favicon.fe9d3ed1.ico",
+    "background": "#ffffff"
+  },
+  "BYMA:DGCU2:ARS": {
+    "src": "/asset-logos/catalog/BYMA_DGCU2_ARS_official.png",
+    "source": "https://www.ecogas.com.ar/favicon.ico?c374cd8d080740f2",
+    "background": "#ffffff"
+  },
+  "BYMA:CTIO:ARS": {
+    "src": "/asset-logos/catalog/BYMA_CTIO_ARS_official.png",
+    "source": "https://www.consultatio.com.ar/assets/img/favicon.png",
+    "background": "#ffffff"
+  },
+  "BYMA:CAPX:ARS": {
+    "src": "/asset-logos/catalog/BYMA_CAPX_ARS_official.png",
+    "source": "https://capex.com.ar/wp-content/uploads/2023/11/isotipo-seccion-con-fondo.svg",
+    "background": "#ffffff"
+  },
+  "BYMA:ECOG:ARS": {
+    "src": "/asset-logos/catalog/BYMA_ECOG_ARS_official.png",
+    "source": "https://www.ecogas.com.ar/favicon.ico?c374cd8d080740f2",
+    "background": "#ffffff"
+  },
+  "BYMA:CARC:ARS": {
+    "src": "/asset-logos/catalog/BYMA_CARC_ARS_official.png",
+    "source": "https://www.carboclor.com.ar/wp-content/uploads/2024/05/cropped-favicon-1-32x32.png",
+    "background": "#ffffff"
+  },
+  "BYMA:GBAN:ARS": {
+    "src": "/asset-logos/catalog/BYMA_GBAN_ARS_official.png",
+    "source": "https://www.naturgy.com.ar/img/logo-fab16.png",
+    "background": "#ffffff"
+  },
+  "BYMA:HAVA:ARS": {
+    "src": "/asset-logos/catalog/BYMA_HAVA_ARS_official.png",
+    "source": "https://havanna.com.ar/images/favicon.png?v=1",
+    "background": "#ffffff"
+  },
+  "BYMA:LEDE:ARS": {
+    "src": "/asset-logos/catalog/BYMA_LEDE_ARS_official.png",
+    "source": "https://www.ledesma.com.ar/favicon.svg",
+    "background": "#ffffff"
+  },
+  "BYMA:FIPL:ARS": {
+    "src": "/asset-logos/catalog/BYMA_FIPL_ARS_official.png",
+    "source": "https://fiplasto.com.ar/wp-content/uploads/2024/08/cropped-favicon-32x32.png",
+    "background": "#ffffff"
+  },
+  "BYMA:DOME:ARS": {
+    "src": "/asset-logos/catalog/BYMA_DOME_ARS_official.png",
+    "source": "https://domec.com.ar/wp-content/uploads/2018/10/favicon-domec.png",
+    "background": "#ffffff"
+  },
+  "BYMA:LONG:ARS": {
+    "src": "/asset-logos/catalog/BYMA_LONG_ARS_official.png",
+    "source": "https://acdn-us.mitiendanube.com/stores/007/494/468/themes/common/logo-3905041190311117512-1785433098-1cfa6c11438e1483dd18f15405c71c0d1785433098.ico?0",
+    "background": "#ffffff"
+  },
+  "BYMA:METR:ARS": {
+    "src": "/asset-logos/catalog/BYMA_METR_ARS_official.png",
+    "source": "https://www.metrogas.com.ar/assets/themes/metrogas/apple-touch-icon.png",
+    "background": "#ffffff"
+  },
+  "BYMA:IRSA:ARS": {
+    "src": "/asset-logos/catalog/BYMA_IRSA_ARS_official.png",
+    "source": "https://www.irsa.com.ar/wp-content/uploads/2025/08/IrsaLogoV2.png",
+    "background": "#ffffff"
+  },
+  "BYMA:MOLI:ARS": {
+    "src": "/asset-logos/catalog/BYMA_MOLI_ARS_official.png",
+    "source": "https://www.molinos.com.ar/wp-content/uploads/2023/03/favicon.png-100x100.webp",
+    "background": "#ffffff"
+  },
+  "BYMA:RIGO:ARS": {
+    "src": "/asset-logos/catalog/BYMA_RIGO_ARS_official.png",
+    "source": "https://www.rigolleau.com.ar/wp-content/uploads/2023/07/cropped-rigolleau-favicon-32x32.png",
+    "background": "#ffffff"
+  },
+  "BYMA:MOLA:ARS": {
+    "src": "/asset-logos/catalog/BYMA_MOLA_ARS_official.png",
+    "source": "https://molinosagro.com.ar/wp-content/uploads/2025/12/cropped-favicon-molinos-32x32.png",
+    "background": "#ffffff"
+  },
+  "BYMA:RAGH:ARS": {
+    "src": "/asset-logos/catalog/BYMA_RAGH_ARS_official.png",
+    "source": "https://www.raghsa.com.ar/icon.png?efc86a3285498396",
+    "background": "#ffffff"
+  },
+  "BYMA:SAMI:ARS": {
+    "src": "/asset-logos/catalog/BYMA_SAMI_ARS_official.png",
+    "source": "https://images.squarespace-cdn.com/content/v1/63eea45262584c3023fb22ed/7afb967e-3d9a-4193-a554-ef4da7195ef7/favicon.ico",
+    "background": "#ffffff"
   }
 }

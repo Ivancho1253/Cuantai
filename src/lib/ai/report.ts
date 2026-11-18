@@ -67,9 +67,9 @@ export function deterministicReport(snapshot: MarketSnapshot): AnalysisReport {
     metrics.rsi === null
       ? 'No se pudo calcular el momentum relativo.'
       : metrics.rsi >= 70
-        ? 'El momentum está en una zona elevada: puede acompañar una tendencia fuerte, pero deja menos margen frente a una corrección.'
+        ? 'El RSI está en sobrecompra: la fuerza de las subas domina a la de las caídas y el impulso es alcista intenso.'
         : metrics.rsi <= 30
-          ? 'El momentum está deprimido. Esa condición muestra presión vendedora, sin confirmar un piso ni un rebote.'
+          ? 'El RSI está en sobreventa: la fuerza de las caídas domina a la de las subas y el impulso es bajista intenso.'
           : 'El momentum se mantiene fuera de los extremos convencionales; la dirección debe contrastarse con las medias.';
   const aligned = metrics.macd !== null && !neutral && (up ? metrics.macd > 0 : metrics.macd < 0);
   const impulse =
@@ -110,7 +110,7 @@ export function deterministicReport(snapshot: MarketSnapshot): AnalysisReport {
         : `El sesgo del histórico es ${up ? 'alcista' : 'bajista'} por la relación entre las medias. ${impulse} ${position}`,
       fundamentalAnalysis:
         'No se emite una valoración fundamental sin estados financieros y períodos verificados.',
-      technicalAnalysis: `La relación entre medias sugiere una tendencia ${neutral ? 'sin dirección definida' : up ? 'alcista' : 'bajista'}. ${momentum} ${impulse} Los niveles mostrados son extremos móviles del histórico, no soportes confirmados.`,
+      technicalAnalysis: `La relación entre medias sugiere una tendencia ${neutral ? 'sin dirección definida' : up ? 'alcista' : 'bajista'}. ${momentum} ${impulse} Los niveles mostrados describen el piso y el techo del rango reciente.`,
       macroContext: 'No se incorporaron series macroeconómicas verificadas a este informe.',
       risks: [
         ...(!neutral && !aligned

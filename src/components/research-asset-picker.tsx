@@ -1,6 +1,6 @@
 'use client';
 import { useText as useUiText } from './locale-provider';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ChevronDown, Search } from 'lucide-react';
 import { api } from '@/lib/utils';
@@ -16,6 +16,7 @@ export function ResearchAssetPicker({
   onChange: (instrument: Instrument) => void;
 }) {
   const uiText = useUiText();
+  const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
@@ -34,9 +35,11 @@ export function ResearchAssetPicker({
   return (
     <>
       <button
+        ref={trigger}
         className="research-picker"
         aria-label={uiText(label)}
         aria-haspopup="dialog"
+        aria-expanded={open}
         onClick={() => setOpen(true)}
       >
         {uiText(instrument && <AssetIcon instrument={instrument} />)}
@@ -49,7 +52,10 @@ export function ResearchAssetPicker({
       </button>
       <Modal
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={(value) => {
+          setOpen(value);
+          if (!value) requestAnimationFrame(() => trigger.current?.focus());
+        }}
         title={uiText('Elegir activo')}
         description={uiText(
           'Busc\u00E1 acciones, ETFs, criptomonedas y CEDEARs por nombre o ticker.',
@@ -83,6 +89,7 @@ export function ResearchAssetPicker({
                       onChange(item);
                       setOpen(false);
                       setQuery('');
+                      requestAnimationFrame(() => trigger.current?.focus());
                     }}
                   >
                     <AssetIcon instrument={item} />
