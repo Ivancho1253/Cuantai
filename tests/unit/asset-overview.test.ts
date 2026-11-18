@@ -125,3 +125,15 @@ describe('Asset intelligence calculations', () => {
     ).toContain('composición');
   });
 });
+
+it('derives investor risk from closed bars with correct turnover units and daily scaling', () => {
+  const input = snapshot();
+  input.candles.at(-1)!.close = 1000000;
+  const risk = build(input).risk;
+  expect(risk.lastClose).toBe(598);
+  expect(risk.averageTurnover).toBe(588500);
+  expect(risk.distanceFromPeak).toBe(0);
+  expect(risk.typicalDailyMove).toBeCloseTo(risk.volatility! / Math.sqrt(365));
+  expect(risk.quoteCurrency).toBe('USDT');
+  expect(build({ ...input, candles: [] }).risk.averageTurnover).toBeNull();
+});

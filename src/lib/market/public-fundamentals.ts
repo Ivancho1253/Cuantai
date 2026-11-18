@@ -1,3 +1,4 @@
+import { earningsComparison, type EarningsComparison } from './earnings-comparison';
 import { z } from 'zod';
 import { cached, fetchJson } from './transport';
 import { yahooSymbol } from './yahoo';
@@ -26,6 +27,7 @@ export type FundamentalResearch = {
   conclusion: string;
   coverage: string[];
   error?: string;
+  earnings?: EarningsComparison;
 };
 export const financialConcepts = [
   ['TotalRevenue', 'Ingresos', 'income'],
@@ -183,7 +185,8 @@ export async function publicFundamentals(
   requested: Instrument,
   issuer: Instrument,
 ): Promise<FundamentalResearch> {
-  return cached('public-research:v1:' + requested.id, 900000, async () => {
+  return cached('public-research:v2:' + requested.id, 900000, async () => {
+    const comparison = earningsComparison(issuer);
     const result: FundamentalResearch = {
       instrumentId: requested.id,
       issuer: issuer.name,
@@ -402,6 +405,7 @@ export async function publicFundamentals(
       result.error = e instanceof Error ? e.message : 'No se pudo consultar la fuente fundamental.';
       result.coverage.push(result.error);
     }
+    result.earnings = await comparison;
     return result;
   });
 }

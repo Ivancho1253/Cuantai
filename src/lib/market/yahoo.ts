@@ -6,6 +6,13 @@ import { ProviderError, candleSchema, type Instrument, type Quote, type Timefram
 // Public indicative quotes. Never present them as an authorized BYMA feed or
 // substitute a US underlying for the local certificate.
 export function yahooSymbol(i: Instrument) {
+  if (
+    i.type === 'crypto' &&
+    i.exchange === 'COINGECKO' &&
+    i.currency === 'USD' &&
+    /^[A-Z0-9]{1,14}$/.test(i.symbol)
+  )
+    return i.symbol + '-USD';
   if (i.exchange === 'BYMA' && i.currency === 'ARS' && ['stock', 'cedear'].includes(i.type))
     return `${i.symbol}.BA`;
   if (['NASDAQ', 'NYSE', 'AMEX', 'ARCA', 'CBOE'].includes(i.exchange) && i.currency === 'USD')
@@ -16,6 +23,8 @@ const metaSchema = z.object({
   symbol: z.string(),
   currency: z.string(),
   exchangeName: z.string(),
+  longName: z.string().optional(),
+  shortName: z.string().optional(),
   regularMarketPrice: z.number().positive(),
   regularMarketTime: z.number().positive(),
   chartPreviousClose: z.number().positive(),
@@ -53,6 +62,7 @@ export class YahooProvider {
         if (!m || m.currency !== i.currency || m.symbol.toUpperCase() !== symbol.toUpperCase())
           throw new ProviderError('La fuente no confirmó la especie y moneda solicitadas.');
         const allowed: Record<string, string[]> = {
+          COINGECKO: ['CCC'],
           NASDAQ: ['NMS', 'NGM', 'NCM'],
           NYSE: ['NYQ'],
           BYMA: ['BUE'],
@@ -122,6 +132,7 @@ export class YahooProvider {
           .parse(await fetchJson(url));
         const result = data.chart.result?.[0];
         const allowed: Record<string, string[]> = {
+          COINGECKO: ['CCC'],
           NASDAQ: ['NMS', 'NGM', 'NCM'],
           NYSE: ['NYQ'],
           BYMA: ['BUE'],
@@ -138,6 +149,15 @@ export class YahooProvider {
           throw new ProviderError(
             'La fuente no confirmó el activo, mercado y moneda del historial.',
           );
+        if (i.type === 'crypto') {
+          const normalize = (name: string) =>
+            name
+              .toLowerCase()
+              .replace(/\busd\b/g, '')
+              .replace(/[^a-z0-9]/g, '');
+          if (normalize(result.meta.longName ?? result.meta.shortName ?? '') !== normalize(i.name))
+            throw new ProviderError('La fuente no confirmó la identidad del criptoactivo.');
+        }
         const values = result.indicators.quote[0];
         if (!values) throw new ProviderError('Historial diario no disponible.');
         const candles = result.timestamp.flatMap((time, index) => {

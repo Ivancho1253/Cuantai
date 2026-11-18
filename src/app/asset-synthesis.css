@@ -1,0 +1,299 @@
+.asset-business-row {
+  gap: 28px;
+}
+.fundamental-research-metrics,
+.investor-risk-grid {
+  gap: 17px;
+}
+.fundamental-research-metrics article,
+.investor-risk-grid article {
+  padding: 20px;
+}
+.fundamental-research-panel,
+.investor-risk-panel {
+  padding: 28px;
+}
+.fundamental-research-metrics {
+  margin: 24px 0;
+}
+.fundamental-metric-heading {
+  row-gap: 10px;
+  margin-bottom: 15px;
+}
+.fundamental-research-metrics strong {
+  margin-bottom: 15px;
+}
+.investor-risk-intro {
+  margin-bottom: 24px;
+}
+.investor-risk-grid strong {
+  margin: 17px 0 13px;
+}
+.earnings-comparison {
+  padding: 22px;
+  margin-top: 25px;
+}
+.asset-synthesis {
+  padding: 30px;
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in srgb, var(--accent) 6%, transparent),
+      transparent 65%
+    ),
+    var(--surface);
+  border-radius: 20px;
+  scroll-margin-top: 130px;
+}
+.asset-synthesis-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 27px;
+}
+.asset-synthesis-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.asset-synthesis h2 {
+  font-size: 25px;
+  letter-spacing: -0.7px;
+  font-weight: 600;
+  margin-top: 5px;
+  line-height: 1.3;
+}
+.synthesis-method {
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: auto;
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  padding: 8px 12px;
+}
+.asset-synthesis > h3 {
+  font-size: clamp(25px, 2.5vw, 34px);
+  letter-spacing: -1px;
+  font-weight: 600;
+  max-width: 1050px;
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+.asset-synthesis-description {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.85;
+  max-width: 950px;
+}
+.synthesis-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 27px 0;
+}
+.synthesis-pillars > div {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+  background: var(--surface-2);
+}
+.synthesis-pillars span {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.synthesis-pillars strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 550;
+  line-height: 1.5;
+  letter-spacing: -0.3px;
+}
+.synthesis-pillars > div[data-tone='positive'] {
+  background: color-mix(in srgb, var(--positive) 5%, var(--surface));
+  border-color: color-mix(in srgb, var(--positive) 30%, var(--line));
+}
+.synthesis-pillars > div[data-tone='positive'] strong {
+  color: var(--positive);
+}
+.synthesis-pillars > div[data-tone='negative'] {
+  background: color-mix(in srgb, var(--negative) 5%, var(--surface));
+  border-color: color-mix(in srgb, var(--negative) 30%, var(--line));
+}
+.synthesis-pillars > div[data-tone='negative'] strong {
+  color: var(--negative);
+}
+.synthesis-pillars > div[data-tone='warning'] {
+  background: #d4b46c09;
+  border-color: #d4b46c40;
+}
+.synthesis-pillars > div[data-tone='warning'] strong {
+  color: #d4b46c;
+}
+.synthesis-evidence-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding: 26px 0;
+  border-block: 1px solid var(--line);
+}
+.synthesis-evidence-columns h4 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 19px;
+  letter-spacing: -0.25px;
+}
+.synthesis-strengths h4 > svg,
+.synthesis-strengths li > svg {
+  color: var(--positive);
+}
+.synthesis-attention h4 > svg,
+.synthesis-attention li > svg {
+  color: #d4b46c;
+}
+.synthesis-attention li[data-tone='negative'] > svg {
+  color: var(--negative);
+}
+.synthesis-evidence-columns ul {
+  display: grid;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.synthesis-evidence-columns li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+.synthesis-evidence-columns li > svg {
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.synthesis-evidence-columns p {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+.synthesis-coverage {
+  margin-top: 20px;
+}
+.synthesis-coverage summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 12px;
+}
+.synthesis-coverage p {
+  margin: 13px 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.synthesis-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 23px;
+}
+.synthesis-footer > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 20px;
+  font-size: 11px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.synthesis-footer > a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  color: var(--accent);
+}
+[data-theme='light'] .synthesis-pillars > div[data-tone='warning'] strong {
+  color: #8b651d;
+}
+[data-theme='light'] .synthesis-attention h4 > svg,
+[data-theme='light'] .synthesis-attention li > svg {
+  color: #8b651d;
+}
+@media (max-width: 1100px) {
+  .asset-business-row {
+    gap: 24px;
+  }
+  .fundamental-research-panel,
+  .investor-risk-panel {
+    padding: 25px;
+  }
+}
+@media (max-width: 680px) {
+  .fundamental-research-metrics,
+  .investor-risk-grid {
+    gap: 15px;
+  }
+  .fundamental-research-metrics article,
+  .investor-risk-grid article {
+    padding: 18px;
+  }
+  .fundamental-research-panel,
+  .investor-risk-panel {
+    padding: 21px;
+  }
+  .asset-synthesis {
+    padding: 23px 20px;
+  }
+  .asset-synthesis-heading {
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .asset-synthesis h2 {
+    font-size: 23px;
+  }
+  .synthesis-method {
+    margin: 0;
+    font-size: 10px;
+  }
+  .asset-synthesis > h3 {
+    font-size: 26px;
+  }
+  .synthesis-pillars {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 22px 0;
+  }
+  .synthesis-pillars > div {
+    padding: 16px 18px;
+  }
+  .synthesis-pillars strong {
+    font-size: 17px;
+  }
+  .synthesis-evidence-columns {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 22px 0;
+  }
+  .synthesis-evidence-columns li {
+    font-size: 13px;
+  }
+  .synthesis-footer {
+    margin-top: 20px;
+  }
+}

@@ -135,6 +135,14 @@ export function buildAssetOverview(
             ? 'Volatilidad intermedia'
             : 'Volatilidad baja',
     volatility,
+    typicalDailyMove: volatility === null ? null : volatility / Math.sqrt(cryptoAsset ? 365 : 252),
+    distanceFromPeak: last && peak > 0 ? (last.close / peak - 1) * 100 : null,
+    averageTurnover:
+      window.length >= 20
+        ? window.slice(-20).reduce((sum, c) => sum + c.close * c.volume, 0) / 20
+        : null,
+    quoteCurrency: snapshot.instrument.currency,
+    lastClose: last?.close ?? null,
     maxDrawdown: logs.length >= 60 && regular ? drawdown : null,
     observations: window.length,
     from: window[0] ? iso(window[0].time) : null,

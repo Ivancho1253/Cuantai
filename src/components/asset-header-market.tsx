@@ -18,10 +18,13 @@ export function AssetHeaderMarket({
     { locale } = useLocale(),
     t = useText();
   const q = useQuery({
-    queryKey: ['asset-overview', instrument.id, demo],
+    queryKey: ['asset-overview', instrument.id, demo, 'public'],
     queryFn: () =>
       api<AssetOverview>(
-        'asset-overview?id=' + encodeURIComponent(instrument.id) + (demo ? '&demo=true' : ''),
+        'asset-overview?id=' +
+          encodeURIComponent(instrument.id) +
+          '&source=public' +
+          (demo ? '&demo=true' : ''),
       ),
     staleTime: 60000,
   });

@@ -2,20 +2,21 @@ import { publicFundamentals } from './public-fundamentals';
 import { buildAssetOverview } from '../finance/asset-overview';
 import {
   marketSnapshot,
+  publicResearchSnapshot,
   assetFundamentals,
   assetFinancialStatements,
   resolveInstrument,
 } from './service';
 import { YahooProvider } from './yahoo';
 
-export async function assetOverview(id: string, demo = false) {
+export async function assetOverview(id: string, demo = false, publicData = false) {
   const instrument = await resolveInstrument(id);
   const issuer =
     instrument.type === 'cedear' && instrument.underlyingId
       ? await resolveInstrument(instrument.underlyingId)
       : instrument;
   const [initialSnapshot, fundamentals, financials, research] = await Promise.all([
-    marketSnapshot(id, '1D', demo),
+    publicData ? publicResearchSnapshot(id) : marketSnapshot(id, '1D', demo),
     assetFundamentals(instrument, demo),
     assetFinancialStatements(instrument, demo),
     publicFundamentals(instrument, issuer),

@@ -2,7 +2,7 @@
 import type { TechnicalHorizon } from '@/lib/finance/chart-indicators';
 import { useText, useLocale } from './locale-provider';
 import { useQuery } from '@tanstack/react-query';
-import { Shield, Maximize2, MessageSquare, Newspaper } from 'lucide-react';
+import { Maximize2, MessageSquare, Newspaper } from 'lucide-react';
 import { useApp } from './app-shell';
 import { Button } from './ui';
 import { api, dateLabel } from '@/lib/utils';
@@ -13,6 +13,8 @@ import { tradingViewSymbol } from '@/lib/market/tradingview';
 import { AssetChat } from './asset-chat';
 import { News } from './news';
 import { FundamentalPanel } from './fundamental-research';
+import { AssetSynthesis } from './asset-synthesis';
+import { InvestorRisk } from './investor-risk';
 import { ChartIndicators } from './chart-indicators';
 
 export function AssetIntelligence({
@@ -32,23 +34,14 @@ export function AssetIntelligence({
   const { locale } = useLocale();
   const { demo } = useApp();
   const query = useQuery({
-    queryKey: ['asset-overview', instrument.id, demo],
+    queryKey: ['asset-overview', instrument.id, demo, 'public'],
     queryFn: () =>
       api<AssetOverview>(
-        `asset-overview?id=${encodeURIComponent(instrument.id)}${demo ? '&demo=true' : ''}`,
+        `asset-overview?id=${encodeURIComponent(instrument.id)}&source=public${demo ? '&demo=true' : ''}`,
       ),
     staleTime: 60000,
   });
   const data = query.data;
-  const language = locale === 'en' ? 'en-US' : locale === 'pt' ? 'pt-BR' : 'es-AR';
-  const format = (value: number | string | null | undefined, compact = false) =>
-    value == null
-      ? '—'
-      : new Intl.NumberFormat(language, {
-          minimumFractionDigits: compact ? 0 : 2,
-          maximumFractionDigits: 2,
-          ...(compact ? { notation: 'compact' as const } : {}),
-        }).format(Number(value));
   return (
     <div className="asset-intelligence asset-priority-layout">
       <section
@@ -97,60 +90,9 @@ export function AssetIntelligence({
       </section>
       <div className="asset-business-row">
         <FundamentalPanel instrument={instrument} onFinancials={onFinancials} />
-        <section className="panel asset-risk-panel" aria-label={t('Riesgo del activo')}>
-          <div className="asset-detail-heading">
-            <div>
-              <span className="asset-overline">{t('TENÉ PRESENTE EL RIESGO')}</span>
-              <h2>
-                <Shield size={23} />
-                {t('Riesgo y volatilidad')}
-              </h2>
-            </div>
-          </div>
-          <span
-            className="risk-label"
-            data-level={
-              data?.risk.volatility == null
-                ? 'unknown'
-                : data.risk.volatility >= 40
-                  ? 'high'
-                  : data.risk.volatility >= 20
-                    ? 'medium'
-                    : 'low'
-            }
-          >
-            {t(data?.risk.label ?? 'Sin determinar')}
-          </span>
-          <dl className="asset-risk-values">
-            <div>
-              <dt>{t('Volatilidad anualizada')}</dt>
-              <dd>
-                {format(data?.risk.volatility)}
-                {data?.risk.volatility != null && '%'}
-              </dd>
-            </div>
-            <div>
-              <dt>{t('Caída máxima de la muestra')}</dt>
-              <dd className="negative">
-                {format(data?.risk.maxDrawdown)}
-                {data?.risk.maxDrawdown != null && '%'}
-              </dd>
-            </div>
-          </dl>
-          <p>{t(data?.risk.conclusion ?? 'Sin historial suficiente')}</p>
-          {data && (
-            <details className="asset-methodology">
-              <summary>{t('Qué riesgos contempla')}</summary>
-              <p>
-                {t('Cierres en la muestra')}: {data.risk.observations}
-              </p>
-              {data.risk.factors.map((factor) => (
-                <p key={factor}>{t(factor)}</p>
-              ))}
-            </details>
-          )}
-        </section>
+        <InvestorRisk instrument={instrument} overview={data} />
       </div>
+      <AssetSynthesis instrument={instrument} horizon={horizon} overview={data} />
       <div className="asset-questions-section" id="asset-questions">
         <div className="asset-detail-heading">
           <div>

@@ -15,6 +15,8 @@ import './research-refresh.css';
 import './asset-typography.css';
 import './analyst-studio.css';
 import './news-search.css';
+import './asset-investor.css';
+import './asset-synthesis.css';
 
 const jakarta = localFont({
   src: './fonts/PlusJakartaSans-Variable.ttf',

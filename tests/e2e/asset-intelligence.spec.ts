@@ -13,10 +13,8 @@ test('asset opens with returns, conclusions, risk, chat, news and a large primar
     page.getByRole('region', { name: 'Rendimiento del activo', exact: true }),
   ).toBeVisible();
   await expect(page.locator('.performance-card')).toHaveCount(4);
-  await expect(page.locator('.performance-card').last()).toHaveAttribute(
-    'title',
-    /Histórico insuficiente/,
-  );
+  await expect(page.locator('.performance-card').last().locator('strong')).not.toHaveText('—');
+  await expect(page.locator('.header-performance-source')).not.toContainText('Simulación');
   for (const name of [
     'Sesgo técnico del activo',
     'Conclusión del análisis técnico',
@@ -31,14 +29,14 @@ test('asset opens with returns, conclusions, risk, chat, news and a large primar
   await expect(page.locator('.chart-tile')).toHaveCount(0);
   await page.getByLabel('Pregunta sobre el activo', { exact: true }).fill('¿Qué riesgo tiene?');
   await page.getByRole('button', { name: 'Enviar pregunta', exact: true }).click();
-  await expect(page.locator('.asset-chat-answer')).toContainText('Modo demo por reglas');
+  await expect(page.locator('.asset-chat-answer')).toContainText('Reglas');
   await page.getByRole('button', { name: 'Ver gráfico', exact: true }).first().click();
   await expect(page.locator('.chart-tile iframe')).toBeVisible();
   await expect(page.locator('.asset-chart-hero')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Pantalla completa', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Volver al resumen', exact: true }).click();
   await expect(page.locator('.performance-card')).toHaveCount(4);
-  await expect(page.locator('.asset-chat-answer')).toContainText('Modo demo por reglas');
+  await expect(page.locator('.asset-chat-answer')).toContainText('Reglas');
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole('region', { name: 'Chat con IA del activo' })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

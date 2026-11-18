@@ -188,6 +188,40 @@ export async function marketSnapshot(
     };
   });
 }
+export async function publicResearchSnapshot(id: string): Promise<MarketSnapshot> {
+  const instrument = await resolveInstrument(id);
+  const provider = listingProvider(instrument);
+  const [quote, history] = await Promise.allSettled([
+    provider.quote(instrument),
+    provider instanceof YahooProvider || instrument.exchange === 'COINGECKO'
+      ? new YahooProvider().dailyHistory(instrument)
+      : provider.history(instrument, '1D'),
+  ]);
+  return {
+    instrument,
+    timeframe: '1D',
+    quote: quote.status === 'fulfilled' ? quote.value : null,
+    candles: history.status === 'fulfilled' ? history.value.candles : [],
+    provenance:
+      history.status === 'fulfilled'
+        ? history.value.provenance
+        : {
+            source: instrument.source,
+            url: '',
+            asOf: '',
+            retrievedAt: new Date().toISOString(),
+            status: 'unavailable',
+            delayMinutes: null,
+            adjusted: 'unknown',
+          },
+    error:
+      history.status === 'rejected'
+        ? history.reason instanceof Error
+          ? history.reason.message
+          : 'Historial no disponible.'
+        : undefined,
+  };
+}
 export async function marketOverview(demo = false) {
   return Promise.all(
     instruments
@@ -221,8 +255,8 @@ export async function chartIndicators(
     try {
       const provider = listingProvider(instrument);
       const history =
-        provider instanceof YahooProvider
-          ? await provider.dailyHistory(instrument)
+        provider instanceof YahooProvider || instrument.exchange === 'COINGECKO'
+          ? await new YahooProvider().dailyHistory(instrument)
           : await provider.history(instrument, '1D');
       return buildChartIndicators(
         instrument,

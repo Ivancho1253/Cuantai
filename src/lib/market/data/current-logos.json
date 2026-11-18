@@ -1,0 +1,968 @@
+{
+  "NASDAQ:AMZN:USD": {
+    "src": "/asset-logos/amazon-current.svg",
+    "name": "Amazon",
+    "background": "#162333",
+    "source": "https://www.aboutamazon.com/",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:AAL:ARS": {
+    "src": "/asset-logos/current/e388fa551587c615.png",
+    "name": "American Airlines Group Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/AAL.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ABEV:ARS": {
+    "src": "/asset-logos/current/ab041ff830be06bd.png",
+    "name": "Ambev S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/ABEV.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:AEM:ARS": {
+    "src": "/asset-logos/current/b7680ffa4a46538c.png",
+    "name": "Agnico Eagle Mines Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/AEM.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ALAB:ARS": {
+    "src": "/asset-logos/current/6e344cfc86873f26.png",
+    "name": "Astera Labs, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/ALAB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ANF:ARS": {
+    "src": "/asset-logos/current/fef5484331913935.png",
+    "name": "Abercrombie & Fitch Co.",
+    "source": "https://images.financialmodelingprep.com/symbol/ANF.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ARM:ARS": {
+    "src": "/asset-logos/current/13fd864d49703a78.png",
+    "name": "Arm Holdings plc",
+    "source": "https://images.financialmodelingprep.com/symbol/ARM.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ASML:ARS": {
+    "src": "/asset-logos/current/f369412dc79c9b7b.png",
+    "name": "ASML Holding N.V.",
+    "source": "https://images.financialmodelingprep.com/symbol/ASML.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ASR:ARS": {
+    "src": "/asset-logos/current/27c611f26cb5db00.png",
+    "name": "Grupo Aeroportuario del Sureste, S. A. B. de C. V.",
+    "source": "https://images.financialmodelingprep.com/symbol/ASR.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ASTS:ARS": {
+    "src": "/asset-logos/current/e390a6951f00e34e.png",
+    "name": "AST SpaceMobile, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/ASTS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:AZN:ARS": {
+    "src": "/asset-logos/current/520be7c9ab88907c.png",
+    "name": "AstraZeneca PLC",
+    "source": "https://images.financialmodelingprep.com/symbol/AZN.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:BABA:ARS": {
+    "src": "/asset-logos/current/16bfcc3c2d4325c9.png",
+    "name": "Alibaba Group Holding Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/BABA.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:BAK:ARS": {
+    "src": "/asset-logos/current/d9b6387d178a8fee.png",
+    "name": "Braskem S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/BAK.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:BBD:ARS": {
+    "src": "/asset-logos/current/ffbfe82c56adfc9e.png",
+    "name": "Banco Bradesco S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/BBD.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:BHP:ARS": {
+    "src": "/asset-logos/current/bd719cecabdf688b.png",
+    "name": "BHP Group Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/BHP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:BIDU:ARS": {
+    "src": "/asset-logos/current/5b5cbbc706357a15.png",
+    "name": "Baidu, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/BIDU.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:BIOX:ARS": {
+    "src": "/asset-logos/current/94d0c892c18da9fd.png",
+    "name": "Bioceres Crop Solutions Corp.",
+    "source": "https://images.financialmodelingprep.com/symbol/BIOX.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:BSBR:ARS": {
+    "src": "/asset-logos/current/2742f36e55f7c396.png",
+    "name": "Banco Santander (Brasil) S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/BSBR.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:CAR:ARS": {
+    "src": "/asset-logos/current/5da92eea7e359fb4.png",
+    "name": "Avis Budget Group, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/CAR.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:CCJ:ARS": {
+    "src": "/asset-logos/current/62f099ede2973bc9.png",
+    "name": "Cameco Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/CCJ.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:CDE:ARS": {
+    "src": "/asset-logos/current/b838db26d5c5266e.png",
+    "name": "Coeur Mining, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/CDE.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:CLS:ARS": {
+    "src": "/asset-logos/current/0082cbaee79639c7.png",
+    "name": "Celestica Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/CLS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:CORN:ARS": {
+    "src": "/asset-logos/current/ad601d6de3469970.png",
+    "name": "Teucrium Corn Fund",
+    "source": "https://images.financialmodelingprep.com/symbol/CORN.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:CRWV:ARS": {
+    "src": "/asset-logos/current/b5f2774c83fc5953.png",
+    "name": "CoreWeave, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/CRWV.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:CX:ARS": {
+    "src": "/asset-logos/current/d4875ff16d14fbde.png",
+    "name": "CEMEX, S.A.B. de C.V.",
+    "source": "https://images.financialmodelingprep.com/symbol/CX.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:CTIO:ARS": {
+    "src": "/asset-logos/current/5c8309929b077cab.png",
+    "name": "Consultatio S.A.",
+    "source": "https://www.consultatio.com.ar/assets/img/favicon.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:DEO:ARS": {
+    "src": "/asset-logos/current/0ca8341902faf034.png",
+    "name": "Diageo plc",
+    "source": "https://images.financialmodelingprep.com/symbol/DEO.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:E:ARS": {
+    "src": "/asset-logos/current/8d0e832df3664f05.png",
+    "name": "Eni S.p.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/E.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:EA:ARS": {
+    "src": "/asset-logos/current/1b7a7dfa28ce5632.png",
+    "name": "Electronic Arts Inc",
+    "source": "https://images.financialmodelingprep.com/symbol/EA.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:EQNR:ARS": {
+    "src": "/asset-logos/current/e84e6a0a6b55eedf.png",
+    "name": "Equinor ASA",
+    "source": "https://images.financialmodelingprep.com/symbol/EQNR.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:EWJ:ARS": {
+    "src": "/asset-logos/current/8eb752d65abae954.png",
+    "name": "iShares MSCI Japan ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/EWJ.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:GFI:ARS": {
+    "src": "/asset-logos/current/d9ce7ca9b46e3c5d.png",
+    "name": "Gold Fields Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/GFI.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:GGB:ARS": {
+    "src": "/asset-logos/current/93adf817dcdb6b62.png",
+    "name": "Gerdau S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/GGB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:GLNG:ARS": {
+    "src": "/asset-logos/current/78b383a8a7104d39.png",
+    "name": "Golar LNG Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/GLNG.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:GLOB:ARS": {
+    "src": "/asset-logos/current/efa2a1909ced0056.png",
+    "name": "Globant S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/GLOB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:GPRK:ARS": {
+    "src": "/asset-logos/current/e3fbcabcb3db6ab2.png",
+    "name": "GeoPark Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/GPRK.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:GSG:ARS": {
+    "src": "/asset-logos/current/808e964bc7acd5ba.png",
+    "name": "iShares S&P GSCI Commodity-Indexed Trust",
+    "source": "https://images.financialmodelingprep.com/symbol/GSG.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:GSK:ARS": {
+    "src": "/asset-logos/current/82dbf894281b3d22.png",
+    "name": "GSK plc",
+    "source": "https://images.financialmodelingprep.com/symbol/GSK.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:GT:ARS": {
+    "src": "/asset-logos/current/0b4064cf171b7cfd.png",
+    "name": "The Goodyear Tire & Rubber Company",
+    "source": "https://images.financialmodelingprep.com/symbol/GT.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:HAVA:ARS": {
+    "src": "/asset-logos/current/b0a026712e9c6660.png",
+    "name": "Havanna Holding S.A.",
+    "source": "https://havanna.com.ar/images/favicon.png?v=1",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:HIMS:ARS": {
+    "src": "/asset-logos/current/bb347e842adc936f.png",
+    "name": "Hims & Hers Health, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/HIMS.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:HL:ARS": {
+    "src": "/asset-logos/current/7ccc52f117f51622.png",
+    "name": "Hecla Mining Company",
+    "source": "https://images.financialmodelingprep.com/symbol/HL.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:HMC:ARS": {
+    "src": "/asset-logos/current/c6aa949e6c7c64db.png",
+    "name": "Honda Motor Co., Ltd.",
+    "source": "https://images.financialmodelingprep.com/symbol/HMC.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:HMY:ARS": {
+    "src": "/asset-logos/current/5790cd9e327b7be4.png",
+    "name": "Harmony Gold Mining Company Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/HMY.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:HOG:ARS": {
+    "src": "/asset-logos/current/7115d42d82e0b6c3.png",
+    "name": "Harley-Davidson, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/HOG.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:HSBC:ARS": {
+    "src": "/asset-logos/current/e5f87f1fedd60fec.png",
+    "name": "HSBC Holdings plc",
+    "source": "https://images.financialmodelingprep.com/symbol/HSBC.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:IBB:ARS": {
+    "src": "/asset-logos/current/75855d198ea08208.png",
+    "name": "iShares Biotechnology ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/IBB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:IBIT:ARS": {
+    "src": "/asset-logos/current/808e964bc7acd5ba.png",
+    "name": "iShares Bitcoin Trust ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/IBIT.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ING:ARS": {
+    "src": "/asset-logos/current/d234f485153e551c.png",
+    "name": "ING Groep N.V.",
+    "source": "https://images.financialmodelingprep.com/symbol/ING.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:IREN:ARS": {
+    "src": "/asset-logos/current/f3f7c27f36896259.png",
+    "name": "IREN Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/IREN.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ITUB:ARS": {
+    "src": "/asset-logos/current/bed115b4e2435304.png",
+    "name": "Itaú Unibanco Holding S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/ITUB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:JOYY:ARS": {
+    "src": "/asset-logos/current/f3fe024679355eef.png",
+    "name": "JOYY Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/JOYY.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:IRSA:ARS": {
+    "src": "/asset-logos/current/de9c22d616763431.png",
+    "name": "IRSA Inversiones y Representaciones S.A.",
+    "source": "https://www.irsa.com.ar/wp-content/uploads/2025/08/IrsaLogoV2.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:KB:ARS": {
+    "src": "/asset-logos/current/709dcaecc97a9b6a.png",
+    "name": "KB Financial Group Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/KB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:KEP:ARS": {
+    "src": "/asset-logos/current/b9a5b32b4f199165.png",
+    "name": "Korea Electric Power Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/KEP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:KGC:ARS": {
+    "src": "/asset-logos/current/7163c0ffb1850e93.png",
+    "name": "Kinross Gold Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/KGC.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:LAC:ARS": {
+    "src": "/asset-logos/current/47c4122abbf16fb6.png",
+    "name": "Lithium Americas Corp.",
+    "source": "https://images.financialmodelingprep.com/symbol/LAC.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:LAR:ARS": {
+    "src": "/asset-logos/current/0b31321039e236c8.png",
+    "name": "Lithium Argentina AG",
+    "source": "https://images.financialmodelingprep.com/symbol/LAR.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:LEDE:ARS": {
+    "src": "/asset-logos/current/333c9e922c79b492.png",
+    "name": "Ledesma S.A.",
+    "source": "https://www.ledesma.com.ar/favicon.svg",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:LND:ARS": {
+    "src": "/asset-logos/current/fc8e4854168cc5ab.png",
+    "name": "BrasilAgro - Companhia Brasileira de Propriedades Agrícolas",
+    "source": "https://images.financialmodelingprep.com/symbol/LND.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:LYG:ARS": {
+    "src": "/asset-logos/current/bbd0846caf01aea6.png",
+    "name": "Lloyds Banking Group plc",
+    "source": "https://images.financialmodelingprep.com/symbol/LYG.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:MFG:ARS": {
+    "src": "/asset-logos/current/2a7d472f70278b1c.png",
+    "name": "Mizuho Financial Group, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/MFG.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:MP:ARS": {
+    "src": "/asset-logos/current/6b255cd3c098f261.png",
+    "name": "MP Materials Corp.",
+    "source": "https://images.financialmodelingprep.com/symbol/MP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:MUFG:ARS": {
+    "src": "/asset-logos/current/403394d99bf8ea45.png",
+    "name": "Mitsubishi UFJ Financial Group, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/MUFG.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:MUX:ARS": {
+    "src": "/asset-logos/current/c76e9f3695d155d0.png",
+    "name": "McEwen Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/MUX.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:NBIS:ARS": {
+    "src": "/asset-logos/current/6c4cc9d43a57813c.png",
+    "name": "Nebius Group N.V. · CEDEAR",
+    "source": "https://images.financialmodelingprep.com/symbol/NBIS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:NGG:ARS": {
+    "src": "/asset-logos/current/682c6623a633fd3e.png",
+    "name": "National Grid plc",
+    "source": "https://images.financialmodelingprep.com/symbol/NGG.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:NMR:ARS": {
+    "src": "/asset-logos/current/25c04c0e267cd148.png",
+    "name": "Nomura Holdings, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/NMR.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:NTES:ARS": {
+    "src": "/asset-logos/current/669f77dd11a1ce85.png",
+    "name": "NetEase, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/NTES.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:NVO:ARS": {
+    "src": "/asset-logos/current/cc7461c7690bfea3.png",
+    "name": "Novo Nordisk A/S",
+    "source": "https://images.financialmodelingprep.com/symbol/NVO.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:NTRA:ARS": {
+    "src": "/asset-logos/current/60626a4d553c6a2d.png",
+    "name": "Natera, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/NTRA.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:NVS:ARS": {
+    "src": "/asset-logos/current/03e1db9be4681542.png",
+    "name": "Novartis AG",
+    "source": "https://images.financialmodelingprep.com/symbol/NVS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:NXE:ARS": {
+    "src": "/asset-logos/current/243facfaeeac136b.png",
+    "name": "NexGen Energy Ltd.",
+    "source": "https://images.financialmodelingprep.com/symbol/NXE.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:OKLO:ARS": {
+    "src": "/asset-logos/current/20c9476b53df49a1.png",
+    "name": "Oklo Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/OKLO.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ONDS:ARS": {
+    "src": "/asset-logos/current/f4e1c6579dc1e13b.png",
+    "name": "Ondas Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/ONDS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:PAAS:ARS": {
+    "src": "/asset-logos/current/c6b3e8d348c4404e.png",
+    "name": "Pan American Silver Corp.",
+    "source": "https://images.financialmodelingprep.com/symbol/PAAS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:PAGS:ARS": {
+    "src": "/asset-logos/current/d2b9fdcdae7723a4.png",
+    "name": "PagSeguro Digital Ltd.",
+    "source": "https://images.financialmodelingprep.com/symbol/PAGS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:PBI:ARS": {
+    "src": "/asset-logos/current/94feec8e3de3de12.png",
+    "name": "Pitney Bowes Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/PBI.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:PDD:ARS": {
+    "src": "/asset-logos/current/8e1b52d35fc4d564.png",
+    "name": "PDD Holdings Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/PDD.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:PHG:ARS": {
+    "src": "/asset-logos/current/f3fdc729f87baa47.png",
+    "name": "Koninklijke Philips N.V.",
+    "source": "https://images.financialmodelingprep.com/symbol/PHG.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:PINS:ARS": {
+    "src": "/asset-logos/current/648ebcb979825f01.png",
+    "name": "Pinterest, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/PINS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:PSO:ARS": {
+    "src": "/asset-logos/current/4b6158bdb425e94f.png",
+    "name": "Pearson plc",
+    "source": "https://images.financialmodelingprep.com/symbol/PSO.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:RACE:ARS": {
+    "src": "/asset-logos/current/6832b7b6abcd96e4.png",
+    "name": "Ferrari N.V.",
+    "source": "https://images.financialmodelingprep.com/symbol/RACE.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:RBLX:ARS": {
+    "src": "/asset-logos/current/6c4065c65e2679fc.png",
+    "name": "Roblox Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/RBLX.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:RGTI:ARS": {
+    "src": "/asset-logos/current/4c895ac694917a4c.png",
+    "name": "Rigetti Computing, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/RGTI.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:RIO:ARS": {
+    "src": "/asset-logos/current/f427108cfc6b518e.png",
+    "name": "Rio Tinto Group",
+    "source": "https://images.financialmodelingprep.com/symbol/RIO.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:RIOT:ARS": {
+    "src": "/asset-logos/current/e6075b2de3ada677.png",
+    "name": "Riot Platforms, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/RIOT.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:RKLB:ARS": {
+    "src": "/asset-logos/current/0336ac916212ad51.png",
+    "name": "Rocket Lab Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/RKLB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ROKU:ARS": {
+    "src": "/asset-logos/current/c390dab98d680c8d.png",
+    "name": "Roku, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/ROKU.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SAMI:ARS": {
+    "src": "/asset-logos/current/e301a7ecc74934ec.png",
+    "name": "S.A. San Miguel A.G.I.C.I. y F.",
+    "source": "https://images.squarespace-cdn.com/content/v1/63eea45262584c3023fb22ed/7afb967e-3d9a-4193-a554-ef4da7195ef7/favicon.ico",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SAN:ARS": {
+    "src": "/asset-logos/current/6899e086e153d6ab.png",
+    "name": "Banco Santander, S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/SAN.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SAP:ARS": {
+    "src": "/asset-logos/current/c46de52c1f9e2763.png",
+    "name": "SAP SE",
+    "source": "https://images.financialmodelingprep.com/symbol/SAP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SATL:ARS": {
+    "src": "/asset-logos/current/b576e9c70b9914a0.png",
+    "name": "Satellogic Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/SATL.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SBS:ARS": {
+    "src": "/asset-logos/current/54271520c6a50acd.png",
+    "name": "Companhia de Saneamento Básico do Estado de São Paulo - SABESP",
+    "source": "https://images.financialmodelingprep.com/symbol/SBS.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SDA:ARS": {
+    "src": "/asset-logos/current/bfe48c4cbfc026f7.png",
+    "name": "SunCar Technology Group Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/SDA.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SE:ARS": {
+    "src": "/asset-logos/current/df830cd07299a48b.png",
+    "name": "Sea Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/SE.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SHOP:ARS": {
+    "src": "/asset-logos/current/2449276d6231611f.png",
+    "name": "Shopify Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/SHOP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SID:ARS": {
+    "src": "/asset-logos/current/72709c52760806cd.png",
+    "name": "Companhia Siderúrgica Nacional",
+    "source": "https://images.financialmodelingprep.com/symbol/SID.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SIEGY:ARS": {
+    "src": "/asset-logos/current/258f6e9022729a2e.png",
+    "name": "Siemens Aktiengesellschaft",
+    "source": "https://images.financialmodelingprep.com/symbol/SIEGY.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SKHY:ARS": {
+    "src": "/asset-logos/current/6341ef79ba10b629.png",
+    "name": "SK hynix Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/SKHY.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SNOW:ARS": {
+    "src": "/asset-logos/current/b21e919650ff8b39.png",
+    "name": "Snowflake Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/SNOW.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SONY:ARS": {
+    "src": "/asset-logos/current/11015a6b91ea9c5c.png",
+    "name": "Sony Group Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/SONY.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SOYB:ARS": {
+    "src": "/asset-logos/current/748a3967cac67802.png",
+    "name": "Teucrium Soybean Fund",
+    "source": "https://images.financialmodelingprep.com/symbol/SOYB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SPCE:ARS": {
+    "src": "/asset-logos/current/9c501f0149ee01e4.png",
+    "name": "Virgin Galactic Holdings, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/SPCE.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SPCX:ARS": {
+    "src": "/asset-logos/current/068503d4bbb85d7a.png",
+    "name": "Space Exploration Technologies Corp.",
+    "source": "https://images.financialmodelingprep.com/symbol/SPCX.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:SPOT:ARS": {
+    "src": "/asset-logos/current/8a9c73730ea15315.png",
+    "name": "Spotify Technology S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/SPOT.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:STLA:ARS": {
+    "src": "/asset-logos/current/ba18aa1b7be23347.png",
+    "name": "Stellantis N.V.",
+    "source": "https://images.financialmodelingprep.com/symbol/STLA.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:STNE:ARS": {
+    "src": "/asset-logos/current/65d7ad6ebe947a4a.png",
+    "name": "StoneCo Ltd.",
+    "source": "https://images.financialmodelingprep.com/symbol/STNE.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TCOM:ARS": {
+    "src": "/asset-logos/current/c83f0e1fb5e2b98d.png",
+    "name": "Trip.com Group Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/TCOM.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TEAM:ARS": {
+    "src": "/asset-logos/current/c1f4dba20abd53e5.png",
+    "name": "Atlassian Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/TEAM.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TEM:ARS": {
+    "src": "/asset-logos/current/2ed01ecb7ac1c781.png",
+    "name": "Tempus AI, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/TEM.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TIIAY:ARS": {
+    "src": "/asset-logos/current/f3fe024679355eef.png",
+    "name": "Telecom Italia S.p.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/TIIAY.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TIMB:ARS": {
+    "src": "/asset-logos/current/705d239251967814.png",
+    "name": "TIM S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/TIMB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TLN:ARS": {
+    "src": "/asset-logos/current/67bc3f3dd20d5ed2.png",
+    "name": "Talen Energy Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/TLN.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TM:ARS": {
+    "src": "/asset-logos/current/a4631121bdb10a8c.png",
+    "name": "Toyota Motor Corporation",
+    "source": "https://images.financialmodelingprep.com/symbol/TM.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TRIP:ARS": {
+    "src": "/asset-logos/current/ab4e66421e14233b.png",
+    "name": "Tripadvisor, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/TRIP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TSM:ARS": {
+    "src": "/asset-logos/current/1fc60d726ed18f41.png",
+    "name": "Taiwan Semiconductor Manufacturing Company Limited",
+    "source": "https://images.financialmodelingprep.com/symbol/TSM.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TTE:ARS": {
+    "src": "/asset-logos/current/1d06cd2540036943.png",
+    "name": "TotalEnergies SE",
+    "source": "https://images.financialmodelingprep.com/symbol/TTE.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:TV:ARS": {
+    "src": "/asset-logos/current/f28d938557135688.png",
+    "name": "Grupo Televisa, S.A.B.",
+    "source": "https://images.financialmodelingprep.com/symbol/TV.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:UGP:ARS": {
+    "src": "/asset-logos/current/4a387d94d2d22fea.png",
+    "name": "Ultrapar Participações S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/UGP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:UL:ARS": {
+    "src": "/asset-logos/current/37cc7dd28cc08470.png",
+    "name": "Unilever PLC",
+    "source": "https://images.financialmodelingprep.com/symbol/UL.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:UPST:ARS": {
+    "src": "/asset-logos/current/5105b611006c097b.png",
+    "name": "Upstart Holdings, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/UPST.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:VIG:ARS": {
+    "src": "/asset-logos/current/105acc499015f6cd.png",
+    "name": "Vanguard Dividend Appreciation Index Fund ETF Shares",
+    "source": "https://images.financialmodelingprep.com/symbol/VIG.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:VIST:ARS": {
+    "src": "/asset-logos/current/4f89fc6165caae60.png",
+    "name": "Vista Energy, S.A.B. de C.V.",
+    "source": "https://images.financialmodelingprep.com/symbol/VIST.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:VIV:ARS": {
+    "src": "/asset-logos/current/5945b4bc7df03b50.png",
+    "name": "Telefônica Brasil S.A.",
+    "source": "https://images.financialmodelingprep.com/symbol/VIV.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:VOD:ARS": {
+    "src": "/asset-logos/current/be41c31dbc019300.png",
+    "name": "Vodafone Group Public Limited Company",
+    "source": "https://images.financialmodelingprep.com/symbol/VOD.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:VXX:ARS": {
+    "src": "/asset-logos/current/3cd1ef4772705e37.png",
+    "name": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
+    "source": "https://images.financialmodelingprep.com/symbol/VXX.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XLB:ARS": {
+    "src": "/asset-logos/current/1b3a5e16dea3483f.png",
+    "name": "State Street Materials Select Sector SPDR ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/XLB.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XLC:ARS": {
+    "src": "/asset-logos/current/cbc836f1bc443877.png",
+    "name": "State Street Communication Services Select Sector SPDR ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/XLC.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XLI:ARS": {
+    "src": "/asset-logos/current/90932c645dc7362a.png",
+    "name": "State Street Industrial Select Sector SPDR ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/XLI.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XLK:ARS": {
+    "src": "/asset-logos/current/90932c645dc7362a.png",
+    "name": "State Street Technology Select Sector SPDR ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/XLK.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XLP:ARS": {
+    "src": "/asset-logos/current/90932c645dc7362a.png",
+    "name": "State Street Consumer Staples Select Sector SPDR ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/XLP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XLRE:ARS": {
+    "src": "/asset-logos/current/90932c645dc7362a.png",
+    "name": "State Street Real Estate Select Sector SPDR ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/XLRE.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XLV:ARS": {
+    "src": "/asset-logos/current/90932c645dc7362a.png",
+    "name": "State Street Health Care Select Sector SPDR ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/XLV.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XLY:ARS": {
+    "src": "/asset-logos/current/e135d23b6a63b1d7.png",
+    "name": "State Street Consumer Discretionary Select Sector SPDR ETF",
+    "source": "https://images.financialmodelingprep.com/symbol/XLY.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:XPEV:ARS": {
+    "src": "/asset-logos/current/9d667d928fc0d7a6.png",
+    "name": "XPeng Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/XPEV.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:YELP:ARS": {
+    "src": "/asset-logos/current/7f9b917c0d14b1ae.png",
+    "name": "Yelp Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/YELP.png",
+    "background": "#ffffff",
+    "reviewedAt": "2026-11-18"
+  },
+  "BYMA:ZM:ARS": {
+    "src": "/asset-logos/current/53752928ce5761ce.png",
+    "name": "Zoom Communications, Inc.",
+    "source": "https://images.financialmodelingprep.com/symbol/ZM.png",
+    "background": "#1d2b34",
+    "reviewedAt": "2026-11-18"
+  }
+}

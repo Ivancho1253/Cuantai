@@ -141,7 +141,13 @@ async function handler(req: Request, { params }: { params: Promise<{ path: strin
       );
     }
     if (method === 'GET' && route === 'asset-overview')
-      return json(await assetOverview(z.string().min(1).parse(url.searchParams.get('id')), demo));
+      return json(
+        await assetOverview(
+          z.string().min(1).parse(url.searchParams.get('id')),
+          demo,
+          url.searchParams.get('source') === 'public',
+        ),
+      );
     if (method === 'GET' && route === 'fundamental-research') {
       const instrument = await resolveInstrument(
         z.string().min(1).parse(url.searchParams.get('id')),

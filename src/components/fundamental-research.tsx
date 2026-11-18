@@ -1,4 +1,5 @@
 'use client';
+import { fundamentalReading } from '@/lib/finance/fundamental-readings';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Building2, ExternalLink, Scale, Wallet } from 'lucide-react';
@@ -32,7 +33,7 @@ const concepts = [
 ];
 export function useFundamentalResearch(id: string) {
   return useQuery({
-    queryKey: ['fundamental-research', id],
+    queryKey: ['fundamental-research', 'v2', id],
     queryFn: () => api<FundamentalResearch>('fundamental-research?id=' + encodeURIComponent(id)),
     staleTime: 900000,
   });
@@ -88,16 +89,108 @@ export function FundamentalPanel({
             <h3 className="fundamental-verdict">{t(d.title)}</h3>
             <p className="fundamental-description">{t(d.conclusion)}</p>
             <div className="fundamental-research-metrics">
-              {d.metrics.map((m, i) => (
-                <article key={m.id} data-accent={i % 4}>
-                  <span>{t(m.label)}</span>
-                  <strong>
-                    {format(m.value, true)} <small>{m.unit}</small>
-                  </strong>
-                  <p>{t(m.explanation)}</p>
-                </article>
-              ))}
+              {d.metrics.map((m, i) => {
+                const reading = fundamentalReading(m, d);
+                return (
+                  <article key={m.id} data-accent={i % 4} data-reading={reading.tone}>
+                    <div className="fundamental-metric-heading">
+                      <span>{t(m.label)}</span>
+                      <span className="fundamental-state" data-tone={reading.tone}>
+                        {t(reading.label)}
+                      </span>
+                    </div>
+                    <strong>
+                      {format(m.value, true)} <small>{m.unit}</small>
+                    </strong>
+                    <p>{t(reading.text)}</p>
+                  </article>
+                );
+              })}
             </div>
+            {d.kind === 'stock' && (
+              <section
+                className="earnings-comparison"
+                aria-label={t('Resultado frente a expectativas')}
+                data-tone={
+                  d.earnings
+                    ? d.earnings.actual > d.earnings.estimate
+                      ? 'positive'
+                      : d.earnings.actual < d.earnings.estimate
+                        ? 'negative'
+                        : 'neutral'
+                    : 'neutral'
+                }
+              >
+                <div className="earnings-comparison-heading">
+                  <h4>{t('¿Superó lo esperado?')}</h4>
+                  <span
+                    className="fundamental-state"
+                    data-tone={
+                      d.earnings
+                        ? d.earnings.actual > d.earnings.estimate
+                          ? 'positive'
+                          : d.earnings.actual < d.earnings.estimate
+                            ? 'negative'
+                            : 'neutral'
+                        : 'neutral'
+                    }
+                  >
+                    {t(
+                      d.earnings
+                        ? d.earnings.actual > d.earnings.estimate
+                          ? 'Por encima del consenso'
+                          : d.earnings.actual < d.earnings.estimate
+                            ? 'Por debajo del consenso'
+                            : 'En línea con el consenso'
+                        : 'Sin consenso disponible',
+                    )}
+                  </span>
+                </div>
+                {d.earnings ? (
+                  <>
+                    <div className="earnings-comparison-values">
+                      <div>
+                        <span>{t('EPS publicado')}</span>
+                        <strong>
+                          {format(d.earnings.actual)} <small>USD</small>
+                        </strong>
+                      </div>
+                      <div>
+                        <span>{t('EPS esperado')}</span>
+                        <strong>
+                          {format(d.earnings.estimate)} <small>USD</small>
+                        </strong>
+                      </div>
+                      <div>
+                        <span>{t('Diferencia')}</span>
+                        <strong>
+                          {d.earnings.surprisePercent === null
+                            ? '—'
+                            : (d.earnings.surprisePercent > 0 ? '+' : '') +
+                              format(d.earnings.surprisePercent) +
+                              '%'}
+                        </strong>
+                      </div>
+                    </div>
+                    <p>
+                      {t(
+                        'Comparación trimestral publicada por Nasdaq; se muestra separada del EPS anual contable.',
+                      )}{' '}
+                      {d.earnings.period} · {d.earnings.reportedAt}
+                    </p>
+                    <a href={d.earnings.url} target="_blank" rel="noreferrer">
+                      {t('Ver comparación original')} ↗
+                    </a>
+                  </>
+                ) : (
+                  <p>
+                    {t(
+                      'No hay una estimación comparable publicada para este activo. Mejorar frente al año anterior no significa superar el consenso del mercado.',
+                    )}
+                  </p>
+                )}
+              </section>
+            )}
             <details className="asset-methodology">
               <summary>{t('Fuentes y cobertura')}</summary>
               <p>

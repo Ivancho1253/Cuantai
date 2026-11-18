@@ -3,7 +3,7 @@ import { useText as useUiText } from './locale-provider';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { assetHref } from '@/lib/market/asset-href';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTheme } from 'next-themes';
 import {
@@ -81,6 +81,7 @@ export function AppShell({
 }) {
   const uiText = useUiText();
   const router = useRouter();
+  const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
@@ -247,7 +248,9 @@ export function AppShell({
               <div className="demo-strip">
                 <span className="demo-indicator" />
                 {uiText(
-                  ' Datos demo de Cuantai \u00B7 14 mar 2025. Gr\u00E1ficos: fuente TradingView.',
+                  pathname.startsWith('/asset/')
+                    ? ' Vista de demostración · Investigación con datos de las fuentes indicadas en cada panel.'
+                    : ' Datos demo de Cuantai \u00B7 14 mar 2025. Gr\u00E1ficos: fuente TradingView.',
                 )}
                 {uiText(' ')}
                 <Link href={demo ? '/register' : href('settings')}>
